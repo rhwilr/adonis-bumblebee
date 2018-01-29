@@ -22,13 +22,24 @@ class BumblebeeProvider extends ServiceProvider {
    * @return {void}
    */
   register () {
-    this.app.bind('Adonis/Addons/Bumblebee', app => {
-      return new Bumblebee(app)
-    })
-
     this.app.bind('Adonis/Addons/Bumblebee/TransformerAbstract', app => {
       return TransformerAbstract
     })
+  }
+
+    /**
+   * Bind ally to the http context
+   *
+   * @method boot
+   *
+   * @return {void}
+   */
+  boot () {
+    const Context = this.app.use('Adonis/Src/HttpContext')
+
+    Context.getter('transform', function () {
+      return new Bumblebee(this)
+    }, true)
   }
 }
 

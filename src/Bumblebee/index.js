@@ -20,14 +20,20 @@
  * @constructor
  */
 class Bumblebee {
-  constructor (app) {
-    this._app = app // The application instance
+  constructor (ctx) {
+    this._ctx = ctx
   }
 
-  collection (data, Transformer) {
+  async collection (data, Transformer) {
+    return Promise.all(
+      (await data).rows.map((item) => this.item(item, Transformer))
+    )
+  }
+
+  async item (data, Transformer) {
     let transformerInstance = new Transformer()
 
-    return data.rows.map(item => transformerInstance.transform(item))
+    return transformerInstance.transform(await data, this._ctx)
   }
 }
 
