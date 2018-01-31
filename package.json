@@ -1,12 +1,9 @@
 {
   "name": "adonis-bumblebee",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Api Transformer Provider for AdonisJs Framework",
   "main": "index.js",
   "scripts": {
-    "test": "npm run lint && istanbul cover _mocha --report lcovonly -- -R spec test && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
-    "coverage": "istanbul cover _mocha test --bail",
-    "lint": "standard src/**/*.js test/*.js"
   },
   "standard": {
     "global": [
