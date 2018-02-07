@@ -92,7 +92,7 @@ test.group('Transformer', () => {
     assert.equal(transformed, null)
   })
 
-  test('data and transformer can be passed to create directly', async (assert) => {
+  test('data and transformer can be passed to create method directly', async (assert) => {
     let item = {item_id: 3}
 
     let transformedItem = await Bumblebee.create(item, IDTransformer).toArray()
