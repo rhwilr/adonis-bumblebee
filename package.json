@@ -6,11 +6,12 @@
   "scripts": {
     "lint": "standard",
     "pretest": "npm run lint",
-    "posttest": "npm run coverage",
+    "posttest": "npm run report-coverage",
     "test:local": "FORCE_COLOR=true node bin/index.js --local",
     "test": "nyc npm run test:local",
     "test:win": "set FORCE_COLOR=true && node bin/index.js --win",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc npm run test:local",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "standard": {
     "global": [
@@ -45,7 +46,7 @@
   "devDependencies": {
     "@adonisjs/fold": "^4.0.5",
     "@adonisjs/sink": "^1.0.13",
-    "coveralls": "^3.0.0",
+    "codecov": "^3.0.0",
     "cz-conventional-changelog": "^2.1.0",
     "japa": "^1.0.5",
     "japa-cli": "^1.0.1",

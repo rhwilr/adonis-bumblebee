@@ -9,6 +9,7 @@ npm-debug.log
 
 # Testing
 coverage
+coverage.lcov
 benchmarks
 out
 .nyc_output
