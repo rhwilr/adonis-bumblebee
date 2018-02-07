@@ -31,6 +31,12 @@ class Bumblebee {
     return this
   }
 
+  null () {
+    this.data('Null', null)
+
+    return this
+  }
+
   data (dataType, data) {
     this._data = data
     this._dataType = dataType

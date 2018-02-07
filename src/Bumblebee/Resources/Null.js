@@ -9,7 +9,7 @@ const ResourceAbstract = require('./ResourceAbstract')
  */
 class Collection extends ResourceAbstract {
   getData () {
-    return {}
+    return null
   }
 }
 

@@ -28,7 +28,7 @@ class Scope {
       return this._item(this._resource.getData(), this._resource.getTransformer())
     }
 
-    return null
+    return this._resource.getData()
   }
 
   async _collection (data, transformer) {
