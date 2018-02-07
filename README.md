@@ -5,7 +5,7 @@ Api Transformer Provider for AdonisJs Framework
 [![Greenkeeper][greenkeeper-image]][greenkeeper-url]
 [![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
-[![Coveralls][coveralls-image]][coveralls-url]
+[![Codecov][codecov-image]][codecov-url]
 
 ## This package is still Work In Progress
 
@@ -19,5 +19,5 @@ Api Transformer Provider for AdonisJs Framework
 [travis-image]: https://img.shields.io/travis/rhwilr/adonis-bumblebee/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/rhwilr/adonis-bumblebee
 
-[coveralls-image]: https://img.shields.io/coveralls/rhwilr/adonis-bumblebee/master.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/github/rhwilr/adonis-bumblebee
+[codecov-image]: https://img.shields.io/codecov/c/github/rhwilr/adonis-bumblebee.svg?style=flat-square
+[codecov-url]: https://codecov.io/gh/rhwilr/adonis-bumblebee
