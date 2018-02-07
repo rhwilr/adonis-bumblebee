@@ -4,6 +4,13 @@
   "description": "Api Transformer Provider for AdonisJs Framework",
   "main": "index.js",
   "scripts": {
+    "lint": "standard",
+    "pretest": "npm run lint",
+    "posttest": "npm run coverage",
+    "test:local": "FORCE_COLOR=true node bin/index.js --local",
+    "test": "nyc npm run test:local",
+    "test:win": "set FORCE_COLOR=true && node bin/index.js --win",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "standard": {
     "global": [
@@ -13,6 +20,11 @@
       "context",
       "before",
       "after"
+    ]
+  },
+  "nyc": {
+    "exclude": [
+      "bin"
     ]
   },
   "repository": {
@@ -32,6 +44,13 @@
   "homepage": "https://github.com/rhwilr/adonis-bumblebee#readme",
   "devDependencies": {
     "@adonisjs/fold": "^4.0.5",
+    "@adonisjs/sink": "^1.0.13",
+    "coveralls": "^3.0.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "japa": "^1.0.5",
+    "japa-cli": "^1.0.1",
+    "nyc": "^11.2.1",
+    "semver": "^5.4.1",
     "standard": "^10.0.3"
   },
   "dependencies": {

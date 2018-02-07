@@ -1,6 +1,15 @@
-#Idea
+#IDE / OS
 .idea
 .vscode
+.DS_Store
 
 # Node modules
 node_modules
+npm-debug.log
+
+# Testing
+coverage
+test
+benchmarks
+out
+.nyc_output
