@@ -44,4 +44,16 @@ test.group('Transformer', () => {
     let transformed = await transform.collection(data, IDTransformer)
     assert.deepEqual(transformed, [{id: 3}, {id: 55}])
   })
+
+  test('a transformer must implement the transform method', async (assert) => {
+    assert.plan(1)
+    class InvalidTransformer extends TransformerAbstract {}
+    let data = {item_id: 3}
+
+    try {
+      await transform.item(data, InvalidTransformer)
+    } catch (error) {
+      assert.equal(error.message, 'You have to implement the method transform!')
+    }
+  })
 })
