@@ -1,14 +1,17 @@
 # adonis-bumblebee
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/rhwilr/adonis-bumblebee.svg)](https://greenkeeper.io/)
 Api Transformer Provider for AdonisJs Framework
 
+[![Greenkeeper][greenkeeper-image]][greenkeeper-url]
 [![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Coveralls][coveralls-image]][coveralls-url]
 
 ## This package is still Work In Progress
 
+
+[greenkeeper-image]: https://badges.greenkeeper.io/rhwilr/adonis-bumblebee.svg
+[greenkeeper-url]: https://greenkeeper.io
 
 [npm-image]: https://img.shields.io/npm/v/adonis-bumblebee.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/adonis-bumblebee
