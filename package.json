@@ -52,8 +52,5 @@
     "nyc": "^11.2.1",
     "semver": "^5.4.1",
     "standard": "^10.0.3"
-  },
-  "dependencies": {
-    "@adonisjs/generic-exceptions": "^2.0.0"
   }
 }
