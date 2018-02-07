@@ -13,7 +13,6 @@ const test = require('japa')
 
 const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
-const transform = new Bumblebee()
 
 class IDTransformer extends TransformerAbstract {
   transform (model) {
@@ -27,21 +26,33 @@ test.group('Transformer', () => {
   test('a transformer maps item properties', async (assert) => {
     let data = {item_id: 3}
 
-    let transformed = await transform.item(data, IDTransformer)
+    let transformed = await Bumblebee.create()
+    .item(data)
+    .transformWith(IDTransformer)
+    .toArray()
+
     assert.equal(transformed.id, 3)
   })
 
   test('a transformer can transform a collection of items', async (assert) => {
     let data = [{item_id: 3}, {item_id: 55}]
 
-    let transformed = await transform.collection(data, IDTransformer)
+    let transformed = await Bumblebee.create()
+    .collection(data)
+    .transformWith(IDTransformer)
+    .toArray()
+
     assert.deepEqual(transformed, [{id: 3}, {id: 55}])
   })
 
   test('a transformer can transform a collection of lucid rows', async (assert) => {
     let data = {rows: [{item_id: 3}, {item_id: 55}]}
 
-    let transformed = await transform.collection(data, IDTransformer)
+    let transformed = await Bumblebee.create()
+    .collection(data)
+    .transformWith(IDTransformer)
+    .toArray()
+
     assert.deepEqual(transformed, [{id: 3}, {id: 55}])
   })
 
@@ -51,7 +62,10 @@ test.group('Transformer', () => {
     let data = {item_id: 3}
 
     try {
-      await transform.item(data, InvalidTransformer)
+      await Bumblebee.create()
+      .item(data)
+      .transformWith(InvalidTransformer)
+      .toArray()
     } catch (error) {
       assert.equal(error.message, 'You have to implement the method transform!')
     }
@@ -60,9 +74,12 @@ test.group('Transformer', () => {
   test('a transformer can be a function', async (assert) => {
     let data = {item_id: 3}
 
-    let transformed = await transform.item(data, model => ({
+    let transformed = await Bumblebee.create()
+    .item(data)
+    .transformWith(model => ({
       id: model.item_id
     }))
+    .toArray()
 
     assert.equal(transformed.id, 3)
   })

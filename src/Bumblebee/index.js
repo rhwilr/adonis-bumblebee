@@ -1,56 +1,72 @@
 'use strict'
 
-/**
- * adonis-bumblebee
- *
- * (c) Ralph Huwiler <ralph@huwiler.rocks>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
-*/
+const Manager = require('./Manager')
 
-const TransformerAbstract = require('./TransformerAbstract')
+const Resources = require('./Resources')
 
-/**
- * Bumblebee class
- *
- * @namespace Adonis/Addons/Bumblebee
- * @singleton
- * @alias Bumblebee
- *
- * @class Bumblebee
- * @constructor
- */
 class Bumblebee {
-  constructor (ctx) {
-    this._ctx = ctx
+  static create (data = null, transformer = null) {
+    let instance = new Bumblebee(new Manager())
+    instance._data = data
+    instance._dataType = instance._determineDataType(data)
+    instance._transformer = transformer
+
+    return instance
   }
 
-  async collection (data, transformer) {
-    return Promise.all(
-      this._getCollectionRows(await data).map((item) => this.item(item, transformer))
-    )
+  constructor (manager) {
+    this._manager = manager
+    return this
   }
 
-  async item (data, transformer) {
-    let transformerInstance = this._getTransformerInstance(transformer)
+  collection (data) {
+    this.data('Collection', data)
 
-    return transformerInstance.transform(await data, this._ctx)
+    return this
   }
 
-  _getCollectionRows (data) {
-    if (data.hasOwnProperty('rows')) {
-      return data.rows
+  item (data) {
+    this.data('Item', data)
+
+    return this
+  }
+
+  data (dataType, data) {
+    this._data = data
+    this._dataType = dataType
+
+    return this
+  }
+
+  transformWith (transformer) {
+    this._transformer = transformer
+
+    return this
+  }
+
+  toArray () {
+    return this.createData().toArray()
+  }
+
+  createData () {
+    return this._manager.createData(this.getResource())
+  }
+
+  getResource () {
+    let Resource = Resources[this._dataType]
+    return new Resource(this._data, this._transformer)
+  }
+
+  _determineDataType (data) {
+    if (data === null) {
+      return 'Null'
     }
-    return data
-  }
 
-  _getTransformerInstance (Transformer) {
-    if (Transformer.prototype instanceof TransformerAbstract) {
-      return new Transformer()
+    if (Array.isArray(data)) {
+      return 'Collection'
     }
 
-    return {transform: Transformer}
+    return 'Item'
   }
 }
 

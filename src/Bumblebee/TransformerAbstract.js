@@ -3,12 +3,17 @@
 /**
  * TransformerAbstract class
  *
- * @namespace Adonis/Addons/TransformerAbstract
- *
  * @class TransformerAbstract
  * @constructor
  */
 class TransformerAbstract {
+  /*
+   * List of resources to automatically include
+  */
+  defaultInclude () {
+    return []
+  }
+
   /**
    * Implementation required
    */
