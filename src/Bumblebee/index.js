@@ -26,7 +26,7 @@ class Bumblebee {
 
   async collection (data, Transformer) {
     return Promise.all(
-      (await data).rows.map((item) => this.item(item, Transformer))
+      this._getCollectionRows(await data).map((item) => this.item(item, Transformer))
     )
   }
 
@@ -34,6 +34,13 @@ class Bumblebee {
     let transformerInstance = new Transformer()
 
     return transformerInstance.transform(await data, this._ctx)
+  }
+
+  _getCollectionRows (data) {
+    if (data.hasOwnProperty('rows')) {
+      return data.rows
+    }
+    return data
   }
 }
 

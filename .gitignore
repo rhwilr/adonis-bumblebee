@@ -9,7 +9,6 @@ npm-debug.log
 
 # Testing
 coverage
-test
 benchmarks
 out
 .nyc_output
