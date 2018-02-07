@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
 */
 
+const TransformerAbstract = require('./TransformerAbstract')
+
 /**
  * Bumblebee class
  *
@@ -24,14 +26,14 @@ class Bumblebee {
     this._ctx = ctx
   }
 
-  async collection (data, Transformer) {
+  async collection (data, transformer) {
     return Promise.all(
-      this._getCollectionRows(await data).map((item) => this.item(item, Transformer))
+      this._getCollectionRows(await data).map((item) => this.item(item, transformer))
     )
   }
 
-  async item (data, Transformer) {
-    let transformerInstance = new Transformer()
+  async item (data, transformer) {
+    let transformerInstance = this._getTransformerInstance(transformer)
 
     return transformerInstance.transform(await data, this._ctx)
   }
@@ -41,6 +43,14 @@ class Bumblebee {
       return data.rows
     }
     return data
+  }
+
+  _getTransformerInstance (Transformer) {
+    if (Transformer.prototype instanceof TransformerAbstract) {
+      return new Transformer()
+    }
+
+    return {transform: Transformer}
   }
 }
 

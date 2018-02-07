@@ -56,4 +56,14 @@ test.group('Transformer', () => {
       assert.equal(error.message, 'You have to implement the method transform!')
     }
   })
+
+  test('a transformer can be a function', async (assert) => {
+    let data = {item_id: 3}
+
+    let transformed = await transform.item(data, model => ({
+      id: model.item_id
+    }))
+
+    assert.equal(transformed.id, 3)
+  })
 })
