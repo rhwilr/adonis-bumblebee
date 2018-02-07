@@ -10,13 +10,10 @@
 */
 
 const test = require('japa')
-// const { Config } = require('@adonisjs/sink')
-// const { ioc } = require('@adonisjs/fold')
 
 const Bumblebee = require('../src/Bumblebee')
-const transform = new Bumblebee()
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
-// const BumblebeeProvider = require('../providers/BumblebeeProvider')
+const transform = new Bumblebee()
 
 class IDTransformer extends TransformerAbstract {
   transform (model) {
