@@ -53,10 +53,18 @@ class Book2Transformer extends TransformerAbstract {
     return this.item(book.author, author => ({name: author.n}))
   }
   includeCharacters (book) {
-    return this.collection(book.characters, character => ({name: character.n}))
+    return this.collection(book.characters, Book2CharacterTransformer)
   }
   includeVoldemort (book) {
     return this.null()
+  }
+}
+
+class Book2CharacterTransformer extends TransformerAbstract {
+  transform (character) {
+    return {
+      name: character.n
+    }
   }
 }
 

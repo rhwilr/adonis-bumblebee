@@ -20,14 +20,24 @@ class Bumblebee {
     return this
   }
 
-  collection (data) {
+  collection (data, transformer = null) {
     this.data('Collection', data)
+
+    if (transformer) {
+      this.transformWith(transformer)
+      return this.toArray()
+    }
 
     return this
   }
 
-  item (data) {
+  item (data, transformer = null) {
     this.data('Item', data)
+
+    if (transformer) {
+      this.transformWith(transformer)
+      return this.toArray()
+    }
 
     return this
   }
@@ -58,14 +68,14 @@ class Bumblebee {
   }
 
   toArray () {
-    return this.createData().toArray()
+    return this._createData().toArray()
   }
 
-  createData () {
-    return this._manager.createData(this.getResource(), this._ctx)
+  _createData () {
+    return this._manager.createData(this._getResource(), this._ctx)
   }
 
-  getResource () {
+  _getResource () {
     let Resource = Resources[this._dataType]
     return new Resource(this._data, this._transformer)
   }

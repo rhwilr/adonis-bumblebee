@@ -67,9 +67,6 @@ class Scope {
 
     return new ClosureTransformer()
   }
-
-  _parseIncludes (data, transformer) {
-  }
 }
 
 module.exports = Scope
