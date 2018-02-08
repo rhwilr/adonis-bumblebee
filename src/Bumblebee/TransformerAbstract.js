@@ -41,7 +41,7 @@ class TransformerAbstract {
     const Scope = require('./Scope')
 
     for (let include of this.defaultInclude()) {
-      let resource = this.callIncludeFunction(include, data)
+      let resource = await this.callIncludeFunction(include, data)
 
       let childScope = new Scope(parentScope._manager, resource, parentScope._ctx)
 
@@ -51,7 +51,7 @@ class TransformerAbstract {
     return includeData
   }
 
-  callIncludeFunction (include, data) {
+  async callIncludeFunction (include, data) {
     let includeName = `include${include.charAt(0).toUpperCase()}${include.slice(1)}`
 
     return this[includeName](data)

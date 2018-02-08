@@ -41,7 +41,7 @@ class Scope {
   async _item (data, transformer) {
     let transformerInstance = this._getTransformerInstance(transformer)
 
-    let transformed = transformerInstance.transform(await data, this._ctx)
+    let transformed = await transformerInstance.transform(await data, this._ctx)
 
     let includeData = await transformerInstance.processIncludedResources(this, await data)
 
