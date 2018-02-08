@@ -14,7 +14,7 @@ const test = require('japa')
 const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
 
-class BookTransformer extends TransformerAbstract {
+class Book1Transformer extends TransformerAbstract {
   defaultInclude () {
     return [
       'author'
@@ -34,6 +34,32 @@ class BookTransformer extends TransformerAbstract {
   }
 }
 
+class Book2Transformer extends TransformerAbstract {
+  defaultInclude () {
+    return [
+      'author',
+      'characters',
+      'voldemort'
+    ]
+  }
+
+  transform (book) {
+    return {
+      title: book.title
+    }
+  }
+
+  includeAuthor (book) {
+    return this.item(book.author, author => ({name: author.n}))
+  }
+  includeCharacters (book) {
+    return this.collection(book.characters, character => ({name: character.n}))
+  }
+  includeVoldemort (book) {
+    return this.null()
+  }
+}
+
 test.group('Default Includes', () => {
   test('a deftault include is appended to the model', async (assert) => {
     let data = {
@@ -47,7 +73,7 @@ test.group('Default Includes', () => {
 
     let transformed = await Bumblebee.create()
     .item(data)
-    .transformWith(BookTransformer)
+    .transformWith(Book1Transformer)
     .toArray()
 
     assert.deepEqual(transformed, {
@@ -57,6 +83,38 @@ test.group('Default Includes', () => {
       author: {
         name: 'J. K. Rowling'
       }
+    })
+  })
+
+  test('all transform types can be used in includes', async (assert) => {
+    let data = {
+      title: 'Harry Potter and the Chamber of Secrets',
+      author: {
+        n: 'J. K. Rowling'
+      },
+      characters: [
+        { n: 'Harry Potter' },
+        { n: 'Ron Weasley' },
+        { n: 'Hermione Granger' }
+      ]
+    }
+
+    let transformed = await Bumblebee.create()
+    .item(data)
+    .transformWith(Book2Transformer)
+    .toArray()
+
+    assert.deepEqual(transformed, {
+      title: 'Harry Potter and the Chamber of Secrets',
+      author: {
+        name: 'J. K. Rowling'
+      },
+      characters: [
+        { name: 'Harry Potter' },
+        { name: 'Ron Weasley' },
+        { name: 'Hermione Granger' }
+      ],
+      voldemort: null
     })
   })
 })

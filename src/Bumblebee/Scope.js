@@ -43,11 +43,9 @@ class Scope {
 
     let transformed = transformerInstance.transform(await data, this._ctx)
 
-    let includeData = await Promise.all(transformerInstance.processIncludedResources(this, await data))
+    let includeData = await transformerInstance.processIncludedResources(this, await data)
 
-    console.log(includeData, 'ttt')
-
-    return transformed
+    return Object.assign(includeData, transformed)
   }
 
   _getCollectionRows (data) {

@@ -23,24 +23,6 @@ class TransformerAbstract {
     throw new Error('You have to implement the method transform!')
   }
 
-  processIncludedResources (parentScope, data) {
-    let includeData = []
-
-    for (let include of this.defaultInclude()) {
-      let resource = this.includeAuthor(data.author)
-
-      console.log(data)
-      const Scope = require('./Scope')
-
-      let childScope = new Scope(parentScope._manager, resource, parentScope._ctx)
-
-      includeData.push('childScope.toArray()')
-      includeData.push(childScope.toArray())
-    }
-
-    return includeData
-  }
-
   collection (data, transformer) {
     return new Resources.Collection(data, transformer)
   }
@@ -51,6 +33,28 @@ class TransformerAbstract {
 
   null () {
     return new Resources.Null()
+  }
+
+  async processIncludedResources (parentScope, data) {
+    let includeData = {}
+
+    const Scope = require('./Scope')
+
+    for (let include of this.defaultInclude()) {
+      let resource = this.callIncludeFunction(include, data)
+
+      let childScope = new Scope(parentScope._manager, resource, parentScope._ctx)
+
+      includeData[include] = await childScope.toArray()
+    }
+
+    return includeData
+  }
+
+  callIncludeFunction (include, data) {
+    let includeName = `include${include.charAt(0).toUpperCase()}${include.slice(1)}`
+
+    return this[includeName](data)
   }
 }
 
