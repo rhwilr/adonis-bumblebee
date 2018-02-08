@@ -20,7 +20,7 @@ The new architecture allows for a much more rubust structure and makes it easier
 
 ## [0.0.2] - 2018-02-07
 
-No new features.
+No new features. Only improvements for project management and a future release.
 
 ### Added
 - Added first basic tests
