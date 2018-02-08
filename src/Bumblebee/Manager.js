@@ -9,8 +9,8 @@ const Scope = require('./Scope')
  * @constructor
  */
 class Manager {
-  createData (resource) {
-    return new Scope(this, resource)
+  createData (resource, ctx = null) {
+    return new Scope(this, resource, ctx)
   }
 }
 

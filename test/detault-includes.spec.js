@@ -13,7 +13,6 @@ const test = require('japa')
 
 const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
-const transform = new Bumblebee()
 
 class BookTransformer extends TransformerAbstract {
   defaultInclude () {
@@ -46,7 +45,10 @@ test.group('Default Includes', () => {
       }
     }
 
-    let transformed = await transform.item(data, BookTransformer)
+    let transformed = await Bumblebee.create()
+    .item(data)
+    .transformWith(BookTransformer)
+    .toArray()
 
     assert.deepEqual(transformed, {
       id: 1,

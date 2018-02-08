@@ -10,6 +10,7 @@ class Bumblebee {
     instance._data = data
     instance._dataType = instance._determineDataType(data)
     instance._transformer = transformer
+    instance._context = null
 
     return instance
   }
@@ -50,12 +51,18 @@ class Bumblebee {
     return this
   }
 
+  withContext (ctx) {
+    this._ctx = ctx
+
+    return this
+  }
+
   toArray () {
     return this.createData().toArray()
   }
 
   createData () {
-    return this._manager.createData(this.getResource())
+    return this._manager.createData(this.getResource(), this._ctx)
   }
 
   getResource () {

@@ -66,8 +66,8 @@ test.group('Transformer', () => {
       .item(data)
       .transformWith(InvalidTransformer)
       .toArray()
-    } catch (error) {
-      assert.equal(error.message, 'You have to implement the method transform!')
+    } catch ({message}) {
+      assert.equal(message, 'You have to implement the method transform!')
     }
   })
 

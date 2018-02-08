@@ -14,9 +14,10 @@ const Resources = require('./Resources')
  * @constructor
  */
 class Scope {
-  constructor (manager, resource) {
+  constructor (manager, resource, ctx) {
     this._manager = manager
     this._resource = resource
+    this._ctx = ctx
   }
 
   async toArray () {
@@ -42,6 +43,10 @@ class Scope {
 
     let transformed = transformerInstance.transform(await data, this._ctx)
 
+    let includeData = await Promise.all(transformerInstance.processIncludedResources(this, await data))
+
+    console.log(includeData, 'ttt')
+
     return transformed
   }
 
@@ -57,7 +62,15 @@ class Scope {
       return new Transformer()
     }
 
-    return {transform: Transformer}
+    class ClosureTransformer extends TransformerAbstract {
+      transform (data) { return Transformer(data) }
+    }
+    ClosureTransformer.transform = Transformer
+
+    return new ClosureTransformer()
+  }
+
+  _parseIncludes (data, transformer) {
   }
 }
 

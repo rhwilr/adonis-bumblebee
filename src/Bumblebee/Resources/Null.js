@@ -8,6 +8,10 @@ const ResourceAbstract = require('./ResourceAbstract')
  * @class Collection
  */
 class Collection extends ResourceAbstract {
+  constructor () {
+    super(null, null)
+  }
+
   getData () {
     return null
   }
