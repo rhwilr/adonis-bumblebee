@@ -12,7 +12,7 @@ The new architecture allows for a much more rubust structure and makes it easier
 
 ### Changed
 - Complete rewrite
-- Import the transformer throught the http context in the controller.
+- Import the transformer through the http context in the controller.
 - Allow transformers to define `defaultIncludes` that will be appended to the result.
 - 100% test coverage! :star:
 
