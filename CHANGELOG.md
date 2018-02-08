@@ -3,9 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.0.5] - 2018-02-08
+
+### Fixed
+- Use the current request context instead of creating a new one.
+
+
 ## [0.0.4] - 2018-02-08
 
-### Changed
+### Fixed
 - Allow the transform function to be a promise
 
 

@@ -38,7 +38,7 @@ class BumblebeeProvider extends ServiceProvider {
     const Context = this.app.use('Adonis/Src/HttpContext')
 
     Context.getter('transform', function () {
-      return Bumblebee.create().withContext(new Context())
+      return Bumblebee.create().withContext(this)
     }, true)
   }
 }
