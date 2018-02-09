@@ -10,6 +10,13 @@ const Resources = require('./Resources')
  */
 class TransformerAbstract {
   /*
+   * Resources that can be included if requested
+  */
+  availableInclude () {
+    return []
+  }
+
+  /*
    * List of resources to automatically include
   */
   defaultInclude () {
@@ -40,7 +47,7 @@ class TransformerAbstract {
 
     const Scope = require('./Scope')
 
-    for (let include of this.defaultInclude()) {
+    for (let include of this.figureOutWhichIncludes(parentScope)) {
       let resource = await this.callIncludeFunction(include, data)
 
       let childScope = new Scope(parentScope._manager, resource, parentScope._ctx)
@@ -55,6 +62,14 @@ class TransformerAbstract {
     let includeName = `include${include.charAt(0).toUpperCase()}${include.slice(1)}`
 
     return this[includeName](data)
+  }
+
+  figureOutWhichIncludes (parentScope) {
+    let includes = this.defaultInclude()
+
+    let requestedAvailableIncludes = this.availableInclude().filter(i => parentScope._isRequested(i))
+
+    return includes.concat(requestedAvailableIncludes)
   }
 }
 

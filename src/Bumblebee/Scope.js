@@ -48,6 +48,10 @@ class Scope {
     return Object.assign(includeData, transformed)
   }
 
+  _isRequested (checkScopeSegment) {
+    return this._manager.getRequestedIncludes().includes(checkScopeSegment)
+  }
+
   _getCollectionRows (data) {
     if (data.hasOwnProperty('rows')) {
       return data.rows

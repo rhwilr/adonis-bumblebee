@@ -67,6 +67,12 @@ class Bumblebee {
     return this
   }
 
+  include (include) {
+    this._manager.parseIncludes(include)
+
+    return this
+  }
+
   toArray () {
     return this._createData().toArray()
   }
