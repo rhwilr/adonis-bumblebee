@@ -14,10 +14,12 @@ const Resources = require('./Resources')
  * @constructor
  */
 class Scope {
-  constructor (manager, resource, ctx) {
+  constructor (manager, resource, ctx, scopeIdentifier = null) {
     this._manager = manager
     this._resource = resource
     this._ctx = ctx
+    this._scopeIdentifier = scopeIdentifier
+    this._parentScopes = []
   }
 
   async toArray () {
@@ -49,7 +51,17 @@ class Scope {
   }
 
   _isRequested (checkScopeSegment) {
-    return this._manager.getRequestedIncludes().includes(checkScopeSegment)
+    let scopeArray
+
+    if (this._scopeIdentifier) {
+      scopeArray = [...this._parentScopes, this._scopeIdentifier, checkScopeSegment]
+    } else {
+      scopeArray = [checkScopeSegment]
+    }
+
+    let scopeString = scopeArray.join('.')
+
+    return this._manager.getRequestedIncludes().includes(scopeString)
   }
 
   _getCollectionRows (data) {
@@ -70,6 +82,18 @@ class Scope {
     ClosureTransformer.transform = Transformer
 
     return new ClosureTransformer()
+  }
+
+  setParentScopes (parentScopes) {
+    this._parentScopes = parentScopes
+  }
+
+  getParentScopes () {
+    return this._parentScopes
+  }
+
+  getScopeIdentifier () {
+    return this._scopeIdentifier
   }
 }
 

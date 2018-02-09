@@ -45,14 +45,10 @@ class TransformerAbstract {
   async processIncludedResources (parentScope, data) {
     let includeData = {}
 
-    const Scope = require('./Scope')
-
     for (let include of this.figureOutWhichIncludes(parentScope)) {
       let resource = await this.callIncludeFunction(include, data)
 
-      let childScope = new Scope(parentScope._manager, resource, parentScope._ctx)
-
-      includeData[include] = await childScope.toArray()
+      includeData[include] = await this.createChildScopeFor(parentScope, resource, include).toArray()
     }
 
     return includeData
@@ -70,6 +66,22 @@ class TransformerAbstract {
     let requestedAvailableIncludes = this.availableInclude().filter(i => parentScope._isRequested(i))
 
     return includes.concat(requestedAvailableIncludes)
+  }
+
+  createChildScopeFor (parentScope, resource, include) {
+    const Scope = require('./Scope')
+
+    let childScope = new Scope(parentScope._manager, resource, parentScope._ctx, include)
+
+    let scopeArray = [...parentScope.getParentScopes()]
+
+    if (parentScope.getScopeIdentifier()) {
+      scopeArray.push(parentScope.getScopeIdentifier())
+    }
+
+    childScope.setParentScopes(scopeArray)
+
+    return childScope
   }
 }
 
