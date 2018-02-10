@@ -1,5 +1,6 @@
 'use strict'
 
+const { ioc } = require('@adonisjs/fold')
 const Scope = require('./Scope')
 
 /**
@@ -10,11 +11,14 @@ const Scope = require('./Scope')
  */
 class Manager {
   constructor () {
+    const Config = ioc.use('Adonis/Src/Config')
+
     this.requestedIncludes = new Set()
-    this._recursionLimit = 10
+    this._recursionLimit = Config.get('bumblebee.includeRecursionLimit', 10)
   }
 
   createData (resource, ctx = null) {
+    this._setIncludesFromRequest(ctx)
     return new Scope(this, resource, ctx)
   }
 
@@ -63,6 +67,17 @@ class Manager {
     this._recursionLimit = limit
 
     return this
+  }
+
+  _setIncludesFromRequest (ctx) {
+    const Config = ioc.use('Adonis/Src/Config')
+
+    // Only parse includes if enabled in config
+    if (!Config.get('bumblebee.parseRequest', false)) return
+
+    if (ctx && ctx.params.include) {
+      this.parseIncludes(ctx.params.include)
+    }
   }
 }
 

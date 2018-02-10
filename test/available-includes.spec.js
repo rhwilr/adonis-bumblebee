@@ -11,6 +11,7 @@
 
 const test = require('japa')
 
+const setup = require('./setup')
 const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
 
@@ -92,7 +93,11 @@ const data = {
   ]
 }
 
-test.group('Available Includes', () => {
+test.group('Available Includes', (group) => {
+  group.before(async () => {
+    await setup()
+  })
+
   test('an availableInclude is not addad by default', async (assert) => {
     let transformed = await Bumblebee.create()
     .item(data)

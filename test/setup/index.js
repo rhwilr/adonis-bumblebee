@@ -1,6 +1,7 @@
 'use strict'
 
 const { ioc, registrar } = require('@adonisjs/fold')
+const { Config } = require('@adonisjs/sink')
 const path = require('path')
 const Macroable = require('macroable')
 
@@ -18,6 +19,17 @@ Context._macros = {}
 module.exports = async () => {
   ioc.bind('Adonis/Src/HttpContext', () => {
     return Context
+  })
+
+  ioc.singleton('Adonis/Src/Config', () => {
+    const config = new Config()
+
+    config.set('bumblebee', {
+      parseRequest: false,
+      includeRecursionLimit: 10
+    })
+
+    return config
   })
 
   await registrar.providers([

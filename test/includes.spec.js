@@ -10,6 +10,7 @@
 */
 
 const test = require('japa')
+const { ioc } = require('@adonisjs/fold')
 
 const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
@@ -111,5 +112,34 @@ test.group('Includes can be an array or a string', () => {
     .toArray()
 
     assert.deepEqual(transformedFromString, expectedTransform)
+  })
+
+  test('when enabled in config, includes are parsed from the request', async (assert) => {
+    const Context = ioc.use('Adonis/Src/HttpContext')
+    const Config = ioc.use('Adonis/Src/Config')
+    Config.set('bumblebee.parseRequest', true)
+
+    const ctx = new Context()
+
+    ctx.params = {include: 'author,characters.actor'}
+
+    let transformed = await Bumblebee.create()
+    .item(data)
+    .transformWith(Book2Transformer)
+    .withContext(ctx)
+    .toArray()
+
+    assert.deepEqual(transformed, expectedTransform)
+
+    // test that no error occures if include param is not set
+    ctx.params = {}
+
+    transformed = await Bumblebee.create()
+    .item(data)
+    .transformWith(Book2Transformer)
+    .withContext(ctx)
+    .toArray()
+
+    assert.deepEqual(transformed, {title: 'Harry Potter and the Deathly Hallows'})
   })
 })
