@@ -61,7 +61,7 @@ class Scope {
 
     let scopeString = scopeArray.join('.')
 
-    return this._manager.getRequestedIncludes().includes(scopeString)
+    return this._manager.getRequestedIncludes().has(scopeString)
   }
 
   _getCollectionRows (data) {

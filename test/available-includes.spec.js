@@ -167,13 +167,7 @@ test.group('Available Includes', () => {
       ]
     }
 
-    let transformed = await Bumblebee.create()
-    .include(['author', 'characters', 'characters.actor'])
-    .item(data)
-    .transformWith(Book2Transformer)
-    .toArray()
-
-    assert.deepEqual(transformed, {
+    let expectedTransform = {
       title: 'Harry Potter and the Deathly Hallows',
       author: {
         name: 'J. K. Rowling'
@@ -190,6 +184,22 @@ test.group('Available Includes', () => {
           }
         }
       ]
-    })
+    }
+
+    let transformed = await Bumblebee.create()
+    .include(['author', 'characters.actor'])
+    .item(data)
+    .transformWith(Book2Transformer)
+    .toArray()
+
+    assert.deepEqual(transformed, expectedTransform)
+
+    let transformedFromString = await Bumblebee.create()
+    .include('author,characters.actor')
+    .item(data)
+    .transformWith(Book2Transformer)
+    .toArray()
+
+    assert.deepEqual(transformedFromString, expectedTransform)
   })
 })
