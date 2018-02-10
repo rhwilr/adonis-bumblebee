@@ -48,7 +48,11 @@ class TransformerAbstract {
     for (let include of this.figureOutWhichIncludes(parentScope)) {
       let resource = await this.callIncludeFunction(include, data)
 
-      includeData[include] = await this.createChildScopeFor(parentScope, resource, include).toArray()
+      if (resource instanceof Resources.ResourceAbstract) {
+        includeData[include] = await this.createChildScopeFor(parentScope, resource, include).toArray()
+      } else {
+        includeData[include] = resource
+      }
     }
 
     return includeData

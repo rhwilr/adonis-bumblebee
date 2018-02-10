@@ -19,7 +19,8 @@ class Book2Transformer extends TransformerAbstract {
   availableInclude () {
     return [
       'author',
-      'characters'
+      'characters',
+      'school'
     ]
   }
 
@@ -34,6 +35,9 @@ class Book2Transformer extends TransformerAbstract {
   }
   includeCharacters (book) {
     return this.collection(book.characters, Book2CharacterTransformer)
+  }
+  includeSchool (book) {
+    return 'Hogwarts'
   }
 }
 
@@ -141,5 +145,18 @@ test.group('Includes can be an array or a string', () => {
     .toArray()
 
     assert.deepEqual(transformed, {title: 'Harry Potter and the Deathly Hallows'})
+  })
+
+  test('an include function can return a object to be merged', async (assert) => {
+    let transformed = await Bumblebee.create()
+    .include(['school'])
+    .item(data)
+    .transformWith(Book2Transformer)
+    .toArray()
+
+    assert.deepEqual(transformed, {
+      title: 'Harry Potter and the Deathly Hallows',
+      school: 'Hogwarts'
+    })
   })
 })

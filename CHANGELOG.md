@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## [0.0.7] - 2018-02-10
+
+### Fixed
+- If an include function does not return an instance of `ResourceAbstrace`, the returned value is used without transformation.
+
+
 ## [0.0.6] - 2018-02-10
 
 This release adds optional includes that can be requested on a per-transform basis.
