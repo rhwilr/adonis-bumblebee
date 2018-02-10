@@ -9,6 +9,7 @@ class Context extends Macroable {
   constructor () {
     super()
     this.env = 'testing'
+    this.params = {}
   }
 }
 Context._getters = {}
