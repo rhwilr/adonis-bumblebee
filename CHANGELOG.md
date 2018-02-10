@@ -3,12 +3,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+
+## [0.0.6] - 2018-02-10
+
 This release adds optional includes that can be requested on a per-transform basis.
 It is also possible to request nested includes which are going to be recursively resolved.
 
 ### Added
 - Added `availableIncludes` to transformers. 
 - Added `parseIncludes()` to request includes.
+- Added config values for recursion limit.
+- Includes can be automatically parsed from the request parameters
 
 
 ## [0.0.5] - 2018-02-08
