@@ -6,6 +6,7 @@ Api Transformer Provider for AdonisJs Framework
 [![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Codecov][codecov-image]][codecov-url]
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frhwilr%2Fadonis-bumblebee.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frhwilr%2Fadonis-bumblebee?ref=badge_shield)
 
 ## This package is still Work In Progress
 
@@ -21,3 +22,6 @@ Api Transformer Provider for AdonisJs Framework
 
 [codecov-image]: https://img.shields.io/codecov/c/github/rhwilr/adonis-bumblebee.svg?style=flat-square
 [codecov-url]: https://codecov.io/gh/rhwilr/adonis-bumblebee
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frhwilr%2Fadonis-bumblebee.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frhwilr%2Fadonis-bumblebee?ref=badge_large)
