@@ -66,7 +66,7 @@ Two types of resource exist:
 The resource accepts an object or an array as the first argument, representing the data that should be transformed.
 The second argument is the transformer used for this resource.
 
-# Transformers
+## Transformers
 
 In the previous example we saw a callback transformer, but there are only intended to be used in some simple cases. Transformers can do much more.
 
@@ -147,3 +147,37 @@ You have to specify the name of the include by returning an array of all include
 Then you create an additional Method for each include named like in the example: `include{Name}`
 
 The include method returns a new resource, that can either be an `item` or a `collection`.  See [Resources](#resources)
+
+
+#### Available Include
+
+```js
+class BookTransformer extends TransformerAbstract {
+  availableInclude () {
+    return [
+      'author'
+    ]
+  }
+
+  transform (book) {
+    return {
+      id: book.id,
+      title: book.title,
+      year: book.yr
+    }
+  }
+
+  includeAuthor (book) {
+    return this.item(book.author().fetch(), AuthorTransformer)
+  }
+}
+
+module.exports = BookTransformer
+```
+
+An `availableInclude` is almost the same as a `defaultInclude`, except it is not included by default. As the name would suggest.
+To include this resource you call the `include()` method before transforming.
+
+```js
+return transform.include('author').item(book, BookTransformer)
+```
