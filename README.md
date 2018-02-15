@@ -111,6 +111,8 @@ const users = await User.all()
 return transform.collection(users, UserTransformer)
 ```
 
+Note: You also get the `context` as the second arguement in the `transform` method. Thought this you can access the current request or the authenticated user.
+
 ### Including Data
 
 Most of the time our data does not only consist of simple properties on the model. Our models also have relations to other models. With include functions you can define additional related data that sould be included in the transformed response.
@@ -181,3 +183,39 @@ To include this resource you call the `include()` method before transforming.
 ```js
 return transform.include('author').item(book, BookTransformer)
 ```
+
+These includes can be nested with dot notation too, to include resources within other resources.
+
+```js
+return transform.include('author,publisher.something').item(book, BookTransformer)
+```
+
+Note: publishers will also be included with somethingelse nested under it. This is shorthand for publishers,publishers.somethingelse.
+This can be done to a limit of 10 levels. But the default nesting limit can be changed in the config file.
+ 
+
+### Parse available includes automatically
+
+In addition to the previous method, you can also enable `parseRequest` in the config file. Now Bumblebee will automatically parse the `?include=` GET parameter and include the requseted resources.
+
+
+## Fluent Interface
+
+You may want to use the transformer somewhere other than in a controller. You can import bumblebee directly by the following method:
+
+```js
+const Bumblebee = use('Adonis/Addons/Bumblebee')
+
+let transformed = await Bumblebee.create()
+    .collection(data)
+    .transformWith(BookTransformer)
+    .withContext(ctx)
+    .toArray()
+```
+
+You can use all the same methods as in the controllers. With one difference: If you need the `context` inside the transformer, you have to set it with the `.withContext(ctx)` method since it is not automatically injected.
+
+## Credits
+
+Special thanks to the creator(s) of [Fractal](https://fractal.thephpleague.com/), a php api transformer that was the main inspiration for this package.
+Also a huge thanks goes to the creator(s) of [AdonisJS](http://adonisjs.com/) for creating such an awesome framework.
