@@ -95,4 +95,10 @@ test.group('Context', (group) => {
 
     assert.equal(transformed.id, 42)
   })
+
+  test('Bumblebee can be importet from the ioc', async (assert) => {
+    const BumblebeeIoc = ioc.use('Adonis/Addons/Bumblebee')
+
+    assert.deepEqual(BumblebeeIoc, Bumblebee)
+  })
 })
