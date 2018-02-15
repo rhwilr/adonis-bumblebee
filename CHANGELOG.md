@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## [1.0.0] - 2018-02-15
+
+This is the first official release of adonis-bumblebee.
+
+### Added
+- The Bumblebee Fluent Interface is now available as `Adonis/Addons/Bumblebee`
+- Lots of documentation
+
+
 ## [0.0.7] - 2018-02-10
 
 ### Fixed
