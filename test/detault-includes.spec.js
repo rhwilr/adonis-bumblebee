@@ -80,9 +80,9 @@ test.group('Default Includes', () => {
     }
 
     let transformed = await Bumblebee.create()
-    .item(data)
-    .transformWith(Book1Transformer)
-    .toArray()
+      .item(data)
+      .transformWith(Book1Transformer)
+      .toArray()
 
     assert.deepEqual(transformed, {
       id: 1,
@@ -108,9 +108,9 @@ test.group('Default Includes', () => {
     }
 
     let transformed = await Bumblebee.create()
-    .item(data)
-    .transformWith(Book2Transformer)
-    .toArray()
+      .item(data)
+      .transformWith(Book2Transformer)
+      .toArray()
 
     assert.deepEqual(transformed, {
       title: 'Harry Potter and the Chamber of Secrets',

@@ -49,7 +49,7 @@ test.group('Promise', (group) => {
     })
 
     let transformed = await transform
-    .item(data, model => ({id: model.item_id}))
+      .item(data, model => ({id: model.item_id}))
 
     assert.equal(transformed.id, 3)
   })
@@ -68,7 +68,7 @@ test.group('Promise', (group) => {
     }
 
     let transformed = await transform
-    .item(data, BookTransformer)
+      .item(data, BookTransformer)
 
     assert.deepEqual(transformed, {
       id: 1,

@@ -100,9 +100,9 @@ test.group('Available Includes', (group) => {
 
   test('an availableInclude is not addad by default', async (assert) => {
     let transformed = await Bumblebee.create()
-    .item(data)
-    .transformWith(Book1Transformer)
-    .toArray()
+      .item(data)
+      .transformWith(Book1Transformer)
+      .toArray()
 
     assert.deepEqual(transformed, {
       id: 1,
@@ -113,10 +113,10 @@ test.group('Available Includes', (group) => {
 
   test('an include can be request', async (assert) => {
     let transformed = await Bumblebee.create()
-    .include('author')
-    .item(data)
-    .transformWith(Book1Transformer)
-    .toArray()
+      .include('author')
+      .item(data)
+      .transformWith(Book1Transformer)
+      .toArray()
 
     assert.deepEqual(transformed, {
       id: 1,
@@ -130,10 +130,10 @@ test.group('Available Includes', (group) => {
 
   test('multiple includes can be requested at once', async (assert) => {
     let transformed = await Bumblebee.create()
-    .include(['author', 'characters'])
-    .item(data)
-    .transformWith(Book1Transformer)
-    .toArray()
+      .include(['author', 'characters'])
+      .item(data)
+      .transformWith(Book1Transformer)
+      .toArray()
 
     assert.deepEqual(transformed, {
       id: 1,
@@ -192,18 +192,18 @@ test.group('Available Includes', (group) => {
     }
 
     let transformed = await Bumblebee.create()
-    .include(['author', 'characters.actor'])
-    .item(data)
-    .transformWith(Book2Transformer)
-    .toArray()
+      .include(['author', 'characters.actor'])
+      .item(data)
+      .transformWith(Book2Transformer)
+      .toArray()
 
     assert.deepEqual(transformed, expectedTransform)
 
     let transformedFromString = await Bumblebee.create()
-    .include('author,characters.actor')
-    .item(data)
-    .transformWith(Book2Transformer)
-    .toArray()
+      .include('author,characters.actor')
+      .item(data)
+      .transformWith(Book2Transformer)
+      .toArray()
 
     assert.deepEqual(transformedFromString, expectedTransform)
   })
