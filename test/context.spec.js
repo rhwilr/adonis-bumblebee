@@ -37,10 +37,10 @@ test.group('Context', (group) => {
     let data = {item_id: 3}
 
     let transformed = await Bumblebee.create()
-    .item(data)
-    .transformWith(IDTransformer)
-    .withContext(ctx)
-    .toArray()
+      .item(data)
+      .transformWith(IDTransformer)
+      .withContext(ctx)
+      .toArray()
 
     assert.equal(transformed.id, 3)
     assert.equal(transformed.env, 'testing')
@@ -53,9 +53,9 @@ test.group('Context', (group) => {
     let data = {item_id: 3}
 
     let transformed = await transform
-    .item(data)
-    .transformWith(model => ({id: model.item_id}))
-    .toArray()
+      .item(data)
+      .transformWith(model => ({id: model.item_id}))
+      .toArray()
 
     assert.equal(transformed.id, 3)
   })
@@ -67,9 +67,9 @@ test.group('Context', (group) => {
     let data = {item_id: 3}
 
     let transformed = await transform
-    .item(data)
-    .transformWith(IDTransformer)
-    .toArray()
+      .item(data)
+      .transformWith(IDTransformer)
+      .toArray()
 
     assert.equal(transformed.id, 3)
     assert.equal(transformed.env, 'testing')
@@ -89,9 +89,9 @@ test.group('Context', (group) => {
     let data = {id: 42}
 
     let transformed = await Bumblebee.create()
-    .item(data)
-    .transformWith(UserTransformer)
-    .toArray()
+      .item(data)
+      .transformWith(UserTransformer)
+      .toArray()
 
     assert.equal(transformed.id, 42)
   })

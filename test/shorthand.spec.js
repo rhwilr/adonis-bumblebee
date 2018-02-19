@@ -26,7 +26,7 @@ test.group('Shorthand', (group) => {
     let data = {item_id: 3}
 
     let transformed = await transform
-    .item(data, model => ({id: model.item_id}))
+      .item(data, model => ({id: model.item_id}))
 
     assert.equal(transformed.id, 3)
   })
@@ -38,7 +38,7 @@ test.group('Shorthand', (group) => {
     let data = [{item_id: 3}]
 
     let transformed = await transform
-    .collection(data, model => ({id: model.item_id}))
+      .collection(data, model => ({id: model.item_id}))
 
     assert.deepEqual(transformed, [{id: 3}])
   })

@@ -27,9 +27,9 @@ test.group('Transformer', () => {
     let data = {item_id: 3}
 
     let transformed = await Bumblebee.create()
-    .item(data)
-    .transformWith(IDTransformer)
-    .toArray()
+      .item(data)
+      .transformWith(IDTransformer)
+      .toArray()
 
     assert.equal(transformed.id, 3)
   })
@@ -38,9 +38,9 @@ test.group('Transformer', () => {
     let data = [{item_id: 3}, {item_id: 55}]
 
     let transformed = await Bumblebee.create()
-    .collection(data)
-    .transformWith(IDTransformer)
-    .toArray()
+      .collection(data)
+      .transformWith(IDTransformer)
+      .toArray()
 
     assert.deepEqual(transformed, [{id: 3}, {id: 55}])
   })
@@ -49,9 +49,9 @@ test.group('Transformer', () => {
     let data = {rows: [{item_id: 3}, {item_id: 55}]}
 
     let transformed = await Bumblebee.create()
-    .collection(data)
-    .transformWith(IDTransformer)
-    .toArray()
+      .collection(data)
+      .transformWith(IDTransformer)
+      .toArray()
 
     assert.deepEqual(transformed, [{id: 3}, {id: 55}])
   })
@@ -63,9 +63,9 @@ test.group('Transformer', () => {
 
     try {
       await Bumblebee.create()
-      .item(data)
-      .transformWith(InvalidTransformer)
-      .toArray()
+        .item(data)
+        .transformWith(InvalidTransformer)
+        .toArray()
     } catch ({message}) {
       assert.equal(message, 'You have to implement the method transform!')
     }
@@ -75,19 +75,19 @@ test.group('Transformer', () => {
     let data = {item_id: 3}
 
     let transformed = await Bumblebee.create()
-    .item(data)
-    .transformWith(model => ({
-      id: model.item_id
-    }))
-    .toArray()
+      .item(data)
+      .transformWith(model => ({
+        id: model.item_id
+      }))
+      .toArray()
 
     assert.equal(transformed.id, 3)
   })
 
   test('the null transformer returns always null', async (assert) => {
     let transformed = await Bumblebee.create()
-    .null()
-    .toArray()
+      .null()
+      .toArray()
 
     assert.equal(transformed, null)
   })

@@ -102,18 +102,18 @@ const expectedTransform = {
 test.group('Includes can be an array or a string', () => {
   test('includes can be defined by relation', async (assert) => {
     let transformed = await Bumblebee.create()
-    .include(['author', 'characters.actor'])
-    .item(data)
-    .transformWith(Book2Transformer)
-    .toArray()
+      .include(['author', 'characters.actor'])
+      .item(data)
+      .transformWith(Book2Transformer)
+      .toArray()
 
     assert.deepEqual(transformed, expectedTransform)
 
     let transformedFromString = await Bumblebee.create()
-    .include('author,characters.actor')
-    .item(data)
-    .transformWith(Book2Transformer)
-    .toArray()
+      .include('author,characters.actor')
+      .item(data)
+      .transformWith(Book2Transformer)
+      .toArray()
 
     assert.deepEqual(transformedFromString, expectedTransform)
   })
@@ -128,10 +128,10 @@ test.group('Includes can be an array or a string', () => {
     ctx.params = {include: 'author,characters.actor'}
 
     let transformed = await Bumblebee.create()
-    .item(data)
-    .transformWith(Book2Transformer)
-    .withContext(ctx)
-    .toArray()
+      .item(data)
+      .transformWith(Book2Transformer)
+      .withContext(ctx)
+      .toArray()
 
     assert.deepEqual(transformed, expectedTransform)
 
@@ -139,20 +139,20 @@ test.group('Includes can be an array or a string', () => {
     ctx.params = {}
 
     transformed = await Bumblebee.create()
-    .item(data)
-    .transformWith(Book2Transformer)
-    .withContext(ctx)
-    .toArray()
+      .item(data)
+      .transformWith(Book2Transformer)
+      .withContext(ctx)
+      .toArray()
 
     assert.deepEqual(transformed, {title: 'Harry Potter and the Deathly Hallows'})
   })
 
   test('an include function can return a object to be merged', async (assert) => {
     let transformed = await Bumblebee.create()
-    .include(['school'])
-    .item(data)
-    .transformWith(Book2Transformer)
-    .toArray()
+      .include(['school'])
+      .item(data)
+      .transformWith(Book2Transformer)
+      .toArray()
 
     assert.deepEqual(transformed, {
       title: 'Harry Potter and the Deathly Hallows',
