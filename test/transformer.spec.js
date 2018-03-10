@@ -92,6 +92,24 @@ test.group('Transformer', () => {
     assert.equal(transformed, null)
   })
 
+  test('if null is passed to item transformer, null is returned', async (assert) => {
+    let transformed = await Bumblebee.create()
+      .item(null)
+      .transformWith(IDTransformer)
+      .toArray()
+
+    assert.deepEqual(transformed, null)
+  })
+
+  test('if null is passed to collection transformer, null is returned', async (assert) => {
+    let transformed = await Bumblebee.create()
+      .collection(null)
+      .transformWith(IDTransformer)
+      .toArray()
+
+    assert.deepEqual(transformed, null)
+  })
+
   test('data and transformer can be passed to create method directly', async (assert) => {
     let item = {item_id: 3}
 

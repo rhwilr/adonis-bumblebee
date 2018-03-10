@@ -35,12 +35,16 @@ class Scope {
   }
 
   async _collection (data, transformer) {
+    if (!data) return null
+
     return Promise.all(
       this._getCollectionRows(await data).map((item) => this._item(item, transformer))
     )
   }
 
   async _item (data, transformer) {
+    if (!data) return null
+
     let transformerInstance = this._getTransformerInstance(transformer)
 
     let transformed = await transformerInstance.transform(await data, this._ctx)

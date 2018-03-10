@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## [1.0.1] - 2018-03-10
+
+### Fixed
+- If null or undefined was passed to the `item` or `collection` method, an exception was thrown. Now null is returned.
+
+
 ## [1.0.0] - 2018-02-15
 
 This is the first official release of adonis-bumblebee.
