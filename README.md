@@ -93,8 +93,8 @@ class UserTransformer extends TransformerAbstract {
     return {
       id: model.id,
 
-      firstname: user.first_name,
-      lastname: user.last_name
+      firstname: model.first_name,
+      lastname: model.last_name
     }
   }
 }
