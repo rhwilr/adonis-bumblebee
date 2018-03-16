@@ -9,8 +9,14 @@ class Context extends Macroable {
   static onReady () {}
   constructor () {
     super()
+    this._qs = {}
+
     this.env = 'testing'
-    this.params = {}
+
+    // mock for the ctx.request object to get query params
+    this.request = {
+      get: () => this._qs || {}
+    }
   }
 }
 Context._getters = {}

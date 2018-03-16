@@ -121,11 +121,14 @@ test.group('Includes can be an array or a string', () => {
   test('when enabled in config, includes are parsed from the request', async (assert) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const Config = ioc.use('Adonis/Src/Config')
-    Config.set('bumblebee.parseRequest', true)
-
     const ctx = new Context()
 
-    ctx.params = {include: 'author,characters.actor'}
+    // enable request parsing in the config
+    Config.set('bumblebee.parseRequest', true)
+
+    // set the query string object for testing,
+    // this is equivalent to ?include=author,characters.actor
+    ctx._qs = {include: 'author,characters.actor'}
 
     let transformed = await Bumblebee.create()
       .item(data)
@@ -135,8 +138,8 @@ test.group('Includes can be an array or a string', () => {
 
     assert.deepEqual(transformed, expectedTransform)
 
-    // test that no error occures if include param is not set
-    ctx.params = {}
+    // test that no error occurs if include param is not set
+    ctx._qs = {}
 
     transformed = await Bumblebee.create()
       .item(data)

@@ -75,8 +75,10 @@ class Manager {
     // Only parse includes if enabled in config
     if (!Config.get('bumblebee.parseRequest', false)) return
 
-    if (ctx && ctx.params.include) {
-      this.parseIncludes(ctx.params.include)
+    let params = (ctx && ctx.request.get()) || {}
+
+    if (params.include) {
+      this.parseIncludes(params.include)
     }
   }
 }
