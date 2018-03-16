@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.2] - 2018-03-16
+
+### Fixed
+- Parsing includes from the request did not work as intended. Now the query parameters are parsed correctly, [#7](https://github.com/rhwilr/adonis-bumblebee/issues/7)
+
 
 ## [1.0.1] - 2018-03-10
 
