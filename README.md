@@ -113,6 +113,8 @@ return transform.collection(users, UserTransformer)
 
 Note: You also get the `context` as the second arguement in the `transform` method. Thought this you can access the current request or the authenticated user.
 
+A transformer can also return a primitive type, like a string or a number, instead of an object. But keep in mind that including additional data, as covered in the next section, only work when returning an object.
+
 ### Including Data
 
 Most of the time our data does not only consist of simple properties on the model. Our models also have relations to other models. With include functions you can define additional related data that sould be included in the transformed response.
