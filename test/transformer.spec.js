@@ -22,6 +22,12 @@ class IDTransformer extends TransformerAbstract {
   }
 }
 
+class PrimitiveTransformer extends TransformerAbstract {
+  transform (model) {
+    return model.name
+  }
+}
+
 test.group('Transformer', () => {
   test('a transformer maps item properties', async (assert) => {
     let data = {item_id: 3}
@@ -43,6 +49,17 @@ test.group('Transformer', () => {
       .toArray()
 
     assert.deepEqual(transformed, [{id: 3}, {id: 55}])
+  })
+
+  test('a transformer can return an array', async (assert) => {
+    let data = [{name: 'John'}, {name: 'Bob'}]
+
+    let transformed = await Bumblebee.create()
+      .collection(data)
+      .transformWith(PrimitiveTransformer)
+      .toArray()
+
+    assert.deepEqual(transformed, ['John', 'Bob'])
   })
 
   test('a transformer can transform a collection of lucid rows', async (assert) => {

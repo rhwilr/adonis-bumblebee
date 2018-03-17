@@ -43,14 +43,18 @@ class Scope {
   }
 
   async _item (data, transformer) {
+    // if there is no data to be transformed, return null
     if (!data) return null
 
+    // get a transformer instance and tranform data
     let transformerInstance = this._getTransformerInstance(transformer)
-
     let transformed = await transformerInstance.transform(await data, this._ctx)
 
-    let includeData = await transformerInstance.processIncludedResources(this, await data)
+    // if a primitive type is returned, we can not add included data.
+    if (!(transformed instanceof Object)) return transformed
 
+    // get included data and append it to the object
+    let includeData = await transformerInstance.processIncludedResources(this, await data)
     return Object.assign(includeData, transformed)
   }
 
