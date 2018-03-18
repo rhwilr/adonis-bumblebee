@@ -64,12 +64,12 @@ let eagerLoaded = {
   _loadCalled: 0
 }
 
-test.group('Lazy-Loading', (group) => {
+test.group('EagerLoading', (group) => {
   group.beforeEach(async () => {
     eagerLoaded._loadCalled = 0
   })
 
-  test('an include function lazyloads the relationship', async (assert) => {
+  test('an include function eagerloads the relationship', async (assert) => {
     let transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book1Transformer)
