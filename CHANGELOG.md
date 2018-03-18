@@ -6,10 +6,12 @@ All notable changes to this project will be documented in this file.
 
 ## [1.1.0] - 2018-03-18
 
+This release adds a few new features. Nothing too exciting but they will help you write simpler and better performing apis.
+
 ### Added
 - Relations are now automatically eagerloaded if they are a lucid model and the include method is named like the relation, [#8](https://github.com/rhwilr/adonis-bumblebee/issues/8)
 - The `transform` method can now return a primitive type, [#9](https://github.com/rhwilr/adonis-bumblebee/issues/9)
-- You can now access the `context` from within an include function throught the second parameter.
+- You can now access the `context` from within an include function throught the second parameter, [#10](https://github.com/rhwilr/adonis-bumblebee/issues/10)
 
 
 ## [1.0.2] - 2018-03-16
