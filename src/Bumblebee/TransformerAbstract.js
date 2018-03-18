@@ -50,7 +50,7 @@ class TransformerAbstract {
     await this.eagerloadIncludedResource(resourcesToInclude, data)
 
     for (let include of resourcesToInclude) {
-      let resource = await this.callIncludeFunction(include, data)
+      let resource = await this.callIncludeFunction(include, parentScope, data)
 
       if (resource instanceof Resources.ResourceAbstract) {
         includeData[include] = await this.createChildScopeFor(parentScope, resource, include).toArray()
@@ -62,10 +62,10 @@ class TransformerAbstract {
     return includeData
   }
 
-  async callIncludeFunction (include, data) {
+  async callIncludeFunction (include, parentScope, data) {
     let includeName = `include${include.charAt(0).toUpperCase()}${include.slice(1)}`
 
-    return this[includeName](data)
+    return this[includeName](data, parentScope._ctx)
   }
 
   figureOutWhichIncludes (parentScope) {

@@ -17,11 +17,21 @@ const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
 
 class IDTransformer extends TransformerAbstract {
+  availableInclude () {
+    return [
+      'ienv'
+    ]
+  }
+
   transform (model, {env}) {
     return {
       id: model.item_id,
       env: env
     }
+  }
+
+  includeIenv (model, {env}) {
+    return env
   }
 }
 
@@ -44,6 +54,24 @@ test.group('Context', (group) => {
 
     assert.equal(transformed.id, 3)
     assert.equal(transformed.env, 'testing')
+  })
+
+  test('an include function receives the context as the second parameter', async (assert) => {
+    const Context = ioc.use('Adonis/Src/HttpContext')
+    const ctx = new Context()
+
+    let data = {item_id: 3}
+
+    let transformed = await Bumblebee.create()
+      .item(data)
+      .include('ienv')
+      .transformWith(IDTransformer)
+      .withContext(ctx)
+      .toArray()
+
+    assert.equal(transformed.id, 3)
+    assert.equal(transformed.env, 'testing')
+    assert.equal(transformed.ienv, 'testing')
   })
 
   test('the transform method is injected into the http context', async (assert) => {
