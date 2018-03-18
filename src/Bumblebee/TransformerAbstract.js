@@ -95,7 +95,12 @@ class TransformerAbstract {
   async eagerloadIncludedResource (resourcesToInclude, data) {
     if (!data.loadMany) return
 
-    let resourcesToLoad = resourcesToInclude.filter(resource => data[resource] instanceof Function)
+    let resourcesToLoad = resourcesToInclude.filter(resource => {
+      // check that a relation method exists and that the relation was not previously loaded.
+      return (data[resource] instanceof Function) && !data.getRelated(resource)
+    })
+
+    if (!resourcesToLoad.length) return
 
     await data.loadMany(resourcesToLoad)
   }

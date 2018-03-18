@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## [1.1.1] - 2018-03-18
+
+### Fixed
+- Prevent an exception that occured when an already loaded relation was eagerloaded again. 
+
+
 ## [1.1.0] - 2018-03-18
 
 This release adds a few new features. Nothing too exciting but they will help you write simpler and better performing apis.
