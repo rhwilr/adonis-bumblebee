@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+
+## [1.1.0] - 2018-03-18
+
+### Added
+- Relations are now automatically eagerloaded if they are a lucid model and the include method is named like the relation, [#8](https://github.com/rhwilr/adonis-bumblebee/issues/8)
+- The `transform` method can now return a primitive type, [#9](https://github.com/rhwilr/adonis-bumblebee/issues/9)
+- You can now access the `context` from within an include function throught the second parameter.
+
+
 ## [1.0.2] - 2018-03-16
 
 ### Fixed

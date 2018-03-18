@@ -1,6 +1,6 @@
 {
   "name": "adonis-bumblebee",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Api Transformer Provider for AdonisJs Framework",
   "main": "index.js",
   "scripts": {
