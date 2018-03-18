@@ -45,7 +45,11 @@ class TransformerAbstract {
   async processIncludedResources (parentScope, data) {
     let includeData = {}
 
-    for (let include of this.figureOutWhichIncludes(parentScope)) {
+    let resourcesToInclude = this.figureOutWhichIncludes(parentScope)
+
+    await this.eagerloadIncludedResource(resourcesToInclude, data)
+
+    for (let include of resourcesToInclude) {
       let resource = await this.callIncludeFunction(include, data)
 
       if (resource instanceof Resources.ResourceAbstract) {
@@ -86,6 +90,14 @@ class TransformerAbstract {
     childScope.setParentScopes(scopeArray)
 
     return childScope
+  }
+
+  async eagerloadIncludedResource (resourcesToInclude, data) {
+    if (!data.loadMany) return
+
+    let resourcesToLoad = resourcesToInclude.filter(resource => data[resource] instanceof Function)
+
+    await data.loadMany(resourcesToLoad)
   }
 }
 
