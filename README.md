@@ -111,9 +111,9 @@ const users = await User.all()
 return transform.collection(users, UserTransformer)
 ```
 
-Note: You also get the `context` as the second arguement in the `transform` method. Thought this you can access the current request or the authenticated user.
+*Note:* You also get the `context` as the second arguement in the `transform` method. Through this you can access the current request or the authenticated user.
 
-A transformer can also return a primitive type, like a string or a number, instead of an object. But keep in mind that including additional data, as covered in the next section, only work when returning an object.
+*Note:* A transformer can also return a primitive type, like a string or a number, instead of an object. But keep in mind that including additional data, as covered in the next section, only work when returning an object.
 
 ### Including Data
 
@@ -138,7 +138,7 @@ class BookTransformer extends TransformerAbstract {
   }
 
   includeAuthor (book) {
-    return this.item(book.author().fetch(), AuthorTransformer)
+    return this.item(book.getRelated('author'), AuthorTransformer)
   }
 }
 
@@ -152,6 +152,7 @@ Then you create an additional Method for each include named like in the example:
 
 The include method returns a new resource, that can either be an `item` or a `collection`.  See [Resources](#resources)
 
+*Note:* As with the transform method you get access to the `context` through the second arguement.
 
 #### Available Include
 
@@ -172,7 +173,7 @@ class BookTransformer extends TransformerAbstract {
   }
 
   includeAuthor (book) {
-    return this.item(book.author().fetch(), AuthorTransformer)
+    return this.item(book.getRelated('author'), AuthorTransformer)
   }
 }
 
@@ -200,6 +201,13 @@ This can be done to a limit of 10 levels. But the default nesting limit can be c
 
 In addition to the previous method, you can also enable `parseRequest` in the config file. Now Bumblebee will automatically parse the `?include=` GET parameter and include the requseted resources.
 
+
+## EagerLoading
+
+When you include additional models in your transformer be sure to eagerload these relations as this can quickly turn into n+1 database queries. If you have defaultIncludes you should load them with your initial query.
+In addition bumblebee will try to load related data if the include method is named the same as the relation.
+
+To ensure the eagerloaded data is used, you should always use the `.getRelated()` method on the model.
 
 ## Fluent Interface
 
