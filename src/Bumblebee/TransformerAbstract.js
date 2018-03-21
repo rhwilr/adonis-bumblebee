@@ -65,6 +65,10 @@ class TransformerAbstract {
   async callIncludeFunction (include, parentScope, data) {
     let includeName = `include${include.charAt(0).toUpperCase()}${include.slice(1)}`
 
+    if (!(this[includeName] instanceof Function)) {
+      throw new Error(`A method called '${includeName}' could not be found in '${this.constructor.name}'`)
+    }
+
     return this[includeName](data, parentScope._ctx)
   }
 

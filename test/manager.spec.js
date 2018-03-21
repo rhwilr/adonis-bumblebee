@@ -19,24 +19,6 @@ test.group('Manager', (group) => {
     await setup()
   })
 
-  test('invalide includes throw an exception', async (assert) => {
-    assert.plan(2)
-
-    let manager = new Manager()
-
-    try {
-      manager.parseIncludes(null)
-    } catch ({message}) {
-      assert.equal(message, 'The parseIncludes() method expects a string or an array. object given')
-    }
-
-    try {
-      manager.parseIncludes(42)
-    } catch ({message}) {
-      assert.equal(message, 'The parseIncludes() method expects a string or an array. number given')
-    }
-  })
-
   test('parseIncludes allows strings and arrays', async (assert) => {
     let manager = new Manager()
 
