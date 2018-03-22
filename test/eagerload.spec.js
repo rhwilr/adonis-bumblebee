@@ -54,7 +54,6 @@ const data = {
   // mock for lucid eagerloading api
   getRelated: (prop) => eagerLoaded[prop],
   loadMany: (props) => {
-    eagerLoaded._loadCalled++
     props.forEach(prop => {
       if (eagerLoaded[prop] !== undefined) {
         throw new Error(`E_CANNOT_OVERRIDE_RELATION: ${prop}`)
@@ -62,6 +61,7 @@ const data = {
 
       eagerLoaded[prop] = data[prop]()
     })
+    eagerLoaded._loadCalled++
   }
 }
 let eagerLoaded = {
@@ -114,8 +114,17 @@ test.group('EagerLoading', (group) => {
   })
 
   test('do not eagerload a relation twice', async (assert) => {
+    assert.plan(3)
+
     // load the relation prior to calling the transformer
     data.loadMany(['author'])
+
+    // make sure mock throws an exception if loaded twice
+    try {
+      data.loadMany(['author'])
+    } catch ({message}) {
+      assert.equal(message, 'E_CANNOT_OVERRIDE_RELATION: author')
+    }
 
     let transformed = await Bumblebee.create()
       .item(data)
