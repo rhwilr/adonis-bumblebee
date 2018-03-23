@@ -13,6 +13,10 @@ class ResourceAbstract {
   }
 
   getData () {
+    if (this.data && this.data.toArray instanceof Function) {
+      return this.data.toArray()
+    }
+
     return this.data
   }
 

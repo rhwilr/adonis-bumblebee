@@ -23,39 +23,67 @@ class Scope {
   }
 
   async toArray () {
-    if (this._resource instanceof Resources.Collection) {
-      return this._collection(this._resource.getData(), this._resource.getTransformer())
-    }
+    let [rawData, rawIncludedData] = await this._executeResourceTransformers()
 
-    if (this._resource instanceof Resources.Item) {
-      return this._item(this._resource.getData(), this._resource.getTransformer())
-    }
+    let serializer = this._manager.getSerializer()
 
-    return this._resource.getData()
+    let data = await this._serializeResource(serializer, rawData)
+    let includes = await this._serializeResource(serializer, rawIncludedData)
+
+    return data
   }
 
-  async _collection (data, transformer) {
-    if (!data) return null
+  async _executeResourceTransformers () {
+    let transformer = this._resource.getTransformer()
+    let data = await this._resource.getData()
 
-    return Promise.all(
-      this._getCollectionRows(await data).map((item) => this._item(item, transformer))
-    )
+    let transformedData = []
+    let includedData = []
+
+    if (!data || this._resource instanceof Resources.Null) {
+      transformedData = null
+      includedData = []
+    } else if (this._resource instanceof Resources.Item) {
+      [transformedData, includedData] = await this._fireTransformer(data, transformer)
+    } else if (this._resource instanceof Resources.Collection) {
+      for (let value of data) {
+        let [transformedValue, includedValue] = await this._fireTransformer(value, transformer)
+
+        transformedData.push(transformedValue)
+        includedData.push(includedValue)
+      }
+    } else {
+      throw new Error('Argument resource should be an instance of Adonis/Addons/Bumblebee/Resources/Item or Adonis/Addons/Bumblebee/Resources/Collection')
+    }
+
+    return [transformedData, includedData]
   }
 
-  async _item (data, transformer) {
-    // if there is no data to be transformed, return null
-    if (!data) return null
+  async _fireTransformer (data, transformer) {
+    let includedData = []
 
     // get a transformer instance and tranform data
     let transformerInstance = this._getTransformerInstance(transformer)
-    let transformed = await transformerInstance.transform(await data, this._ctx)
+    let transformedData = await transformerInstance.transform(await data, this._ctx)
 
-    // if a primitive type is returned, we can not add included data.
-    if (!(transformed instanceof Object)) return transformed
+    if (this._transformerHasIncludes(transformerInstance)) {
+      includedData = await transformerInstance.processIncludedResources(this, await data)
+      transformedData = await this._manager.getSerializer().mergeIncludes(transformedData, includedData)
+    }
 
-    // get included data and append it to the object
-    let includeData = await transformerInstance.processIncludedResources(this, await data)
-    return Object.assign(includeData, transformed)
+    return [transformedData, includedData]
+  }
+
+  async _serializeResource (serializer, rawData) {
+    if (this._resource instanceof Resources.Collection) {
+      return serializer.collection(rawData)
+    }
+
+    if (this._resource instanceof Resources.Item) {
+      return serializer.item(rawData)
+    }
+
+    return serializer.null()
   }
 
   _isRequested (checkScopeSegment) {
@@ -72,13 +100,6 @@ class Scope {
     return this._manager.getRequestedIncludes().has(scopeString)
   }
 
-  _getCollectionRows (data) {
-    if (data.hasOwnProperty('rows')) {
-      return data.rows
-    }
-    return data
-  }
-
   _getTransformerInstance (Transformer) {
     if (Transformer.prototype instanceof TransformerAbstract) {
       return new Transformer()
@@ -90,6 +111,13 @@ class Scope {
     ClosureTransformer.transform = Transformer
 
     return new ClosureTransformer()
+  }
+
+  _transformerHasIncludes (Transformer) {
+    let defaultInclude = Transformer.defaultInclude()
+    let availableInclude = Transformer.availableInclude()
+
+    return defaultInclude.length > 0 || availableInclude.length > 0
   }
 
   setParentScopes (parentScopes) {

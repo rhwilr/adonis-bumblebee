@@ -63,7 +63,7 @@ test.group('Transformer', () => {
   })
 
   test('a transformer can transform a collection of lucid rows', async (assert) => {
-    let data = {rows: [{item_id: 3}, {item_id: 55}]}
+    let data = {toArray: () => [{item_id: 3}, {item_id: 55}]}
 
     let transformed = await Bumblebee.create()
       .collection(data)

@@ -2,6 +2,7 @@
 
 const { ioc } = require('@adonisjs/fold')
 const Scope = require('./Scope')
+const Serializers = require('./Serializers')
 
 /**
  * Manager class
@@ -80,6 +81,10 @@ class Manager {
     if (params.include) {
       this.parseIncludes(params.include)
     }
+  }
+
+  getSerializer () {
+    return new Serializers.ArraySerializer()
   }
 }
 
