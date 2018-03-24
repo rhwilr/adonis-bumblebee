@@ -144,4 +144,28 @@ test.group('DataSerializer', group => {
       { id: 7, null: null }
     ] })
   })
+
+  test('add meta to a item', async (assert) => {
+    let data = {id: 3}
+
+    let transformed = await manager
+      .item(data)
+      .meta({link: 'rhwilr/adonis-bumblebee'})
+      .transformWith(d => ({ id: d.id }))
+      .toArray()
+
+    assert.deepEqual(transformed, {data: {id: 3}, meta: {link: 'rhwilr/adonis-bumblebee'}})
+  })
+
+  test('add meta to a collection', async (assert) => {
+    let data = [{id: 3}, {id: 7}]
+
+    let transformed = await manager
+      .collection(data)
+      .meta({link: 'rhwilr/adonis-bumblebee'})
+      .transformWith(d => ({ id: d.id }))
+      .toArray()
+
+    assert.deepEqual(transformed, {data: [{id: 3}, {id: 7}], meta: {link: 'rhwilr/adonis-bumblebee'}})
+  })
 })

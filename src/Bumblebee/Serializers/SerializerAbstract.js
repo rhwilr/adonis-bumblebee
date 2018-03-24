@@ -23,6 +23,10 @@ class SerializerAbstract {
     throw new Error('A Serializer must implement the method meta')
   }
 
+  async paginator (meta) {
+    throw new Error('A Serializer must implement the method paginator')
+  }
+
   async mergeIncludes (data, includes) {
     return Object.assign(includes, data)
   }

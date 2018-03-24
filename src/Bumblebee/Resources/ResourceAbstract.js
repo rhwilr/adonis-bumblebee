@@ -18,6 +18,11 @@ class ResourceAbstract {
       return this.data.toArray()
     }
 
+    if (this.data && this.data.toJSON instanceof Function) {
+      let data = this.data.toJSON()
+      return data.data || data
+    }
+
     return this.data
   }
 
@@ -31,8 +36,18 @@ class ResourceAbstract {
     return this
   }
 
-  getMeta (meta) {
+  getMeta () {
     return this.meta
+  }
+
+  setPagination (pagination) {
+    this.pagination = pagination
+
+    return this
+  }
+
+  getPagination () {
+    return this.pagination
   }
 }
 

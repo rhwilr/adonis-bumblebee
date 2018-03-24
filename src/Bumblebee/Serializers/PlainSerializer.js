@@ -24,6 +24,10 @@ class PlainSerializer extends SerializerAbstract {
   async meta (meta) {
     return {meta: meta}
   }
+
+  async paginator (pagination) {
+    return {pagination: pagination}
+  }
 }
 
 module.exports = PlainSerializer

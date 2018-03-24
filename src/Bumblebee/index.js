@@ -10,6 +10,7 @@ class Bumblebee {
     instance._data = data
     instance._dataType = instance._determineDataType(data)
     instance._transformer = transformer
+    instance._pagination = null
     instance._context = null
     instance._meta = null
 
@@ -49,6 +50,21 @@ class Bumblebee {
     return this
   }
 
+  paginate (data, transformer = null) {
+    let paginatedData = data.toJSON()
+    this.data('Collection', paginatedData.data)
+
+    delete paginatedData.data
+    this._pagination = paginatedData
+
+    if (transformer) {
+      this.transformWith(transformer)
+      return this.toArray()
+    }
+
+    return this
+  }
+
   data (dataType, data) {
     this._data = data
     this._dataType = dataType
@@ -84,6 +100,10 @@ class Bumblebee {
     return this._createData().toArray()
   }
 
+  setializeWith (serializer) {
+    return this.setSerializer(serializer)
+  }
+
   setSerializer (serializer) {
     this._manager.setSerializer(serializer)
 
@@ -99,6 +119,7 @@ class Bumblebee {
     let resourceInstance = new Resource(this._data, this._transformer)
 
     resourceInstance.setMeta(this._meta)
+    resourceInstance.setPagination(this._pagination)
 
     return resourceInstance
   }
