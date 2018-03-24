@@ -66,7 +66,7 @@ test.group('Shorthand', (group) => {
         page: 1,
         lastPage: 1
       },
-      0: [{id: 3}, {id: 7}]
+      data: [{id: 3}, {id: 7}]
     })
   })
 })

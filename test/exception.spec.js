@@ -81,7 +81,7 @@ test.group('Exception', (group) => {
 
     try {
       await Bumblebee.create()
-        .data('ResourceAbstract', [{item_id: 3}])
+        ._setData('ResourceAbstract', [{item_id: 3}])
         .toArray()
     } catch ({message}) {
       assert.equal(message, 'This resourcetype is not supported. Use Item or Collection')

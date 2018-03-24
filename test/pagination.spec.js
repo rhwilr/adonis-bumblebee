@@ -28,7 +28,7 @@ test.group('Pagination', () => {
     let transformed = await Bumblebee.create()
       .paginate(data)
       .transformWith(d => ({ id: d.item_id }))
-      .setializeWith('data')
+      .serializeWith('data')
       .toArray()
 
     assert.deepEqual(transformed, {

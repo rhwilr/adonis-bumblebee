@@ -166,6 +166,6 @@ test.group('PlainSerializer', group => {
       .transformWith(d => ({ id: d.id }))
       .toArray()
 
-    assert.deepEqual(transformed, {0: [{id: 3}, {id: 7}], meta: {link: 'rhwilr/adonis-bumblebee'}})
+    assert.deepEqual(transformed, {data: [{id: 3}, {id: 7}], meta: {link: 'rhwilr/adonis-bumblebee'}})
   })
 })

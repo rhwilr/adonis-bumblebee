@@ -42,7 +42,7 @@ class Scope {
 
     if (Object.keys(meta).length !== 0) {
       if (Array.isArray(data) || (typeof data !== 'object' && data !== null)) {
-        data = {0: data}
+        data = {data: data}
       }
 
       data = Object.assign(meta, data)

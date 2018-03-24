@@ -23,7 +23,7 @@ class Bumblebee {
   }
 
   collection (data, transformer = null) {
-    this.data('Collection', data)
+    this._setData('Collection', data)
 
     if (transformer) {
       this.transformWith(transformer)
@@ -34,7 +34,7 @@ class Bumblebee {
   }
 
   item (data, transformer = null) {
-    this.data('Item', data)
+    this._setData('Item', data)
 
     if (transformer) {
       this.transformWith(transformer)
@@ -45,7 +45,7 @@ class Bumblebee {
   }
 
   null () {
-    this.data('Null', null)
+    this._setData('Null', null)
 
     return this
   }
@@ -56,7 +56,7 @@ class Bumblebee {
     }
 
     let paginatedData = data.toJSON()
-    this.data('Collection', paginatedData.data)
+    this._setData('Collection', paginatedData.data)
 
     delete paginatedData.data
     this._pagination = paginatedData
@@ -65,13 +65,6 @@ class Bumblebee {
       this.transformWith(transformer)
       return this.toArray()
     }
-
-    return this
-  }
-
-  data (dataType, data) {
-    this._data = data
-    this._dataType = dataType
 
     return this
   }
@@ -100,16 +93,23 @@ class Bumblebee {
     return this
   }
 
+  setSerializer (serializer) {
+    this._manager.setSerializer(serializer)
+
+    return this
+  }
+
+  serializeWith (serializer) {
+    return this.setSerializer(serializer)
+  }
+
   toArray () {
     return this._createData().toArray()
   }
 
-  setializeWith (serializer) {
-    return this.setSerializer(serializer)
-  }
-
-  setSerializer (serializer) {
-    this._manager.setSerializer(serializer)
+  _setData (dataType, data) {
+    this._data = data
+    this._dataType = dataType
 
     return this
   }
