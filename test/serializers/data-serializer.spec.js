@@ -19,7 +19,8 @@ class IDTransformer extends TransformerAbstract {
     return [
       'primitive',
       'item',
-      'collection'
+      'collection',
+      'null'
     ]
   }
 
@@ -39,6 +40,10 @@ class IDTransformer extends TransformerAbstract {
 
   includeCollection (model) {
     return this.collection(model.c, m => ({ name: m.name }))
+  }
+
+  includeNull (model) {
+    return this.null()
   }
 }
 
@@ -65,6 +70,15 @@ test.group('DataSerializer', group => {
       .toArray()
 
     assert.deepEqual(transformed, { data: [{ id: 3 }, { id: 7 }] })
+  })
+
+  test('null', async (assert) => {
+    let transformed = await manager
+      .item()
+      .transformWith(IDTransformer)
+      .toArray()
+
+    assert.deepEqual(transformed, null)
   })
 
   test('includes primitive', async (assert) => {
@@ -112,6 +126,22 @@ test.group('DataSerializer', group => {
     assert.deepEqual(transformed, { data: [
       { id: 3, collection: { data: [{ name: 'Alice' }] } },
       { id: 7, collection: { data: [{ name: 'Bob' }] } }
+    ] })
+  })
+
+  test('includes null', async (assert) => {
+    let transformed = await manager
+      .collection([
+        { id: 3 },
+        { id: 7 }
+      ])
+      .include('null')
+      .transformWith(IDTransformer)
+      .toArray()
+
+    assert.deepEqual(transformed, { data: [
+      { id: 3, null: null },
+      { id: 7, null: null }
     ] })
   })
 })

@@ -24,15 +24,7 @@ class SerializerAbstract {
   }
 
   async mergeIncludes (data, includes) {
-    if (data instanceof Array) {
-      return data.concat(includes)
-    }
-
-    if (includes instanceof Array) {
-      return Object.assign(data, ...includes)
-    }
-
-    return Object.assign(data, includes)
+    return Object.assign(includes, data)
   }
 }
 

@@ -51,8 +51,6 @@ class Scope {
         transformedData.push(transformedValue)
         includedData.push(includedValue)
       }
-    } else {
-      throw new Error('Argument resource should be an instance of Adonis/Addons/Bumblebee/Resources/Item or Adonis/Addons/Bumblebee/Resources/Collection')
     }
 
     return [transformedData, includedData]

@@ -14,7 +14,7 @@ class Manager {
   constructor () {
     const Config = ioc.use('Adonis/Src/Config')
 
-    this.setSerializer(Config.get('bumblebee.serializer', 'plain'))
+    this.serializer = null
     this.requestedIncludes = new Set()
     this._recursionLimit = Config.get('bumblebee.includeRecursionLimit', 10)
   }
@@ -54,7 +54,8 @@ class Manager {
 
   getSerializer () {
     if (!this.serializer) {
-      this.setSerializer(new Serializers.PlainSerializer())
+      const Config = ioc.use('Adonis/Src/Config')
+      this.setSerializer(Config.get('bumblebee.serializer', 'plain'))
     }
 
     return this.serializer

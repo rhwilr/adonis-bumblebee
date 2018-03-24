@@ -162,4 +162,35 @@ test.group('Includes can be an array or a string', () => {
       school: 'Hogwarts'
     })
   })
+
+  test('data should take precedent over an include with the same name', async (assert) => {
+
+    class CollisionTransformer extends TransformerAbstract {
+      availableInclude () {
+        return [
+          'name'
+        ]
+      }
+
+      transform (book) {
+        return {
+          name: book.title
+        }
+      }
+
+      includeName (book) {
+        return this.item(book.author, author => ({name: author.n}))
+      }
+    }
+
+    let transformed = await Bumblebee.create()
+      .include(['name'])
+      .item(data)
+      .transformWith(CollisionTransformer)
+      .toArray()
+
+    assert.deepEqual(transformed, {
+      name: 'Harry Potter and the Deathly Hallows'
+    })
+  })
 })
