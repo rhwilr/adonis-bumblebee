@@ -1,23 +1,40 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
 ## [Unreleased]
+
+
+## [1.2.0] - 2018-03-24
+
+This update adds three new major features that did not quite make it into the initial release. Metadata and pagination are especially useful if you're building larger APIs.
+
+### Added
+- [Serializers](https://github.com/rhwilr/adonis-bumblebee#serializers) allow you to format the data after the transformation to a standard format. 
+- [Metadata](https://github.com/rhwilr/adonis-bumblebee#metadata) are used to add extra data to the response.
+- [Pagination](https://github.com/rhwilr/adonis-bumblebee#pagination) to split large datasets into multiple parts.
+
+### Changed
+- Renamed method `data` on the transform interface to `_setData` to mark it as private. 
+- Improved error handling. Exceptions now have a descriptive message that describes the problem.
 
 
 ## [1.1.1] - 2018-03-18
 
 ### Fixed
-- Prevent an exception that occured when an already loaded relation was eagerloaded again. 
+- Prevent an exception that occurred when an already loaded relation was eager-loaded again. 
 
 
 ## [1.1.0] - 2018-03-18
 
-This release adds a few new features. Nothing too exciting but they will help you write simpler and better performing apis.
+This release adds a few new features. Nothing too exciting but they will help you write simpler and better performing APIs.
 
 ### Added
-- Relations are now automatically eagerloaded if they are a lucid model and the include method is named like the relation, [#8](https://github.com/rhwilr/adonis-bumblebee/issues/8)
+- Relations are now automatically eager-loaded if they are a lucid model and the include method is named like the relation, [#8](https://github.com/rhwilr/adonis-bumblebee/issues/8)
 - The `transform` method can now return a primitive type, [#9](https://github.com/rhwilr/adonis-bumblebee/issues/9)
-- You can now access the `context` from within an include function throught the second parameter, [#10](https://github.com/rhwilr/adonis-bumblebee/issues/10)
+- You can now access the `context` from within an include function through the second parameter, [#10](https://github.com/rhwilr/adonis-bumblebee/issues/10)
 
 
 ## [1.0.2] - 2018-03-16
@@ -73,8 +90,8 @@ It is also possible to request nested includes which are going to be recursively
 
 ## [0.0.3] - 2018-02-08
 
-This release is a complete rewrite. :fire:
-The new architecture allows for a much more rubust structure and makes it easier to add more features down the line.
+This release is a complete rewrite.
+The new architecture allows for a much more robust structure and makes it easier to add more features down the line.
 
 ### Changed
 - Complete rewrite
