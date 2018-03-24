@@ -164,7 +164,6 @@ test.group('Includes can be an array or a string', () => {
   })
 
   test('data should take precedent over an include with the same name', async (assert) => {
-
     class CollisionTransformer extends TransformerAbstract {
       availableInclude () {
         return [
