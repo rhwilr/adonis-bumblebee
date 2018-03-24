@@ -15,7 +15,7 @@ class Context extends Macroable {
 
     // mock for the ctx.request object to get query params
     this.request = {
-      get: () => this._qs || {}
+      get: () => this._qs
     }
   }
 }

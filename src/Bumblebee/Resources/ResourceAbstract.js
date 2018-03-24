@@ -20,7 +20,7 @@ class ResourceAbstract {
 
     if (this.data && this.data.toJSON instanceof Function) {
       let data = this.data.toJSON()
-      return data.data || data
+      return data.data
     }
 
     return this.data

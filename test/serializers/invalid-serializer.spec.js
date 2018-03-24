@@ -17,6 +17,12 @@ const SerializerAbstract = require('../../src/Bumblebee/Serializers/SerializerAb
 class InvalidSerializer extends SerializerAbstract {
 }
 
+class InvalidSerializerWithCollection extends SerializerAbstract {
+  async collection (data) {
+    return data
+  }
+}
+
 test.group('InvalidSerializer', group => {
   let manager
 
@@ -60,6 +66,43 @@ test.group('InvalidSerializer', group => {
         .toArray()
     } catch ({message}) {
       assert.equal(message, 'A Serializer must implement the method null')
+    }
+  })
+
+  test('meta', async (assert) => {
+    assert.plan(1)
+
+    try {
+      await manager.setSerializer(new InvalidSerializerWithCollection())
+        .collection([{ id: 3 }])
+        .meta({})
+        .transformWith(m => {})
+        .toArray()
+    } catch ({message}) {
+      assert.equal(message, 'A Serializer must implement the method meta')
+    }
+  })
+
+  test('paginator', async (assert) => {
+    assert.plan(1)
+
+    const data = {
+      toJSON: () => ({
+        total: 5,
+        perPage: 20,
+        page: 1,
+        lastPage: 1,
+        data: [{item_id: 3}, {item_id: 7}]
+      })
+    }
+
+    try {
+      await manager.setSerializer(new InvalidSerializerWithCollection())
+        .paginate(data)
+        .transformWith(m => {})
+        .toArray()
+    } catch ({message}) {
+      assert.equal(message, 'A Serializer must implement the method paginator')
     }
   })
 })

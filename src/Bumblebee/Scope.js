@@ -30,13 +30,14 @@ class Scope {
     let data = await this._serializeResource(serializer, rawData)
 
     let meta = {}
-    if (this._resource.getMeta()) {
-      meta = await serializer.meta(this._resource.getMeta())
-    }
 
     if (this._resource instanceof Resources.Collection && this._resource.getPagination()) {
       let pagination = await serializer.paginator(this._resource.getPagination())
       meta = Object.assign(pagination, meta)
+    }
+
+    if (this._resource.getMeta()) {
+      meta = await serializer.meta(this._resource.getMeta())
     }
 
     if (Object.keys(meta).length !== 0) {

@@ -42,4 +42,31 @@ test.group('Shorthand', (group) => {
 
     assert.deepEqual(transformed, [{id: 3}])
   })
+
+  test('transformer can be passed directly to paginate', async (assert) => {
+    const Context = ioc.use('Adonis/Src/HttpContext')
+    const {transform} = new Context()
+
+    const data = {
+      toJSON: () => ({
+        total: 5,
+        perPage: 20,
+        page: 1,
+        lastPage: 1,
+        data: [{item_id: 3}, {item_id: 7}]
+      })
+    }
+
+    let transformed = await transform.paginate(data, model => ({id: model.item_id}))
+
+    assert.deepEqual(transformed, {
+      pagination: {
+        total: 5,
+        perPage: 20,
+        page: 1,
+        lastPage: 1
+      },
+      0: [{id: 3}, {id: 7}]
+    })
+  })
 })
