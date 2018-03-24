@@ -70,6 +70,8 @@ class Scope {
         transformedData.push(transformedValue)
         includedData.push(includedValue)
       }
+    } else {
+      throw new Error('This resourcetype is not supported. Use Item or Collection')
     }
 
     return [transformedData, includedData]

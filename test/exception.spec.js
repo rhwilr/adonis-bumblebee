@@ -75,4 +75,16 @@ test.group('Exception', (group) => {
       assert.equal(message, 'The paginate() method only accepts query builder results with pagination.')
     }
   })
+
+  test('exception if an undefined resource is passed', async (assert) => {
+    assert.plan(1)
+
+    try {
+      await Bumblebee.create()
+        .data('ResourceAbstract', [{item_id: 3}])
+        .toArray()
+    } catch ({message}) {
+      assert.equal(message, 'This resourcetype is not supported. Use Item or Collection')
+    }
+  })
 })
