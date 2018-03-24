@@ -10,6 +10,7 @@ class ResourceAbstract {
   constructor (data, transformer) {
     this.data = data
     this.transformer = transformer
+    this.meta = null
   }
 
   getData () {
@@ -22,6 +23,16 @@ class ResourceAbstract {
 
   getTransformer () {
     return this.transformer
+  }
+
+  setMeta (meta) {
+    this.meta = meta
+
+    return this
+  }
+
+  getMeta (meta) {
+    return this.meta
   }
 }
 

@@ -29,12 +29,22 @@ class Scope {
 
     let data = await this._serializeResource(serializer, rawData)
 
+    if (this._resource.getMeta()) {
+      let meta = await serializer.meta(this._resource.getMeta())
+
+      if (Array.isArray(data) || (typeof data !== 'object' && data !== null)) {
+        data = {0: data}
+      }
+
+      data = Object.assign(meta, data)
+    }
+
     return data
   }
 
   async _executeResourceTransformers () {
     let transformer = this._resource.getTransformer()
-    let data = await this._resource.getData()
+    let data = this._resource.getData()
 
     let transformedData = []
     let includedData = []

@@ -11,6 +11,7 @@ class Bumblebee {
     instance._dataType = instance._determineDataType(data)
     instance._transformer = transformer
     instance._context = null
+    instance._meta = null
 
     return instance
   }
@@ -55,6 +56,12 @@ class Bumblebee {
     return this
   }
 
+  meta (meta) {
+    this._meta = meta
+
+    return this
+  }
+
   transformWith (transformer) {
     this._transformer = transformer
 
@@ -89,7 +96,11 @@ class Bumblebee {
 
   _getResource () {
     let Resource = Resources[this._dataType]
-    return new Resource(this._data, this._transformer)
+    let resourceInstance = new Resource(this._data, this._transformer)
+
+    resourceInstance.setMeta(this._meta)
+
+    return resourceInstance
   }
 
   _determineDataType (data) {
