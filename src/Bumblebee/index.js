@@ -77,6 +77,12 @@ class Bumblebee {
     return this._createData().toArray()
   }
 
+  setSerializer (serializer) {
+    this._manager.setSerializer(serializer)
+
+    return this
+  }
+
   _createData () {
     return this._manager.createData(this._getResource(), this._ctx)
   }

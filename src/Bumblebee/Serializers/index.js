@@ -1,7 +1,7 @@
-const ArraySerializer = require('./ArraySerializer')
-const SerializerAbstract = require('./SerializerAbstract')
+const PlainSerializer = require('./PlainSerializer')
+const DataSerializer = require('./DataSerializer')
 
 module.exports = {
-  ArraySerializer,
-  SerializerAbstract
+  plain: PlainSerializer,
+  data: DataSerializer
 }

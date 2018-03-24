@@ -1,1 +1,2 @@
-require('./serializers/array-serializer.spec')
+require('./serializers/plain-serializer.spec')
+require('./serializers/data-serializer.spec')

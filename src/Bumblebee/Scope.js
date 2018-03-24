@@ -23,12 +23,11 @@ class Scope {
   }
 
   async toArray () {
-    let [rawData, rawIncludedData] = await this._executeResourceTransformers()
+    let [rawData] = await this._executeResourceTransformers()
 
     let serializer = this._manager.getSerializer()
 
     let data = await this._serializeResource(serializer, rawData)
-    let includes = await this._serializeResource(serializer, rawIncludedData)
 
     return data
   }

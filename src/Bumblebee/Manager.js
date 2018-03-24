@@ -14,6 +14,7 @@ class Manager {
   constructor () {
     const Config = ioc.use('Adonis/Src/Config')
 
+    this.setSerializer(Config.get('bumblebee.serializer', 'plain'))
     this.requestedIncludes = new Set()
     this._recursionLimit = Config.get('bumblebee.includeRecursionLimit', 10)
   }
@@ -41,6 +42,22 @@ class Manager {
 
     includes.forEach(this.requestedIncludes.add, this.requestedIncludes)
     this._autoIncludeParents()
+  }
+
+  setSerializer (serializer) {
+    if (typeof serializer === 'string') {
+      serializer = new Serializers[serializer]()
+    }
+
+    this.serializer = serializer
+  }
+
+  getSerializer () {
+    if (!this.serializer) {
+      this.setSerializer(new Serializers.PlainSerializer())
+    }
+
+    return this.serializer
   }
 
   _guardAgainstToDeepRecursion (include) {
@@ -81,10 +98,6 @@ class Manager {
     if (params.include) {
       this.parseIncludes(params.include)
     }
-  }
-
-  getSerializer () {
-    return new Serializers.ArraySerializer()
   }
 }
 
