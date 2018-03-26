@@ -24,10 +24,6 @@ const UserItem = {
 
   getFullname () {
     return `${this.first_name} ${this.last_name}`
-  },
-
-  toJSON () {
-    return this.$attributes
   }
 }
 
