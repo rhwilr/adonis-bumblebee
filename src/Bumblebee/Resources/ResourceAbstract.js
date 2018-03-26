@@ -13,12 +13,13 @@ class ResourceAbstract {
     this.meta = null
   }
 
-  getData () {
-    if (this.data && this.data.toArray instanceof Function) {
-      return this.data.toArray()
+  async getData () {
+    let data = await this.data
+    if (data && data.rows) {
+      return data.rows
     }
 
-    return this.data
+    return data
   }
 
   getTransformer () {

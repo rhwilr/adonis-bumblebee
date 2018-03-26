@@ -14,7 +14,7 @@ const test = require('japa')
 const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
 
-const User = {
+const UserItem = {
   $attributes: {
     id: 1,
     first_name: 'Darth',
@@ -31,11 +31,18 @@ const User = {
   }
 }
 
-const UserModel = new Proxy(User, {
+const UserItemModel = new Proxy(UserItem, {
   get (obj, prop) {
+    if (prop === 'isOne') return true
     return obj.$attributes[prop] ? obj.$attributes[prop] : obj[prop]
   }
 })
+
+const UserCollectionModel = {
+  rows: [UserItemModel],
+
+  isOne: false
+}
 
 class UserTransformer extends TransformerAbstract {
   transform (model) {
@@ -60,8 +67,15 @@ const expectedTransform = {
 test.group('Lucid', () => {
   test('a lucid item can be transformed', async (assert) => {
     let transformed = await Bumblebee.create()
-      .item(UserModel, UserTransformer)
+      .item(UserItemModel, UserTransformer)
 
     assert.deepEqual(transformed, expectedTransform)
+  })
+
+  test('a lucid collection can be transformed', async (assert) => {
+    let transformed = await Bumblebee.create()
+      .collection(UserCollectionModel, UserTransformer)
+
+    assert.deepEqual(transformed, [expectedTransform])
   })
 })

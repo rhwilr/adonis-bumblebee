@@ -62,17 +62,6 @@ test.group('Transformer', () => {
     assert.deepEqual(transformed, ['John', 'Bob'])
   })
 
-  test('a transformer can transform a collection of lucid rows', async (assert) => {
-    let data = {toArray: () => [{item_id: 3}, {item_id: 55}]}
-
-    let transformed = await Bumblebee.create()
-      .collection(data)
-      .transformWith(IDTransformer)
-      .toArray()
-
-    assert.deepEqual(transformed, [{id: 3}, {id: 55}])
-  })
-
   test('a transformer must implement the transform method', async (assert) => {
     assert.plan(1)
     class InvalidTransformer extends TransformerAbstract {}

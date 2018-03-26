@@ -53,7 +53,7 @@ class Scope {
 
   async _executeResourceTransformers () {
     let transformer = this._resource.getTransformer()
-    let data = this._resource.getData()
+    let data = await this._resource.getData()
 
     let transformedData = []
     let includedData = []
