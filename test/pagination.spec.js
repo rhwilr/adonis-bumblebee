@@ -41,13 +41,4 @@ test.group('Pagination', () => {
       data: [{id: 3}, {id: 7}]
     })
   })
-
-  test('collection method accepts paginated data', async (assert) => {
-    let transformed = await Bumblebee.create()
-      .collection(data)
-      .transformWith(d => ({ id: d.item_id }))
-      .toArray()
-
-    assert.deepEqual(transformed, [{id: 3}, {id: 7}])
-  })
 })
