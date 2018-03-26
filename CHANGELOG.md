@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [1.2.1] - 2018-03-26
+
+### Fixed
+- Lucid models did not get correctly serialized and null was returned.
+
+
 ## [1.2.0] - 2018-03-24
 
 This update adds three new major features that did not quite make it into the initial release. Metadata and pagination are especially useful if you're building larger APIs.
