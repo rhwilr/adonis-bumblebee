@@ -33,7 +33,7 @@ const User = {
 
 const UserModel = new Proxy(User, {
   get (obj, prop) {
-      return obj.$attributes[prop] ? obj.$attributes[prop] : obj[prop]
+    return obj.$attributes[prop] ? obj.$attributes[prop] : obj[prop]
   }
 })
 
@@ -59,8 +59,6 @@ const expectedTransform = {
 
 test.group('Lucid', () => {
   test('a lucid item can be transformed', async (assert) => {
-    let data = UserModel
-
     let transformed = await Bumblebee.create()
       .item(UserModel, UserTransformer)
 
