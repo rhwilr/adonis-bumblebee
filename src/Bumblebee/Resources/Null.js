@@ -3,18 +3,24 @@
 const ResourceAbstract = require('./ResourceAbstract')
 
 /**
- * Collection class
+ * Null class
  *
- * @class Collection
+ * @class Null
  */
-class Collection extends ResourceAbstract {
+class Null extends ResourceAbstract {
+  /**
+   * Overwrite the constructor and set data and transformer to null
+   */
   constructor () {
     super(null, null)
   }
 
+  /**
+   * Returns null, a NullResource always returns null
+   */
   getData () {
     return null
   }
 }
 
-module.exports = Collection
+module.exports = Null

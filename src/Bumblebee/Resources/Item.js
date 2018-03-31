@@ -3,11 +3,11 @@
 const ResourceAbstract = require('./ResourceAbstract')
 
 /**
- * Collection class
+ * Item class
  *
- * @class Collection
+ * @class Item
  */
-class Collection extends ResourceAbstract {
+class Item extends ResourceAbstract {
 }
 
-module.exports = Collection
+module.exports = Item

@@ -11,6 +11,9 @@ const Serializers = require('./Serializers')
  * @constructor
  */
 class Manager {
+  /**
+   * Create a new manager instance
+   */
   constructor () {
     const Config = ioc.use('Adonis/Src/Config')
 
