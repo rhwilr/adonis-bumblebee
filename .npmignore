@@ -1,12 +1,22 @@
-coverage
-node_modules
+# IDE / OS
+.idea
+.vscode
 .DS_Store
-npm-debug.log
-test
+
+# Settings
 .travis.yml
 .editorconfig
+
+# Testing
+test
+
+# Node modules
+node_modules
+npm-debug.log
+
+# Testing
+coverage
+coverage.lcov
 benchmarks
-.idea
-bin
 out
 .nyc_output
