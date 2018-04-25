@@ -64,18 +64,6 @@ test.group('Exception', (group) => {
     }
   })
 
-  test('pagination can only accept a lucid model', async (assert) => {
-    assert.plan(1)
-
-    try {
-      await Bumblebee.create()
-        .paginate([{item_id: 3}])
-        .toArray()
-    } catch ({message}) {
-      assert.equal(message, 'The paginate() method only accepts query builder results with pagination.')
-    }
-  })
-
   test('exception if an undefined resource is passed', async (assert) => {
     assert.plan(1)
 
