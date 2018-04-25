@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.2.3] - 2018-04-25
 
 ### Fixed
-- Model methods were not available in when using pagination because the model was passed throught `toJSON`, [#14](https://github.com/rhwilr/adonis-bumblebee/pull/14) (by [@spamoom](https://github.com/spamoom))
+- Model methods were not available in when using pagination because the model was passed through `toJSON`, [#14](https://github.com/rhwilr/adonis-bumblebee/pull/14) (by [@spamoom](https://github.com/spamoom))
 - Fixed pagination data not getting reset when setting new data without pagination.
 
 
