@@ -51,15 +51,8 @@ class Bumblebee {
   }
 
   paginate (data, transformer = null) {
-    if (!(data.toJSON instanceof Function)) {
-      throw new Error('The paginate() method only accepts query builder results with pagination.')
-    }
-
-    let paginatedData = data.toJSON()
-    this._setData('Collection', paginatedData.data)
-
-    delete paginatedData.data
-    this._pagination = paginatedData
+    this._setData('Collection', data.rows)
+    this._pagination = data.pages
 
     if (transformer) {
       this.transformWith(transformer)
