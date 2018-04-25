@@ -103,6 +103,7 @@ class Bumblebee {
   _setData (dataType, data) {
     this._data = data
     this._dataType = dataType
+    this._pagination = null
 
     return this
   }
