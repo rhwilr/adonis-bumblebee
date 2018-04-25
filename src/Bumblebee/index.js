@@ -52,7 +52,7 @@ class Bumblebee {
 
   paginate (data, transformer = null) {
     this._setData('Collection', data.rows)
-    this._pagination = data.pages;
+    this._pagination = data.pages
 
     if (transformer) {
       this.transformWith(transformer)
