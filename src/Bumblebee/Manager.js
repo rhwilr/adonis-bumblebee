@@ -38,7 +38,7 @@ class Manager {
       throw Error(`The parseIncludes() method expects a string or an array. ${typeof includes} given`)
     }
 
-    includes = includes.map(i => this._guardAgainstToDeepRecursion(i))
+    includes = includes.map(i => this._guardAgainstToDeepRecursion(i)).map(i => this._formatIncludeName(i))
 
     includes.forEach(this.requestedIncludes.add, this.requestedIncludes)
     this._autoIncludeParents()
@@ -59,6 +59,22 @@ class Manager {
     }
 
     return this.serializer
+  }
+
+  _formatIncludeName (include) {
+    // split the include name by recursion level
+    return include.split('.')
+      .map(fragment => {
+        // Split on underscores and hyphens to properly support multi-part includes
+        let fragments = fragment.split(/[_|-]/)
+
+        // transform the fist letter of each word into uppercase, except for the first word.
+        let camelCaseInclude = fragments.slice(1).map(word => word[0].toUpperCase() + word.substr(1))
+
+        // combine the first word with the rest of the fragments
+        return fragments.slice(0, 1).concat(camelCaseInclude).join('')
+      })
+      .join('.')
   }
 
   _guardAgainstToDeepRecursion (include) {

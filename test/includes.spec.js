@@ -59,6 +59,24 @@ class Book2CharacterTransformer extends TransformerAbstract {
   }
 }
 
+class CamelCaseTransformer extends TransformerAbstract {
+  availableInclude () {
+    return [
+      'authorName'
+    ]
+  }
+
+  transform (book) {
+    return {
+      name: book.title
+    }
+  }
+
+  includeAuthorName (book) {
+    return this.item(book.author, author => author.n)
+  }
+}
+
 const data = {
   title: 'Harry Potter and the Deathly Hallows',
   author: {
@@ -190,6 +208,32 @@ test.group('Includes can be an array or a string', () => {
 
     assert.deepEqual(transformed, {
       name: 'Harry Potter and the Deathly Hallows'
+    })
+  })
+
+  test('an include name can be camelCase', async (assert) => {
+    let transformed = await Bumblebee.create()
+      .include(['authorName'])
+      .item(data)
+      .transformWith(CamelCaseTransformer)
+      .toArray()
+
+    assert.deepEqual(transformed, {
+      name: 'Harry Potter and the Deathly Hallows',
+      authorName: 'J. K. Rowling'
+    })
+  })
+
+  test('a camel case include can be requested using snake_case', async (assert) => {
+    let transformed = await Bumblebee.create()
+      .include(['author_name'])
+      .item(data)
+      .transformWith(CamelCaseTransformer)
+      .toArray()
+
+    assert.deepEqual(transformed, {
+      name: 'Harry Potter and the Deathly Hallows',
+      authorName: 'J. K. Rowling'
     })
   })
 })
