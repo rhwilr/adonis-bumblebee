@@ -52,11 +52,13 @@ class Bumblebee {
 
   paginate (data, transformer = null) {
     this._setData('Collection', data.rows)
-    
-    let paginationData = data.pages;
+
+    let paginationData = data.pages
 
     // Ensure the pagination keys are integers
-    Object.keys(paginationData).forEach((key) => paginationData[key] = parseInt(paginationData[key]))
+    Object.keys(paginationData).forEach((key) => {
+      paginationData[key] = parseInt(paginationData[key])
+    })
 
     this._pagination = paginationData
 
