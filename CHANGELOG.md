@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Includes can now be requested with underscores and hyphens as separator and will be converted to camelCase, [#15](https://github.com/rhwilr/adonis-bumblebee/pull/15) (by [@spamoom](https://github.com/spamoom))
 
+### Fixed
+- Ensure that pagination data is always an integer by explicitly casting `.pages` to Numbers, [#17](https://github.com/rhwilr/adonis-bumblebee/pull/17) (by [@spamoom](https://github.com/spamoom))
+
 
 ## [1.2.3] - 2018-04-25
 
