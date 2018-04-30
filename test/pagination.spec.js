@@ -41,4 +41,25 @@ test.group('Pagination', () => {
       data: [{id: 3}, {id: 7}]
     })
   })
+
+  test('ensure integer pagination data', async (assert) => {
+    // Overwrite with a string to ensure transformation
+    data.pages.page = '2'
+
+    let transformed = await Bumblebee.create()
+      .paginate(data)
+      .transformWith(d => ({ id: d.item_id }))
+      .serializeWith('data')
+      .toArray()
+
+    assert.deepEqual(transformed, {
+      pagination: {
+        total: 5,
+        perPage: 20,
+        page: 2,
+        lastPage: 1
+      },
+      data: [{id: 3}, {id: 7}]
+    })
+  })
 })
