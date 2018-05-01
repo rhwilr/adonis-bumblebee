@@ -30,7 +30,7 @@ class IDTransformer extends TransformerAbstract {
 }
 
 test.group('Exception', (group) => {
-  test('throw excexption if include function is not defined', async (assert) => {
+  test('throw exception if include function is not defined', async (assert) => {
     assert.plan(1)
 
     let data = {item_id: 3}
@@ -46,7 +46,7 @@ test.group('Exception', (group) => {
     }
   })
 
-  test('invalide includes throw an exception', async (assert) => {
+  test('invalid includes throw an exception', async (assert) => {
     assert.plan(2)
 
     let manager = new Manager()
