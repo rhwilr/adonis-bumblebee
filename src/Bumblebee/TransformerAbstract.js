@@ -208,7 +208,6 @@ class TransformerAbstract {
     console.warn('Deprecation warning: eagerloadIncludedResource an is internal method. You should not use it. Please open an issue if you need this feature.')
     return this._eagerloadIncludedResource(parentScope, data)
   }
-
 }
 
 module.exports = TransformerAbstract
