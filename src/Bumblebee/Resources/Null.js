@@ -23,14 +23,6 @@ class Null extends ResourceAbstract {
   getData () {
     return null
   }
-
-  /**
-   * The Null resource does not support pagination,
-   * null is returned
-   */
-  getPagination () {
-    return null
-  }
 }
 
 module.exports = Null

@@ -62,4 +62,39 @@ test.group('Pagination', () => {
       data: [{id: 3}, {id: 7}]
     })
   })
+
+  test('an item resource does not support pagination', async (assert) => {
+    let bumblebee = await Bumblebee.create()
+      .item({item_id: 3})
+      .transformWith(d => ({ id: d.item_id }))
+      .serializeWith('data')
+
+    // setting pagination data directly on the bumblebee instance,
+    // since the item interface does not allow setting pagination
+    bumblebee._pagination = {
+      total: 5
+    }
+
+    let transformed = await bumblebee.toArray()
+
+    assert.deepEqual(transformed, {
+      data: {id: 3}
+    })
+  })
+
+  test('the null resource does not support pagination', async (assert) => {
+    let bumblebee = await Bumblebee.create()
+      .null()
+      .serializeWith('data')
+
+    // setting pagination data directly on the bumblebee instance,
+    // since the item interface does not allow setting pagination
+    bumblebee._pagination = {
+      total: 5
+    }
+
+    let transformed = await bumblebee.toArray()
+
+    assert.deepEqual(transformed, null)
+  })
 })
