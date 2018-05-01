@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [1.3.1] - 2018-05-01
+
+Apart from depricating a few methods that were only intended for internal use, this release also adds lots of code documentation.
+
+### Depticated
+- These methods were only intended for internal use and the alias will be removed in a future release: `processIncludedResources`, `callIncludeFunction`, `figureOutWhichIncludes`, `createChildScopeFor`, `eagerloadIncludedResource`
+
+
 ## [1.3.0] - 2018-04-30
 
 ### Added
