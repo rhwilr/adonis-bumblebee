@@ -121,7 +121,7 @@ class Scope {
     // if this transformer has includes defined,
     // figure out which includes should be run and run requested includes
     if (this._transformerHasIncludes(transformerInstance)) {
-      includedData = await transformerInstance.processIncludedResources(this, await data)
+      includedData = await transformerInstance._processIncludedResources(this, await data)
       transformedData = await this._manager.getSerializer().mergeIncludes(transformedData, includedData)
     }
 
