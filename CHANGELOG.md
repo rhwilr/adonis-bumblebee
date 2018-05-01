@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 Apart from deprecating a few methods that were only intended for internal use, this release also adds lots of code documentation.
 
-### Depticated
+### Deprecated
 - These methods were only intended for internal use and the alias will be removed in a future release: `processIncludedResources`, `callIncludeFunction`, `figureOutWhichIncludes`, `createChildScopeFor`, `eagerloadIncludedResource`
 
 
