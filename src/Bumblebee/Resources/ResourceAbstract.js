@@ -7,6 +7,10 @@
  * @constructor
  */
 class ResourceAbstract {
+  /**
+   * Constractor for the ResourceAbstract
+   * This allowes to set data and transformer while creating an instance
+   */
   constructor (data, transformer) {
     this.data = data
     this.transformer = transformer
@@ -17,11 +21,15 @@ class ResourceAbstract {
    * Return the data for this resource
    */
   async getData () {
+    // data can be a promise, so we wait until it resolves
     let data = await this.data
+
+    // if data is a lucid collection, return just the array with the data
     if (data && data.rows) {
       return data.rows
     }
 
+    // data is an item, so we return it as is
     return data
   }
 

@@ -72,6 +72,28 @@ test.group('DataSerializer', group => {
     assert.deepEqual(transformed, { data: [{ id: 3 }, { id: 7 }] })
   })
 
+  test('pagination', async (assert) => {
+    const data = {
+      rows: [{id: 3}, {id: 7}],
+      pages: {
+        total: 5,
+        perPage: 20,
+        page: 1,
+        lastPage: 1
+      }
+    }
+
+    let transformed = await manager
+      .paginate(data)
+      .transformWith(IDTransformer)
+      .toArray()
+
+    assert.deepEqual(transformed, {
+      data: [{ id: 3 }, { id: 7 }],
+      pagination: {total: 5, perPage: 20, page: 1, lastPage: 1}
+    })
+  })
+
   test('null', async (assert) => {
     let transformed = await manager
       .item()

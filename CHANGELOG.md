@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [1.3.1] - 2018-05-01
+
+Apart from deprecating a few methods that were only intended for internal use, this release also adds lots of code documentation.
+
+### Deprecated
+- These methods were only intended for internal use and the alias will be removed in a future release: `processIncludedResources`, `callIncludeFunction`, `figureOutWhichIncludes`, `createChildScopeFor`, `eagerloadIncludedResource`
+
+
+## [1.3.0] - 2018-04-30
+
+### Added
+- Includes can now be requested with underscores and hyphens as the separator and will be converted to camelCase, [#15](https://github.com/rhwilr/adonis-bumblebee/pull/15) (by [@spamoom](https://github.com/spamoom))
+
+### Fixed
+- Ensure that pagination data is always an integer by explicitly casting `.pages` to Numbers, [#17](https://github.com/rhwilr/adonis-bumblebee/pull/17) (by [@spamoom](https://github.com/spamoom))
+
+
+## [1.2.3] - 2018-04-25
+
+### Fixed
+- Model methods were not available in when using pagination because the model was passed through `toJSON`, [#14](https://github.com/rhwilr/adonis-bumblebee/pull/14) (by [@spamoom](https://github.com/spamoom))
+- Fixed pagination data not getting reset when setting new data without pagination.
+
+
 ## [1.2.2] - 2018-03-26
 
 ### Fixed
@@ -112,7 +136,6 @@ The new architecture allows for a much more robust structure and makes it easier
 - 100% test coverage! :star:
 
 
-
 ## [0.0.2] - 2018-02-07
 
 No new features. Only improvements for project management and a future release.
@@ -121,7 +144,6 @@ No new features. Only improvements for project management and a future release.
 - Added first basic tests
 - Added travis-ci integration
 - Added configuration for coveralls
-
 
 
 ## [0.0.1] - 2018-01-31

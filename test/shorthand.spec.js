@@ -48,13 +48,13 @@ test.group('Shorthand', (group) => {
     const {transform} = new Context()
 
     const data = {
-      toJSON: () => ({
+      rows: [{item_id: 3}, {item_id: 7}],
+      pages: {
         total: 5,
         perPage: 20,
         page: 1,
-        lastPage: 1,
-        data: [{item_id: 3}, {item_id: 7}]
-      })
+        lastPage: 1
+      }
     }
 
     let transformed = await transform.paginate(data, model => ({id: model.item_id}))

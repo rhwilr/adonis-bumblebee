@@ -20,12 +20,13 @@ class DataSerializer extends SerializerAbstract {
   }
 
   /**
-   * Serialize i single item
+   * Serialize a single item
    * The DataSerializer will add the item under the 'data' namespace
    *
    * @param {*} data
    */
   async item (data) {
+    // if the item is an object, add it to the data property
     if (data instanceof Object) {
       return { data: data }
     }

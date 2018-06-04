@@ -24,37 +24,67 @@ class TransformerAbstract {
   }
 
   /**
+   * This method is used to transform the data.
    * Implementation required
    */
   transform () {
     throw new Error('You have to implement the method transform!')
   }
 
+  /**
+   * Helper method to transform a collection in includes
+   *
+   * @param {*} data
+   * @param {*} transformer
+   */
   collection (data, transformer) {
     return new Resources.Collection(data, transformer)
   }
 
+  /**
+   * Helper method to transform an object in includes
+   *
+   * @param {*} data
+   * @param {*} transformer
+   */
   item (data, transformer) {
     return new Resources.Item(data, transformer)
   }
 
+  /**
+   * Helper method to return a null resource
+   *
+   * @param {*} data
+   * @param {*} transformer
+   */
   null () {
     return new Resources.Null()
   }
 
-  async processIncludedResources (parentScope, data) {
+  /**
+   * Processes included resources for this transformer
+   *
+   * @param {*} parentScope
+   * @param {*} data
+   */
+  async _processIncludedResources (parentScope, data) {
     let includeData = {}
 
-    let resourcesToInclude = this.figureOutWhichIncludes(parentScope)
+    // figure out which of the available includes are requested
+    let resourcesToInclude = this._figureOutWhichIncludes(parentScope)
 
-    await this.eagerloadIncludedResource(resourcesToInclude, data)
+    // load related lucid models
+    await this._eagerloadIncludedResource(resourcesToInclude, data)
 
+    // for each include call the include function for the transformer
     for (let include of resourcesToInclude) {
-      let resource = await this.callIncludeFunction(include, parentScope, data)
+      let resource = await this._callIncludeFunction(include, parentScope, data)
 
+      // if the include uses a resource, run the data through the transformer chain
       if (resource instanceof Resources.ResourceAbstract) {
-        includeData[include] = await this.createChildScopeFor(parentScope, resource, include).toArray()
+        includeData[include] = await this._createChildScopeFor(parentScope, resource, include).toArray()
       } else {
+        // otherwise, return the data as is
         includeData[include] = resource
       }
     }
@@ -62,7 +92,14 @@ class TransformerAbstract {
     return includeData
   }
 
-  async callIncludeFunction (include, parentScope, data) {
+  /**
+   * Construct and call the include function
+   *
+   * @param {*} include
+   * @param {*} parentScope
+   * @param {*} data
+   */
+  async _callIncludeFunction (include, parentScope, data) {
     let includeName = `include${include.charAt(0).toUpperCase()}${include.slice(1)}`
 
     if (!(this[includeName] instanceof Function)) {
@@ -72,7 +109,12 @@ class TransformerAbstract {
     return this[includeName](data, parentScope._ctx)
   }
 
-  figureOutWhichIncludes (parentScope) {
+  /**
+   * Returns an array of all includes that are requested
+   *
+   * @param {*} parentScope
+   */
+  _figureOutWhichIncludes (parentScope) {
     let includes = this.defaultInclude()
 
     let requestedAvailableIncludes = this.availableInclude().filter(i => parentScope._isRequested(i))
@@ -80,33 +122,91 @@ class TransformerAbstract {
     return includes.concat(requestedAvailableIncludes)
   }
 
-  createChildScopeFor (parentScope, resource, include) {
+  /**
+   * Create a new scope for the included resource
+   *
+   * @param {*} parentScope
+   * @param {*} resource
+   * @param {*} include
+   */
+  _createChildScopeFor (parentScope, resource, include) {
+    // create a new scope
     const Scope = require('./Scope')
-
     let childScope = new Scope(parentScope._manager, resource, parentScope._ctx, include)
 
+    // get the scope for this transformer
     let scopeArray = [...parentScope.getParentScopes()]
 
     if (parentScope.getScopeIdentifier()) {
       scopeArray.push(parentScope.getScopeIdentifier())
     }
 
+    // set the parent scope for the new child scope
     childScope.setParentScopes(scopeArray)
 
     return childScope
   }
 
-  async eagerloadIncludedResource (resourcesToInclude, data) {
+  /**
+   * Eager-load lucid models for includes
+   * @param {*} resourcesToInclude
+   * @param {*} data
+   */
+  async _eagerloadIncludedResource (resourcesToInclude, data) {
+    // if there is no loadMany function, return since it propably is not a lucid model
     if (!data.loadMany) return
 
+    // figure out which resources should be loaded
     let resourcesToLoad = resourcesToInclude.filter(resource => {
       // check that a relation method exists and that the relation was not previously loaded.
       return (data[resource] instanceof Function) && !data.getRelated(resource)
     })
 
+    // if no resources should be loaded, return
     if (!resourcesToLoad.length) return
 
+    // load all resources
     await data.loadMany(resourcesToLoad)
+  }
+
+  /**
+   * @deprecated
+   */
+  async processIncludedResources (parentScope, data) {
+    console.warn('Deprecation warning: processIncludedResources an is internal method. You should not use it. Please open an issue if you need this feature.')
+    return this._processIncludedResources(parentScope, data)
+  }
+
+  /**
+   * @deprecated
+   */
+  async callIncludeFunction (parentScope, data) {
+    console.warn('Deprecation warning: callIncludeFunction an is internal method. You should not use it. Please open an issue if you need this feature.')
+    return this._callIncludeFunction(parentScope, data)
+  }
+
+  /**
+   * @deprecated
+   */
+  async figureOutWhichIncludes (parentScope, data) {
+    console.warn('Deprecation warning: figureOutWhichIncludes an is internal method. You should not use it. Please open an issue if you need this feature.')
+    return this._figureOutWhichIncludes(parentScope, data)
+  }
+
+  /**
+   * @deprecated
+   */
+  async createChildScopeFor (parentScope, data) {
+    console.warn('Deprecation warning: createChildScopeFor an is internal method. You should not use it. Please open an issue if you need this feature.')
+    return this._createChildScopeFor(parentScope, data)
+  }
+
+  /**
+   * @deprecated
+   */
+  async eagerloadIncludedResource (parentScope, data) {
+    console.warn('Deprecation warning: eagerloadIncludedResource an is internal method. You should not use it. Please open an issue if you need this feature.')
+    return this._eagerloadIncludedResource(parentScope, data)
   }
 }
 

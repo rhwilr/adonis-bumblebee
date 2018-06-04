@@ -1,11 +1,11 @@
+const ResourceAbstract = require('./ResourceAbstract')
 const Collection = require('./Collection')
 const Item = require('./Item')
 const Null = require('./Null')
-const ResourceAbstract = require('./ResourceAbstract')
 
 module.exports = {
+  ResourceAbstract,
   Collection,
   Item,
-  Null,
-  ResourceAbstract
+  Null
 }

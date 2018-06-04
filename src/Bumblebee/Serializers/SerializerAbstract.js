@@ -4,7 +4,6 @@
  * SerializerAbstract class
  *
  * @class SerializerAbstract
- * @constructor
  */
 class SerializerAbstract {
   /**

@@ -30,7 +30,7 @@ class IDTransformer extends TransformerAbstract {
 }
 
 test.group('Exception', (group) => {
-  test('throw excexption if include function is not defined', async (assert) => {
+  test('throw exception if include function is not defined', async (assert) => {
     assert.plan(1)
 
     let data = {item_id: 3}
@@ -46,7 +46,7 @@ test.group('Exception', (group) => {
     }
   })
 
-  test('invalide includes throw an exception', async (assert) => {
+  test('invalid includes throw an exception', async (assert) => {
     assert.plan(2)
 
     let manager = new Manager()
@@ -61,18 +61,6 @@ test.group('Exception', (group) => {
       manager.parseIncludes(42)
     } catch ({message}) {
       assert.equal(message, 'The parseIncludes() method expects a string or an array. number given')
-    }
-  })
-
-  test('pagination can only accept a lucid model', async (assert) => {
-    assert.plan(1)
-
-    try {
-      await Bumblebee.create()
-        .paginate([{item_id: 3}])
-        .toArray()
-    } catch ({message}) {
-      assert.equal(message, 'The paginate() method only accepts query builder results with pagination.')
     }
   })
 

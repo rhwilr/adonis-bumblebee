@@ -184,6 +184,8 @@ The include method returns a new resource, that can either be an `item` or a `co
 
 *Note:* As with the transform method you get access to the `context` through the second argument.
 
+*Note:* If you have hyphen or underscore separated properties, you would name the include function in camelCase. The conversion is done automatically.
+
 
 #### Available Include
 

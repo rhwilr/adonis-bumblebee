@@ -18,14 +18,20 @@ class Bumblebee {
    * @param {TransformerAbstract} transformer
    */
   static create (data = null, transformer = null) {
+    // create an instance of Bumblebee and pass a new instance of Manager
     let instance = new Bumblebee(new Manager())
+
+    // initialize data and transformer properties
     instance._data = data
     instance._dataType = instance._determineDataType(data)
     instance._transformer = transformer
+
+    // set pagination, context and meta properties to null
     instance._pagination = null
     instance._context = null
     instance._meta = null
 
+    // return the instance for the fluid interface
     return instance
   }
 
@@ -94,15 +100,18 @@ class Bumblebee {
    * @param {TransformerAbstract} transformer
    */
   paginate (data, transformer = null) {
-    if (!(data.toJSON instanceof Function)) {
-      throw new Error('The paginate() method only accepts query builder results with pagination.')
-    }
+    this._setData('Collection', data.rows)
 
-    let paginatedData = data.toJSON()
-    this._setData('Collection', paginatedData.data)
+    // extract pagination data
+    let paginationData = data.pages
 
-    delete paginatedData.data
-    this._pagination = paginatedData
+    // ensure the pagination keys are integers
+    Object.keys(paginationData).forEach((key) => {
+      paginationData[key] = parseInt(paginationData[key])
+    })
+
+    // set pagination data
+    this._pagination = paginationData
 
     if (transformer) {
       this.transformWith(transformer)
@@ -192,14 +201,21 @@ class Bumblebee {
   _setData (dataType, data) {
     this._data = data
     this._dataType = dataType
+    this._pagination = null
 
     return this
   }
 
+  /**
+   * Helper function to set resource on the manager
+   */
   _createData () {
     return this._manager.createData(this._getResource(), this._ctx)
   }
 
+  /**
+   * Create a resource for the data and set meta and pagination data
+   */
   _getResource () {
     let Resource = Resources[this._dataType]
     let resourceInstance = new Resource(this._data, this._transformer)
@@ -210,6 +226,11 @@ class Bumblebee {
     return resourceInstance
   }
 
+  /**
+   * Determine resource type based on the type of the data passed
+   *
+   * @param {*} data
+   */
   _determineDataType (data) {
     if (data === null) {
       return 'Null'

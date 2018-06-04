@@ -20,7 +20,7 @@ class PlainSerializer extends SerializerAbstract {
   }
 
   /**
-   * Serialize i single item
+   * Serialize a single item
    * The PlainSerializer will return the the data without modification
    *
    * @param {*} data

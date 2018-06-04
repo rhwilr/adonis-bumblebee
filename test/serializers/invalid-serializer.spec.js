@@ -87,13 +87,13 @@ test.group('InvalidSerializer', group => {
     assert.plan(1)
 
     const data = {
-      toJSON: () => ({
+      rows: [{item_id: 3}, {item_id: 7}],
+      pages: {
         total: 5,
         perPage: 20,
         page: 1,
-        lastPage: 1,
-        data: [{item_id: 3}, {item_id: 7}]
-      })
+        lastPage: 1
+      }
     }
 
     try {
