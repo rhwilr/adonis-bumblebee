@@ -33,7 +33,7 @@ test.group('Exception', (group) => {
   test('throw exception if include function is not defined', async (assert) => {
     assert.plan(1)
 
-    let data = {item_id: 3}
+    let data = { item_id: 3 }
 
     try {
       await Bumblebee.create()
@@ -41,7 +41,7 @@ test.group('Exception', (group) => {
         .include(['notexisting'])
         .transformWith(IDTransformer)
         .toArray()
-    } catch ({message}) {
+    } catch ({ message }) {
       assert.equal(message, 'A method called \'includeNotexisting\' could not be found in \'IDTransformer\'')
     }
   })
@@ -53,13 +53,13 @@ test.group('Exception', (group) => {
 
     try {
       manager.parseIncludes(null)
-    } catch ({message}) {
+    } catch ({ message }) {
       assert.equal(message, 'The parseIncludes() method expects a string or an array. object given')
     }
 
     try {
       manager.parseIncludes(42)
-    } catch ({message}) {
+    } catch ({ message }) {
       assert.equal(message, 'The parseIncludes() method expects a string or an array. number given')
     }
   })
@@ -69,9 +69,9 @@ test.group('Exception', (group) => {
 
     try {
       await Bumblebee.create()
-        ._setData('ResourceAbstract', [{item_id: 3}])
+        ._setData('ResourceAbstract', [{ item_id: 3 }])
         .toArray()
-    } catch ({message}) {
+    } catch ({ message }) {
       assert.equal(message, 'This resourcetype is not supported. Use Item or Collection')
     }
   })

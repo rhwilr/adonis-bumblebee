@@ -38,7 +38,7 @@ test.group('InvalidSerializer', group => {
         .item({ id: 3 })
         .transformWith(m => {})
         .toArray()
-    } catch ({message}) {
+    } catch ({ message }) {
       assert.equal(message, 'A Serializer must implement the method item')
     }
   })
@@ -51,7 +51,7 @@ test.group('InvalidSerializer', group => {
         .collection([{ id: 3 }, { id: 7 }])
         .transformWith(m => {})
         .toArray()
-    } catch ({message}) {
+    } catch ({ message }) {
       assert.equal(message, 'A Serializer must implement the method collection')
     }
   })
@@ -64,7 +64,7 @@ test.group('InvalidSerializer', group => {
         .null()
         .transformWith(m => {})
         .toArray()
-    } catch ({message}) {
+    } catch ({ message }) {
       assert.equal(message, 'A Serializer must implement the method null')
     }
   })
@@ -78,7 +78,7 @@ test.group('InvalidSerializer', group => {
         .meta({})
         .transformWith(m => {})
         .toArray()
-    } catch ({message}) {
+    } catch ({ message }) {
       assert.equal(message, 'A Serializer must implement the method meta')
     }
   })
@@ -87,7 +87,7 @@ test.group('InvalidSerializer', group => {
     assert.plan(1)
 
     const data = {
-      rows: [{item_id: 3}, {item_id: 7}],
+      rows: [{ item_id: 3 }, { item_id: 7 }],
       pages: {
         total: 5,
         perPage: 20,
@@ -101,7 +101,7 @@ test.group('InvalidSerializer', group => {
         .paginate(data)
         .transformWith(m => {})
         .toArray()
-    } catch ({message}) {
+    } catch ({ message }) {
       assert.equal(message, 'A Serializer must implement the method paginator')
     }
   })

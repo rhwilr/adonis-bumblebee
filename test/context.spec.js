@@ -23,14 +23,14 @@ class IDTransformer extends TransformerAbstract {
     ]
   }
 
-  transform (model, {env}) {
+  transform (model, { env }) {
     return {
       id: model.item_id,
       env: env
     }
   }
 
-  includeIenv (model, {env}) {
+  includeIenv (model, { env }) {
     return env
   }
 }
@@ -44,7 +44,7 @@ test.group('Context', (group) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const ctx = new Context()
 
-    let data = {item_id: 3}
+    let data = { item_id: 3 }
 
     let transformed = await Bumblebee.create()
       .item(data)
@@ -60,7 +60,7 @@ test.group('Context', (group) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const ctx = new Context()
 
-    let data = {item_id: 3}
+    let data = { item_id: 3 }
 
     let transformed = await Bumblebee.create()
       .item(data)
@@ -76,13 +76,13 @@ test.group('Context', (group) => {
 
   test('the transform method is injected into the http context', async (assert) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
-    const {transform} = new Context()
+    const { transform } = new Context()
 
-    let data = {item_id: 3}
+    let data = { item_id: 3 }
 
     let transformed = await transform
       .item(data)
-      .transformWith(model => ({id: model.item_id}))
+      .transformWith(model => ({ id: model.item_id }))
       .toArray()
 
     assert.equal(transformed.id, 3)
@@ -90,9 +90,9 @@ test.group('Context', (group) => {
 
   test('the context is injected automatically in the http context', async (assert) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
-    const {transform} = new Context()
+    const { transform } = new Context()
 
-    let data = {item_id: 3}
+    let data = { item_id: 3 }
 
     let transformed = await transform
       .item(data)
@@ -114,7 +114,7 @@ test.group('Context', (group) => {
       }
     }
 
-    let data = {id: 42}
+    let data = { id: 42 }
 
     let transformed = await Bumblebee.create()
       .item(data)

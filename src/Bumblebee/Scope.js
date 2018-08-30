@@ -59,7 +59,7 @@ class Scope {
       // If the serializer does not support meta data,
       // we just force the data object under a 'data' propert since we can not mix an array with objects
       if (Array.isArray(data) || (typeof data !== 'object' && data !== null)) {
-        data = {data: data}
+        data = { data: data }
       }
 
       // merge data with meta data

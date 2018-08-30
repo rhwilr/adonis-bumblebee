@@ -31,10 +31,10 @@ class Book1Transformer extends TransformerAbstract {
   }
 
   includeAuthor (book) {
-    return this.item(book.getRelated('author'), author => ({name: author.name}))
+    return this.item(book.getRelated('author'), author => ({ name: author.name }))
   }
   includeCharacters (book) {
-    return this.collection(book.getRelated('characters'), character => ({name: character.n}))
+    return this.collection(book.getRelated('characters'), character => ({ name: character.n }))
   }
 }
 
@@ -122,7 +122,7 @@ test.group('EagerLoading', (group) => {
     // make sure mock throws an exception if loaded twice
     try {
       data.loadMany(['author'])
-    } catch ({message}) {
+    } catch ({ message }) {
       assert.equal(message, 'E_CANNOT_OVERRIDE_RELATION: author')
     }
 

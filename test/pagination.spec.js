@@ -14,7 +14,7 @@ const test = require('japa')
 const Bumblebee = require('../src/Bumblebee')
 
 const data = {
-  rows: [{item_id: 3}, {item_id: 7}],
+  rows: [{ item_id: 3 }, { item_id: 7 }],
   pages: {
     total: 5,
     perPage: 20,
@@ -38,7 +38,7 @@ test.group('Pagination', () => {
         page: 1,
         lastPage: 1
       },
-      data: [{id: 3}, {id: 7}]
+      data: [{ id: 3 }, { id: 7 }]
     })
   })
 
@@ -59,13 +59,13 @@ test.group('Pagination', () => {
         page: 2,
         lastPage: 1
       },
-      data: [{id: 3}, {id: 7}]
+      data: [{ id: 3 }, { id: 7 }]
     })
   })
 
   test('an item resource does not support pagination', async (assert) => {
     let bumblebee = await Bumblebee.create()
-      .item({item_id: 3})
+      .item({ item_id: 3 })
       .transformWith(d => ({ id: d.item_id }))
       .serializeWith('data')
 
@@ -78,7 +78,7 @@ test.group('Pagination', () => {
     let transformed = await bumblebee.toArray()
 
     assert.deepEqual(transformed, {
-      data: {id: 3}
+      data: { id: 3 }
     })
   })
 
