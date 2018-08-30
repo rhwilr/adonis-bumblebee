@@ -168,46 +168,6 @@ class TransformerAbstract {
     // load all resources
     await data.loadMany(resourcesToLoad)
   }
-
-  /**
-   * @deprecated
-   */
-  async processIncludedResources (parentScope, data) {
-    console.warn('Deprecation warning: processIncludedResources an is internal method. You should not use it. Please open an issue if you need this feature.')
-    return this._processIncludedResources(parentScope, data)
-  }
-
-  /**
-   * @deprecated
-   */
-  async callIncludeFunction (parentScope, data) {
-    console.warn('Deprecation warning: callIncludeFunction an is internal method. You should not use it. Please open an issue if you need this feature.')
-    return this._callIncludeFunction(parentScope, data)
-  }
-
-  /**
-   * @deprecated
-   */
-  async figureOutWhichIncludes (parentScope, data) {
-    console.warn('Deprecation warning: figureOutWhichIncludes an is internal method. You should not use it. Please open an issue if you need this feature.')
-    return this._figureOutWhichIncludes(parentScope, data)
-  }
-
-  /**
-   * @deprecated
-   */
-  async createChildScopeFor (parentScope, data) {
-    console.warn('Deprecation warning: createChildScopeFor an is internal method. You should not use it. Please open an issue if you need this feature.')
-    return this._createChildScopeFor(parentScope, data)
-  }
-
-  /**
-   * @deprecated
-   */
-  async eagerloadIncludedResource (parentScope, data) {
-    console.warn('Deprecation warning: eagerloadIncludedResource an is internal method. You should not use it. Please open an issue if you need this feature.')
-    return this._eagerloadIncludedResource(parentScope, data)
-  }
 }
 
 module.exports = TransformerAbstract
