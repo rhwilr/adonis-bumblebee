@@ -6,8 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-### Added
- - Added inline documentation to many classes and methods.
+## [1.4.0] - 2018-08-30
+
+This maintenance release brings no new functionality, but fixes a few minor issues, updates dependencies and improves documentation and tests.
+
+### Fixed
+ - Relations that were loaded but returned null will no longer be loaded twice, [#16](https://github.com/rhwilr/adonis-bumblebee/issues/16)
+
+### Removed
+ - Methods that were marked as deprecated have been removed in this release.
 
 
 ## [1.3.1] - 2018-05-01
