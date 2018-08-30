@@ -159,7 +159,7 @@ class TransformerAbstract {
     // figure out which resources should be loaded
     let resourcesToLoad = resourcesToInclude.filter(resource => {
       // check that a relation method exists and that the relation was not previously loaded.
-      return (data[resource] instanceof Function) && !data.getRelated(resource)
+      return (data[resource] instanceof Function) && !data.getRelated(resource) && data.$relations[resource] !== null
     })
 
     // if no resources should be loaded, return
