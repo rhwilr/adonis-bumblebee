@@ -49,7 +49,7 @@ class DataSerializer extends SerializerAbstract {
    * @param {Object} meta
    */
   async meta (meta) {
-    return {meta: meta}
+    return { meta: meta }
   }
 
   /**
@@ -58,7 +58,7 @@ class DataSerializer extends SerializerAbstract {
    * @param {Object} pagination
    */
   async paginator (pagination) {
-    return {pagination: pagination}
+    return { pagination: pagination }
   }
 }
 

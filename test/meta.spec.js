@@ -15,26 +15,26 @@ const Bumblebee = require('../src/Bumblebee')
 
 test.group('Meta', () => {
   test('add meta to a item', async (assert) => {
-    let data = {id: 3}
+    let data = { id: 3 }
 
     let transformed = await Bumblebee.create()
       .item(data)
-      .meta({link: 'rhwilr/adonis-bumblebee'})
+      .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => ({ id: d.id }))
       .toArray()
 
-    assert.deepEqual(transformed, {id: 3, meta: {link: 'rhwilr/adonis-bumblebee'}})
+    assert.deepEqual(transformed, { id: 3, meta: { link: 'rhwilr/adonis-bumblebee' } })
   })
 
   test('add meta to a collection', async (assert) => {
-    let data = [{id: 3}, {id: 7}]
+    let data = [{ id: 3 }, { id: 7 }]
 
     let transformed = await Bumblebee.create()
       .collection(data)
-      .meta({link: 'rhwilr/adonis-bumblebee'})
+      .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => ({ id: d.id }))
       .toArray()
 
-    assert.deepEqual(transformed, {data: [{id: 3}, {id: 7}], meta: {link: 'rhwilr/adonis-bumblebee'}})
+    assert.deepEqual(transformed, { data: [{ id: 3 }, { id: 7 }], meta: { link: 'rhwilr/adonis-bumblebee' } })
   })
 })

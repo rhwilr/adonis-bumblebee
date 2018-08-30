@@ -21,34 +21,34 @@ test.group('Shorthand', (group) => {
 
   test('transformer can be passed directly to item', async (assert) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
-    const {transform} = new Context()
+    const { transform } = new Context()
 
-    let data = {item_id: 3}
+    let data = { item_id: 3 }
 
     let transformed = await transform
-      .item(data, model => ({id: model.item_id}))
+      .item(data, model => ({ id: model.item_id }))
 
     assert.equal(transformed.id, 3)
   })
 
   test('transformer can be passed directly to collection', async (assert) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
-    const {transform} = new Context()
+    const { transform } = new Context()
 
-    let data = [{item_id: 3}]
+    let data = [{ item_id: 3 }]
 
     let transformed = await transform
-      .collection(data, model => ({id: model.item_id}))
+      .collection(data, model => ({ id: model.item_id }))
 
-    assert.deepEqual(transformed, [{id: 3}])
+    assert.deepEqual(transformed, [{ id: 3 }])
   })
 
   test('transformer can be passed directly to paginate', async (assert) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
-    const {transform} = new Context()
+    const { transform } = new Context()
 
     const data = {
-      rows: [{item_id: 3}, {item_id: 7}],
+      rows: [{ item_id: 3 }, { item_id: 7 }],
       pages: {
         total: 5,
         perPage: 20,
@@ -57,7 +57,7 @@ test.group('Shorthand', (group) => {
       }
     }
 
-    let transformed = await transform.paginate(data, model => ({id: model.item_id}))
+    let transformed = await transform.paginate(data, model => ({ id: model.item_id }))
 
     assert.deepEqual(transformed, {
       pagination: {
@@ -66,7 +66,7 @@ test.group('Shorthand', (group) => {
         page: 1,
         lastPage: 1
       },
-      data: [{id: 3}, {id: 7}]
+      data: [{ id: 3 }, { id: 7 }]
     })
   })
 })

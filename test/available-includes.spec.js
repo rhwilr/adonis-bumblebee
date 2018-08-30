@@ -32,10 +32,10 @@ class Book1Transformer extends TransformerAbstract {
   }
 
   includeAuthor (book) {
-    return this.item(book.author, author => ({name: author.name}))
+    return this.item(book.author, author => ({ name: author.name }))
   }
   includeCharacters (book) {
-    return this.collection(book.characters, character => ({name: character.n}))
+    return this.collection(book.characters, character => ({ name: character.n }))
   }
 }
 
@@ -54,7 +54,7 @@ class Book2Transformer extends TransformerAbstract {
   }
 
   includeAuthor (book) {
-    return this.item(book.author, author => ({name: author.n}))
+    return this.item(book.author, author => ({ name: author.n }))
   }
   includeCharacters (book) {
     return this.collection(book.characters, Book2CharacterTransformer)
@@ -75,7 +75,7 @@ class Book2CharacterTransformer extends TransformerAbstract {
   }
 
   includeActor (character) {
-    return this.item(character.actor, actor => ({name: actor.n}))
+    return this.item(character.actor, actor => ({ name: actor.n }))
   }
 }
 

@@ -31,7 +31,7 @@ class Book2Transformer extends TransformerAbstract {
   }
 
   includeAuthor (book) {
-    return this.item(book.author, author => ({name: author.n}))
+    return this.item(book.author, author => ({ name: author.n }))
   }
   includeCharacters (book) {
     return this.collection(book.characters, Book2CharacterTransformer)
@@ -55,7 +55,7 @@ class Book2CharacterTransformer extends TransformerAbstract {
   }
 
   includeActor (character) {
-    return this.item(character.actor, actor => ({name: actor.n}))
+    return this.item(character.actor, actor => ({ name: actor.n }))
   }
 }
 
@@ -146,7 +146,7 @@ test.group('Includes can be an array or a string', () => {
 
     // set the query string object for testing,
     // this is equivalent to ?include=author,characters.actor
-    ctx._qs = {include: 'author,characters.actor'}
+    ctx._qs = { include: 'author,characters.actor' }
 
     let transformed = await Bumblebee.create()
       .item(data)
@@ -165,7 +165,7 @@ test.group('Includes can be an array or a string', () => {
       .withContext(ctx)
       .toArray()
 
-    assert.deepEqual(transformed, {title: 'Harry Potter and the Deathly Hallows'})
+    assert.deepEqual(transformed, { title: 'Harry Potter and the Deathly Hallows' })
   })
 
   test('an include function can return a object to be merged', async (assert) => {
@@ -196,7 +196,7 @@ test.group('Includes can be an array or a string', () => {
       }
 
       includeName (book) {
-        return this.item(book.author, author => ({name: author.n}))
+        return this.item(book.author, author => ({ name: author.n }))
       }
     }
 

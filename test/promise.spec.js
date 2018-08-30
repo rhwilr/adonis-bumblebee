@@ -31,7 +31,7 @@ class BookTransformer extends TransformerAbstract {
   }
 
   async includeAuthor (book) {
-    return this.item(book.author, author => ({name: author.name}))
+    return this.item(book.author, author => ({ name: author.name }))
   }
 }
 
@@ -42,21 +42,21 @@ test.group('Promise', (group) => {
 
   test('data can be a promise and will resolve before transforming', async (assert) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
-    const {transform} = new Context()
+    const { transform } = new Context()
 
     let data = new Promise((resolve, reject) => {
-      setTimeout(resolve, 1, {item_id: 3})
+      setTimeout(resolve, 1, { item_id: 3 })
     })
 
     let transformed = await transform
-      .item(data, model => ({id: model.item_id}))
+      .item(data, model => ({ id: model.item_id }))
 
     assert.equal(transformed.id, 3)
   })
 
   test('the transform function can be a promise', async (assert) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
-    const {transform} = new Context()
+    const { transform } = new Context()
 
     let data = {
       id: 1,
