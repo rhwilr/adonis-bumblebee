@@ -29,7 +29,6 @@ const UserItem = {
 
 const UserItemModel = new Proxy(UserItem, {
   get (obj, prop) {
-    if (prop === 'isOne') return true
     return obj.$attributes[prop] ? obj.$attributes[prop] : obj[prop]
   }
 })

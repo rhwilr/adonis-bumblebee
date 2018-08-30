@@ -37,4 +37,16 @@ test.group('Meta', () => {
 
     assert.deepEqual(transformed, { data: [{ id: 3 }, { id: 7 }], meta: { link: 'rhwilr/adonis-bumblebee' } })
   })
+
+  test('add meta to a primitive value', async (assert) => {
+    let data = 1
+
+    let transformed = await Bumblebee.create()
+      .item(data)
+      .meta({ link: 'rhwilr/adonis-bumblebee' })
+      .transformWith(d => (d))
+      .toArray()
+
+    assert.deepEqual(transformed, { data: 1, meta: { link: 'rhwilr/adonis-bumblebee' } })
+  })
 })
