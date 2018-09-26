@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.4.1] - 2018-09-26
+
+Just a small update, nothing new in this release. Just upgrading some dependencies.
+
+### Updated
+ - Updated dev-dependency japa to version 2.0.
+
+
 ## [1.4.0] - 2018-08-30
 
 This maintenance release brings no new functionality, but fixes a few minor issues, updates dependencies and improves documentation and tests.
