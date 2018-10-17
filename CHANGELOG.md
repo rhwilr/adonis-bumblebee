@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+## [1.5.0] - 2018-10-17
+
+### Added
+ - You can now generate a transformer by calling `adonis make:transformer`, [#22](https://github.com/rhwilr/adonis-bumblebee/issues/22)
+
+### Fixed
+ - When an invalid transformer is passed, a better understandable error message is thrown, [#21](https://github.com/rhwilr/adonis-bumblebee/issues/21)
+
+
 ## [1.4.1] - 2018-09-26
 
 Just a small update, nothing new in this release. Just upgrading some dependencies.
