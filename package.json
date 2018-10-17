@@ -43,15 +43,16 @@
   },
   "homepage": "https://github.com/rhwilr/adonis-bumblebee#readme",
   "devDependencies": {
+    "@adonisjs/ace": "^5.0.8",
     "@adonisjs/fold": "^4.0.9",
     "@adonisjs/sink": "^1.0.17",
     "codecov": "^3.1.0",
     "cz-conventional-changelog": "^2.1.0",
     "japa": "^2.0.5",
+    "lodash": "^4.17.11",
     "macroable": "^1.0.0",
     "nyc": "^13.1.0",
     "semver": "^5.6.0",
     "standard": "^12.0.0"
-  },
-  "dependencies": {}
+  }
 }

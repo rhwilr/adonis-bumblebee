@@ -13,3 +13,6 @@ coverage.lcov
 benchmarks
 out
 .nyc_output
+
+# app directory created in testing
+app

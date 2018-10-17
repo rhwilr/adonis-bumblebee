@@ -1,8 +1,8 @@
 'use strict'
 
-const { ioc, registrar } = require('@adonisjs/fold')
-const { Config } = require('@adonisjs/sink')
 const path = require('path')
+const { ioc, registrar, resolver } = require('@adonisjs/fold')
+const { Config } = require('@adonisjs/sink')
 const Macroable = require('macroable')
 
 class Context extends Macroable {
@@ -38,7 +38,10 @@ module.exports = async () => {
     return config
   })
 
+  resolver.appNamespace('App')
+
   await registrar.providers([
-    path.join(__dirname, '../../providers/BumblebeeProvider')
+    path.join(__dirname, '../../providers/BumblebeeProvider'),
+    path.join(__dirname, '../../providers/CommandsProvider')
   ]).registerAndBoot()
 }
