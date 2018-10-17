@@ -109,6 +109,11 @@ return transform.collection(users, user => ({
 
 The recommended way to use transformers is to create a transformer class. This allows the transformer to be easily reused in multiple places.
 
+You can let bumblebee generate the transformer for you by running:
+```sh
+adonis make:transformer User
+```
+
 The class must extend `Adonis/Addons/Bumblebee/TransformerAbstract` and implement at least a `transform` method.
 
 ```js
@@ -232,7 +237,7 @@ This can be done to a limit of 10 levels. But the default nesting limit can be c
 
 ### Parse available includes automatically
 
-In addition to the previous method, you can also enable `parseRequest` in the config file. Now Bumblebee will automatically parse the `?include=` GET parameter and include the requested resources.
+In addition to the previous method, you can also enable `parseRequest` in the config file. Now bumblebee will automatically parse the `?include=` GET parameter and include the requested resources.
 
 
 ## EagerLoading

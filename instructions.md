@@ -8,6 +8,14 @@ const providers = [
 ]
 ```
 
+If you want to use the `make:transformer` command, add this as well:
+
+```js
+const aceProviders = [
+  'adonis-bumblebee/providers/CommandsProvider'
+]
+```
+
 That's all! Now you can use the request transformer by importing it from the http context
 
 ```js
