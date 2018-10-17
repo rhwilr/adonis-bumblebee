@@ -175,18 +175,22 @@ class Scope {
    */
   _getTransformerInstance (Transformer) {
     // if the transformer is a class, create a new instance
-    if (Transformer.prototype instanceof TransformerAbstract) {
+    if (Transformer && Transformer.prototype instanceof TransformerAbstract) {
       return new Transformer()
     }
 
-    // otherwise a closure was passed, so we create an anonymous transformer class
-    // with the passed closure as transform method
-    class ClosureTransformer extends TransformerAbstract {
-      transform (data) { return Transformer(data) }
-    }
-    ClosureTransformer.transform = Transformer
+    if (typeof Transformer === 'function') {
+      // if a closure was passed, we create an anonymous transformer class
+      // with the passed closure as transform method
+      class ClosureTransformer extends TransformerAbstract {
+        transform (data) { return Transformer(data) }
+      }
+      ClosureTransformer.transform = Transformer
 
-    return new ClosureTransformer()
+      return new ClosureTransformer()
+    }
+
+    throw new Error('A transformer must be a function or a class extending TransformerAbstract')
   }
 
   /**

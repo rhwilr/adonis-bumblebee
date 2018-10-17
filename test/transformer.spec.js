@@ -90,6 +90,29 @@ test.group('Transformer', () => {
     assert.equal(transformed.id, 3)
   })
 
+  test('an invalid transformer throws an error', async (assert) => {
+    assert.plan(2)
+    let data = { item_id: 3 }
+
+    try {
+      await Bumblebee.create()
+        .item(data)
+        .transformWith({})
+        .toArray()
+    } catch ({ message }) {
+      assert.equal(message, 'A transformer must be a function or a class extending TransformerAbstract')
+    }
+
+    try {
+      await Bumblebee.create()
+        .item(data)
+        .transformWith(undefined)
+        .toArray()
+    } catch ({ message }) {
+      assert.equal(message, 'A transformer must be a function or a class extending TransformerAbstract')
+    }
+  })
+
   test('the null transformer returns always null', async (assert) => {
     let transformed = await Bumblebee.create()
       .null()
