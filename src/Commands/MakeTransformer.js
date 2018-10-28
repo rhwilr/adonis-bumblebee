@@ -35,24 +35,19 @@ class MakeTransformer extends Command {
    */
   async handle ({ name }) {
     try {
-      let directories = name.split('/')
-      name = this.getName(directories[directories.length - 1])
-      directories.splice(-1, 1)
-      directories = directories.join('/')
-      const templatePath = join(
-        __dirname,
-        '../../templates/Transformer.mustache'
-      )
+      // generate file path and classname for the Transformer class from the provided name
+      const className = this.getClassname(name)
+      const directoryPath = this.getDirectoryPath(name)
+      const filePath = join(directoryPath, className) + '.js'
 
+      // compile the template with the provided classname
+      const templatePath = join(__dirname, '../../templates/Transformer.mustache')
       const templateContent = await this.readFile(templatePath, 'utf-8')
-      const dirpath = join('app/Transformers', directories)
-      const filePath = join(dirpath, name) + '.js'
 
-      await this.generateFile(filePath, templateContent, { name })
+      // save the generated file
+      await this.generateFile(filePath, templateContent, { className })
 
-      console.log(
-        `${this.icon('success')} ${this.chalk.green('create')}  ${filePath}`
-      )
+      console.log(`${this.icon('success')} ${this.chalk.green('create')}  ${filePath}`)
     } catch ({ message }) {
       this.error(message)
     }
@@ -63,10 +58,26 @@ class MakeTransformer extends Command {
    *
    * @param {*} name
    */
-  getName (name) {
-    return (
-      _.upperFirst(_.camelCase(name.replace('Transformer', ''))) + 'Transformer'
-    )
+  getClassname (name) {
+    let directories = name.split('/')
+    let filename = directories[directories.length - 1]
+
+    return (_.upperFirst(_.camelCase(filename.replace('Transformer', ''))) + 'Transformer')
+  }
+
+  /**
+   * Extract the directory path from the name
+   *
+   * @param {*} name
+   */
+  getDirectoryPath (name) {
+    let directories = name.split('/')
+
+    // remove the last element in the list, since the is the filename
+    directories.splice(-1, 1)
+    directories = directories.join('/')
+
+    return join('app/Transformers', directories)
   }
 }
 

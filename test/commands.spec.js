@@ -22,6 +22,7 @@ const originalConsoleError = console.error
 test.group('Commands', group => {
   let lastLogged
   const transformerFilePath = path.join(__dirname, '../app/Transformers/TestTransformer.js')
+  const transformerFileWithSubdirectoryPath = path.join(__dirname, '../app/Transformers/Dir/TestTransformer.js')
 
   group.before(async () => {
     await setup()
@@ -32,6 +33,8 @@ test.group('Commands', group => {
     // cleanup
     try {
       fs.unlinkSync(transformerFilePath)
+      fs.unlinkSync(transformerFileWithSubdirectoryPath)
+      fs.rmdirSync(path.join(__dirname, '../app/Transformers/Dir/'))
       fs.rmdirSync(path.join(__dirname, '../app/Transformers/'))
       fs.rmdirSync(path.join(__dirname, '../app/'))
     } catch (e) {}
@@ -47,6 +50,12 @@ test.group('Commands', group => {
     await ace.call('make:transformer', { name: 'Test' })
     assert.isTrue(fs.existsSync(transformerFilePath))
     assert.equal(lastLogged, '✔ create  app/Transformers/TestTransformer.js')
+  })
+
+  test('Create a transformer in a subdirectory', async assert => {
+    await ace.call('make:transformer', { name: 'Dir/Test' })
+    assert.isTrue(fs.existsSync(transformerFileWithSubdirectoryPath))
+    assert.equal(lastLogged, '✔ create  app/Transformers/Dir/TestTransformer.js')
   })
 
   test('Call the create command twice prints an error', async assert => {
