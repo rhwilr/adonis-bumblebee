@@ -7,7 +7,7 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
-*/
+ */
 
 const { Command } = require('@adonisjs/ace')
 const { join } = require('path')
@@ -35,14 +35,24 @@ class MakeTransformer extends Command {
    */
   async handle ({ name }) {
     try {
-      name = this.getName(name)
-      const templatePath = join(__dirname, '../../templates/Transformer.mustache')
+      let directories = name.split('/')
+      name = this.getName(directories[directories.length - 1])
+      directories.splice(-1, 1)
+      directories = directories.join('/')
+      const templatePath = join(
+        __dirname,
+        '../../templates/Transformer.mustache'
+      )
+
       const templateContent = await this.readFile(templatePath, 'utf-8')
-      const filePath = join('app/Transformers', name) + '.js'
+      const dirpath = join('app/Transformers', directories)
+      const filePath = join(dirpath, name) + '.js'
 
       await this.generateFile(filePath, templateContent, { name })
 
-      console.log(`${this.icon('success')} ${this.chalk.green('create')}  ${filePath}`)
+      console.log(
+        `${this.icon('success')} ${this.chalk.green('create')}  ${filePath}`
+      )
     } catch ({ message }) {
       this.error(message)
     }
@@ -54,7 +64,9 @@ class MakeTransformer extends Command {
    * @param {*} name
    */
   getName (name) {
-    return _.upperFirst(_.camelCase(name.replace('Transformer', ''))) + 'Transformer'
+    return (
+      _.upperFirst(_.camelCase(name.replace('Transformer', ''))) + 'Transformer'
+    )
   }
 }
 
