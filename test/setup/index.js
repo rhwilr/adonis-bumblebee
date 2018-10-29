@@ -3,7 +3,7 @@
 const path = require('path')
 const { ioc, registrar, resolver } = require('@adonisjs/fold')
 const { Config } = require('@adonisjs/sink')
-const Macroable = require('macroable')
+const { Macroable } = require('macroable')
 
 class Context extends Macroable {
   static onReady () {}
