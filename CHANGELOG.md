@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [1.5.1] - 2018-10-29
+
+### Added
+ - The `adonis make:transformer` command now supports subfolders, [#23](https://github.com/rhwilr/adonis-bumblebee/pull/23) (by [@NeroOficial](https://github.com/NeroOficial))
+
+
 ## [1.5.0] - 2018-10-17
 
 ### Added
