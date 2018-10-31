@@ -48,6 +48,7 @@
     "@adonisjs/sink": "^1.0.17",
     "codecov": "^3.1.0",
     "cz-conventional-changelog": "^2.1.0",
+    "fs-extra": "^7.0.0",
     "japa": "^2.0.5",
     "lodash": "^4.17.11",
     "macroable": "^2.0.0",

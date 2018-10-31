@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
 */
 
-const fs = require('fs')
+const fs = require('fs-extra')
 const test = require('japa')
 const path = require('path')
 const ace = require('@adonisjs/ace')
@@ -50,6 +50,14 @@ test.group('Commands', group => {
     await ace.call('make:transformer', { name: 'Test' })
     assert.isTrue(fs.existsSync(transformerFilePath))
     assert.equal(lastLogged, '✔ create  app/Transformers/TestTransformer.js')
+  })
+
+  test('The value set as the name parameter is used as the className', async assert => {
+    await ace.call('make:transformer', { name: 'Test' })
+    const transformerContent = await fs.readFile(transformerFilePath, 'utf-8')
+
+    assert.isTrue(transformerContent.includes(`TestTransformer class`))
+    assert.isTrue(transformerContent.includes(`module.exports = TestTransformer`))
   })
 
   test('Create a transformer in a subdirectory', async assert => {
