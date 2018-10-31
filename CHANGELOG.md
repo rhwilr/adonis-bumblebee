@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [1.5.2] - 2018-10-31
+
+### Fixed
+ - While refactoring a bug was introduced in the `adonis make:transformer` command that caused it to generate invalid transformers, [#26](https://github.com/rhwilr/adonis-bumblebee/pull/26) (by [@vincentducorps ](https://github.com/vincentducorps))
+  
+
 ## [1.5.1] - 2018-10-29
 
 ### Added
