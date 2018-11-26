@@ -1,6 +1,6 @@
 {
   "name": "adonis-bumblebee",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Api Transformer Provider for AdonisJs Framework",
   "main": "index.js",
   "scripts": {
@@ -48,8 +48,8 @@
     "@adonisjs/sink": "^1.0.17",
     "codecov": "^3.1.0",
     "cz-conventional-changelog": "^2.1.0",
-    "fs-extra": "^7.0.0",
-    "japa": "^2.0.5",
+    "fs-extra": "^7.0.1",
+    "japa": "^2.0.6",
     "lodash": "^4.17.11",
     "macroable": "^2.0.0",
     "nyc": "^13.1.0",
