@@ -1,5 +1,7 @@
 'use strict'
 
+const { ioc } = require('@adonisjs/fold')
+
 const TransformerAbstract = require('./TransformerAbstract')
 const Resources = require('./Resources')
 
@@ -182,6 +184,11 @@ class Scope {
    * @param {*} Transformer
    */
   _getTransformerInstance (Transformer) {
+    // if the transformer is a string, use the IoC to fetch the instance.
+    if (typeof Transformer === 'string') {
+      return ioc.use(Transformer)
+    }
+
     // if the transformer is a class, create a new instance
     if (Transformer && Transformer.prototype instanceof TransformerAbstract) {
       return new Transformer()
