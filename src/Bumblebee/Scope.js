@@ -31,14 +31,6 @@ class Scope {
   /**
    * Passes the data through the transformers and serializers and returns the transformed data
    */
-  toArray () {
-    console.log('Calling #toArray() is deprecated. Please us #toJSON() instead.')
-    return this.toJSON()
-  }
-
-  /**
-   * Passes the data through the transformers and serializers and returns the transformed data
-   */
   async toJSON () {
     // run the transformation on the data
     let [rawData] = await this._executeResourceTransformers()
