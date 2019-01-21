@@ -12,14 +12,14 @@ class TransformerAbstract {
   /*
    * Resources that can be included if requested
   */
-  availableInclude () {
+  static get availableInclude () {
     return []
   }
 
   /*
    * List of resources to automatically include
   */
-  defaultInclude () {
+  static get defaultInclude () {
     return []
   }
 
@@ -115,9 +115,9 @@ class TransformerAbstract {
    * @param {*} parentScope
    */
   _figureOutWhichIncludes (parentScope) {
-    let includes = this.defaultInclude()
+    let includes = this.constructor.defaultInclude
 
-    let requestedAvailableIncludes = this.availableInclude().filter(i => parentScope._isRequested(i))
+    let requestedAvailableIncludes = this.constructor.availableInclude.filter(i => parentScope._isRequested(i))
 
     return includes.concat(requestedAvailableIncludes)
   }

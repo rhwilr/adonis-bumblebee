@@ -206,8 +206,8 @@ class Scope {
    * @param {*} Transformer
    */
   _transformerHasIncludes (Transformer) {
-    let defaultInclude = Transformer.defaultInclude()
-    let availableInclude = Transformer.availableInclude()
+    let defaultInclude = Transformer.constructor.defaultInclude
+    let availableInclude = Transformer.constructor.availableInclude
 
     return defaultInclude.length > 0 || availableInclude.length > 0
   }

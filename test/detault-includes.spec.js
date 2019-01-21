@@ -15,7 +15,7 @@ const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
 
 class Book1Transformer extends TransformerAbstract {
-  defaultInclude () {
+  static get defaultInclude () {
     return [
       'author'
     ]
@@ -35,7 +35,7 @@ class Book1Transformer extends TransformerAbstract {
 }
 
 class Book2Transformer extends TransformerAbstract {
-  defaultInclude () {
+  static get defaultInclude () {
     return [
       'author',
       'characters',

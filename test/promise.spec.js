@@ -16,7 +16,7 @@ const setup = require('./setup')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
 
 class BookTransformer extends TransformerAbstract {
-  defaultInclude () {
+  static get defaultInclude () {
     return [
       'author'
     ]

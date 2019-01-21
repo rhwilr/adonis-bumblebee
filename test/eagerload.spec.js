@@ -15,7 +15,7 @@ const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
 
 class Book1Transformer extends TransformerAbstract {
-  availableInclude () {
+  static get availableInclude () {
     return [
       'author',
       'dragon',
