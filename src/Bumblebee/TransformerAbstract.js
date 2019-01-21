@@ -82,7 +82,7 @@ class TransformerAbstract {
 
       // if the include uses a resource, run the data through the transformer chain
       if (resource instanceof Resources.ResourceAbstract) {
-        includeData[include] = await this._createChildScopeFor(parentScope, resource, include).toArray()
+        includeData[include] = await this._createChildScopeFor(parentScope, resource, include).toJSON()
       } else {
         // otherwise, return the data as is
         includeData[include] = resource

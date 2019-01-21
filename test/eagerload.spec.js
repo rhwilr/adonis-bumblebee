@@ -83,7 +83,7 @@ test.group('EagerLoading', (group) => {
       .item(data)
       .transformWith(Book1Transformer)
       .include(['author'])
-      .toArray()
+      .toJSON()
 
     assert.equal(data.$loadCalled, 1)
     assert.deepEqual(transformed, {
@@ -101,7 +101,7 @@ test.group('EagerLoading', (group) => {
       .item(data)
       .transformWith(Book1Transformer)
       .include(['author', 'characters'])
-      .toArray()
+      .toJSON()
 
     assert.equal(data.$loadCalled, 1)
     assert.deepEqual(transformed, {
@@ -135,7 +135,7 @@ test.group('EagerLoading', (group) => {
       .item(data)
       .transformWith(Book1Transformer)
       .include(['author'])
-      .toArray()
+      .toJSON()
 
     assert.equal(data.$loadCalled, 1)
     assert.deepEqual(transformed, {
@@ -160,7 +160,7 @@ test.group('EagerLoading', (group) => {
       .item(data)
       .transformWith(Book1Transformer)
       .include(['dragon'])
-      .toArray()
+      .toJSON()
 
     assert.equal(data.$loadCalled, 1)
     assert.deepEqual(transformed, {

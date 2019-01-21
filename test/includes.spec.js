@@ -123,7 +123,7 @@ test.group('Includes can be an array or a string', () => {
       .include(['author', 'characters.actor'])
       .item(data)
       .transformWith(Book2Transformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, expectedTransform)
 
@@ -131,7 +131,7 @@ test.group('Includes can be an array or a string', () => {
       .include('author,characters.actor')
       .item(data)
       .transformWith(Book2Transformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformedFromString, expectedTransform)
   })
@@ -152,7 +152,7 @@ test.group('Includes can be an array or a string', () => {
       .item(data)
       .transformWith(Book2Transformer)
       .withContext(ctx)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, expectedTransform)
 
@@ -163,7 +163,7 @@ test.group('Includes can be an array or a string', () => {
       .item(data)
       .transformWith(Book2Transformer)
       .withContext(ctx)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, { title: 'Harry Potter and the Deathly Hallows' })
   })
@@ -173,7 +173,7 @@ test.group('Includes can be an array or a string', () => {
       .include(['school'])
       .item(data)
       .transformWith(Book2Transformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       title: 'Harry Potter and the Deathly Hallows',
@@ -204,7 +204,7 @@ test.group('Includes can be an array or a string', () => {
       .include(['name'])
       .item(data)
       .transformWith(CollisionTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       name: 'Harry Potter and the Deathly Hallows'
@@ -216,7 +216,7 @@ test.group('Includes can be an array or a string', () => {
       .include(['authorName'])
       .item(data)
       .transformWith(CamelCaseTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       name: 'Harry Potter and the Deathly Hallows',
@@ -229,7 +229,7 @@ test.group('Includes can be an array or a string', () => {
       .include(['author_name'])
       .item(data)
       .transformWith(CamelCaseTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       name: 'Harry Potter and the Deathly Hallows',

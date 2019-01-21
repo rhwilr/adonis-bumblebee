@@ -35,7 +35,7 @@ test.group('Transformer', () => {
     let transformed = await Bumblebee.create()
       .item(data)
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.equal(transformed.id, 3)
   })
@@ -46,7 +46,7 @@ test.group('Transformer', () => {
     let transformed = await Bumblebee.create()
       .collection(data)
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, [{ id: 3 }, { id: 55 }])
   })
@@ -57,7 +57,7 @@ test.group('Transformer', () => {
     let transformed = await Bumblebee.create()
       .collection(data)
       .transformWith(PrimitiveTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, ['John', 'Bob'])
   })
@@ -71,7 +71,7 @@ test.group('Transformer', () => {
       await Bumblebee.create()
         .item(data)
         .transformWith(InvalidTransformer)
-        .toArray()
+        .toJSON()
     } catch ({ message }) {
       assert.equal(message, 'You have to implement the method transform!')
     }
@@ -85,7 +85,7 @@ test.group('Transformer', () => {
       .transformWith(model => ({
         id: model.item_id
       }))
-      .toArray()
+      .toJSON()
 
     assert.equal(transformed.id, 3)
   })
@@ -98,7 +98,7 @@ test.group('Transformer', () => {
       await Bumblebee.create()
         .item(data)
         .transformWith({})
-        .toArray()
+        .toJSON()
     } catch ({ message }) {
       assert.equal(message, 'A transformer must be a function or a class extending TransformerAbstract')
     }
@@ -107,7 +107,7 @@ test.group('Transformer', () => {
       await Bumblebee.create()
         .item(data)
         .transformWith(undefined)
-        .toArray()
+        .toJSON()
     } catch ({ message }) {
       assert.equal(message, 'A transformer must be a function or a class extending TransformerAbstract')
     }
@@ -116,7 +116,7 @@ test.group('Transformer', () => {
   test('the null transformer returns always null', async (assert) => {
     let transformed = await Bumblebee.create()
       .null()
-      .toArray()
+      .toJSON()
 
     assert.equal(transformed, null)
   })
@@ -125,7 +125,7 @@ test.group('Transformer', () => {
     let transformed = await Bumblebee.create()
       .item(null)
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, null)
   })
@@ -134,7 +134,7 @@ test.group('Transformer', () => {
     let transformed = await Bumblebee.create()
       .collection(null)
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, null)
   })
@@ -142,15 +142,15 @@ test.group('Transformer', () => {
   test('data and transformer can be passed to create method directly', async (assert) => {
     let item = { item_id: 3 }
 
-    let transformedItem = await Bumblebee.create(item, IDTransformer).toArray()
+    let transformedItem = await Bumblebee.create(item, IDTransformer).toJSON()
     assert.equal(transformedItem.id, 3)
 
     let collection = [{ item_id: 3 }, { item_id: 55 }]
 
-    let transformedCollection = await Bumblebee.create(collection, IDTransformer).toArray()
+    let transformedCollection = await Bumblebee.create(collection, IDTransformer).toJSON()
     assert.deepEqual(transformedCollection, [{ id: 3 }, { id: 55 }])
 
-    let transformedNull = await Bumblebee.create(null, IDTransformer).toArray()
+    let transformedNull = await Bumblebee.create(null, IDTransformer).toJSON()
     assert.deepEqual(transformedNull, null)
   })
 })
