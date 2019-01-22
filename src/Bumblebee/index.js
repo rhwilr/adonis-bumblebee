@@ -58,7 +58,7 @@ class Bumblebee {
 
     if (transformer) {
       this.transformWith(transformer)
-      return this.toArray()
+      return this.toJSON()
     }
 
     return this
@@ -76,7 +76,7 @@ class Bumblebee {
 
     if (transformer) {
       this.transformWith(transformer)
-      return this.toArray()
+      return this.toJSON()
     }
 
     return this
@@ -115,7 +115,7 @@ class Bumblebee {
 
     if (transformer) {
       this.transformWith(transformer)
-      return this.toArray()
+      return this.toJSON()
     }
 
     return this
@@ -191,7 +191,14 @@ class Bumblebee {
    * Terminates the fluid interface and returns the transformed data.
    */
   toArray () {
-    return this._createData().toArray()
+    return this.toJSON()
+  }
+
+  /**
+   * Terminates the fluid interface and returns the transformed data.
+   */
+  toJSON () {
+    return this._createData().toJSON()
   }
 
   /**

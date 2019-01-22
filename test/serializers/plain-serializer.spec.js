@@ -15,7 +15,7 @@ const Bumblebee = require('../../src/Bumblebee')
 const TransformerAbstract = require('../../src/Bumblebee/TransformerAbstract')
 
 class IDTransformer extends TransformerAbstract {
-  availableInclude () {
+  static get availableInclude () {
     return [
       'primitive',
       'item',

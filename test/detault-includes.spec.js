@@ -15,7 +15,7 @@ const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
 
 class Book1Transformer extends TransformerAbstract {
-  defaultInclude () {
+  static get defaultInclude () {
     return [
       'author'
     ]
@@ -35,7 +35,7 @@ class Book1Transformer extends TransformerAbstract {
 }
 
 class Book2Transformer extends TransformerAbstract {
-  defaultInclude () {
+  static get defaultInclude () {
     return [
       'author',
       'characters',
@@ -82,7 +82,7 @@ test.group('Default Includes', () => {
     let transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book1Transformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       id: 1,
@@ -110,7 +110,7 @@ test.group('Default Includes', () => {
     let transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book2Transformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       title: 'Harry Potter and the Chamber of Secrets',

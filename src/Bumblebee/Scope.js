@@ -1,5 +1,7 @@
 'use strict'
 
+const { ioc } = require('@adonisjs/fold')
+
 const TransformerAbstract = require('./TransformerAbstract')
 const Resources = require('./Resources')
 
@@ -29,7 +31,7 @@ class Scope {
   /**
    * Passes the data through the transformers and serializers and returns the transformed data
    */
-  async toArray () {
+  async toJSON () {
     // run the transformation on the data
     let [rawData] = await this._executeResourceTransformers()
 
@@ -174,6 +176,11 @@ class Scope {
    * @param {*} Transformer
    */
   _getTransformerInstance (Transformer) {
+    // if the transformer is a string, use the IoC to fetch the instance.
+    if (typeof Transformer === 'string') {
+      return ioc.use(Transformer)
+    }
+
     // if the transformer is a class, create a new instance
     if (Transformer && Transformer.prototype instanceof TransformerAbstract) {
       return new Transformer()
@@ -199,8 +206,8 @@ class Scope {
    * @param {*} Transformer
    */
   _transformerHasIncludes (Transformer) {
-    let defaultInclude = Transformer.defaultInclude()
-    let availableInclude = Transformer.availableInclude()
+    let defaultInclude = Transformer.constructor.defaultInclude
+    let availableInclude = Transformer.constructor.availableInclude
 
     return defaultInclude.length > 0 || availableInclude.length > 0
   }

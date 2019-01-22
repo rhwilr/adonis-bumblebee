@@ -29,6 +29,8 @@ class BumblebeeProvider extends ServiceProvider {
     this.app.bind('Adonis/Addons/Bumblebee', app => {
       return Bumblebee
     })
+
+    this.app.alias('Adonis/Addons/Bumblebee/TransformerAbstract', 'BaseTransformer')
   }
 
   /**

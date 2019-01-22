@@ -21,7 +21,7 @@ test.group('Meta', () => {
       .item(data)
       .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => ({ id: d.id }))
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, { id: 3, meta: { link: 'rhwilr/adonis-bumblebee' } })
   })
@@ -33,7 +33,7 @@ test.group('Meta', () => {
       .collection(data)
       .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => ({ id: d.id }))
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, { data: [{ id: 3 }, { id: 7 }], meta: { link: 'rhwilr/adonis-bumblebee' } })
   })
@@ -45,7 +45,7 @@ test.group('Meta', () => {
       .item(data)
       .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => (d))
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, { data: 1, meta: { link: 'rhwilr/adonis-bumblebee' } })
   })

@@ -29,7 +29,7 @@ test.group('Pagination', () => {
       .paginate(data)
       .transformWith(d => ({ id: d.item_id }))
       .serializeWith('data')
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       pagination: {
@@ -50,7 +50,7 @@ test.group('Pagination', () => {
       .paginate(data)
       .transformWith(d => ({ id: d.item_id }))
       .serializeWith('data')
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       pagination: {
@@ -75,7 +75,7 @@ test.group('Pagination', () => {
       total: 5
     }
 
-    let transformed = await bumblebee.toArray()
+    let transformed = await bumblebee.toJSON()
 
     assert.deepEqual(transformed, {
       data: { id: 3 }
@@ -93,7 +93,7 @@ test.group('Pagination', () => {
       total: 5
     }
 
-    let transformed = await bumblebee.toArray()
+    let transformed = await bumblebee.toJSON()
 
     assert.deepEqual(transformed, null)
   })

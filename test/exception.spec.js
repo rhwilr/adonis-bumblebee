@@ -16,7 +16,7 @@ const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
 
 class IDTransformer extends TransformerAbstract {
-  availableInclude () {
+  static get availableInclude () {
     return [
       'notexisting'
     ]
@@ -40,7 +40,7 @@ test.group('Exception', (group) => {
         .item(data)
         .include(['notexisting'])
         .transformWith(IDTransformer)
-        .toArray()
+        .toJSON()
     } catch ({ message }) {
       assert.equal(message, 'A method called \'includeNotexisting\' could not be found in \'IDTransformer\'')
     }
@@ -70,7 +70,7 @@ test.group('Exception', (group) => {
     try {
       await Bumblebee.create()
         ._setData('ResourceAbstract', [{ item_id: 3 }])
-        .toArray()
+        .toJSON()
     } catch ({ message }) {
       assert.equal(message, 'This resourcetype is not supported. Use Item or Collection')
     }

@@ -114,12 +114,12 @@ You can let bumblebee generate the transformer for you by running:
 adonis make:transformer User
 ```
 
-The class must extend `Adonis/Addons/Bumblebee/TransformerAbstract` and implement at least a `transform` method.
+The class must extend `BaseTransformer` and implement at least a `transform` method.
 
 ```js
-const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
+const BaseTransformer = use('BaseTransformer')
 
-class UserTransformer extends TransformerAbstract {
+class UserTransformer extends BaseTransformer {
   transform (model) {
     return {
       id: model.id,
@@ -146,6 +146,8 @@ const users = await User.all()
 return transform.collection(users, UserTransformer)
 ```
 
+*Note:* You can also directly use the namespace of the transformer. `transform.collection(users, 'App/Transformers/UserTransformer')`
+
 *Note:* Passing the Transformer as the second argument will terminate the fluent interface. If you want to chain more methods after the call to `collection` or `item` you should only pass the first argument and then use the `transformWith` method to define the transformer. See [Fluent Interface](#fluent-interface)
 
 
@@ -158,7 +160,7 @@ Most of the time our data does not only consist of simple properties on the mode
 
 ```js
 class BookTransformer extends TransformerAbstract {
-  defaultInclude () {
+  static get defaultInclude () {
     return [
       'author'
     ]
@@ -180,9 +182,9 @@ class BookTransformer extends TransformerAbstract {
 module.exports = BookTransformer
 ```
 
-Includes defined in the `defaultInclude` method will always be included in the returned data.
+Includes defined in the `defaultInclude` getter will always be included in the returned data.
 
-You have to specify the name of the include by returning an array of all includes from the  `defaultInclude` method.
+You have to specify the name of the include by returning an array of all includes from the  `defaultInclude` getter.
 Then you create an additional Method for each include named like in the example: `include{Name}`
 
 The include method returns a new resource, that can either be an `item` or a `collection`.  See [Resources](#resources)
@@ -196,7 +198,7 @@ The include method returns a new resource, that can either be an `item` or a `co
 
 ```js
 class BookTransformer extends TransformerAbstract {
-  availableInclude () {
+  static get availableInclude () {
     return [
       'author'
     ]

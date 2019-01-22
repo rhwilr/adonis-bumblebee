@@ -12,14 +12,14 @@ class TransformerAbstract {
   /*
    * Resources that can be included if requested
   */
-  availableInclude () {
+  static get availableInclude () {
     return []
   }
 
   /*
    * List of resources to automatically include
   */
-  defaultInclude () {
+  static get defaultInclude () {
     return []
   }
 
@@ -82,7 +82,7 @@ class TransformerAbstract {
 
       // if the include uses a resource, run the data through the transformer chain
       if (resource instanceof Resources.ResourceAbstract) {
-        includeData[include] = await this._createChildScopeFor(parentScope, resource, include).toArray()
+        includeData[include] = await this._createChildScopeFor(parentScope, resource, include).toJSON()
       } else {
         // otherwise, return the data as is
         includeData[include] = resource
@@ -115,9 +115,9 @@ class TransformerAbstract {
    * @param {*} parentScope
    */
   _figureOutWhichIncludes (parentScope) {
-    let includes = this.defaultInclude()
+    let includes = this.constructor.defaultInclude
 
-    let requestedAvailableIncludes = this.availableInclude().filter(i => parentScope._isRequested(i))
+    let requestedAvailableIncludes = this.constructor.availableInclude.filter(i => parentScope._isRequested(i))
 
     return includes.concat(requestedAvailableIncludes)
   }
