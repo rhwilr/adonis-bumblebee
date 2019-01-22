@@ -37,7 +37,7 @@ test.group('InvalidSerializer', group => {
       await manager
         .item({ id: 3 })
         .transformWith(m => {})
-        .toArray()
+        .toJSON()
     } catch ({ message }) {
       assert.equal(message, 'A Serializer must implement the method item')
     }
@@ -50,7 +50,7 @@ test.group('InvalidSerializer', group => {
       await manager
         .collection([{ id: 3 }, { id: 7 }])
         .transformWith(m => {})
-        .toArray()
+        .toJSON()
     } catch ({ message }) {
       assert.equal(message, 'A Serializer must implement the method collection')
     }
@@ -63,7 +63,7 @@ test.group('InvalidSerializer', group => {
       await manager
         .null()
         .transformWith(m => {})
-        .toArray()
+        .toJSON()
     } catch ({ message }) {
       assert.equal(message, 'A Serializer must implement the method null')
     }
@@ -77,7 +77,7 @@ test.group('InvalidSerializer', group => {
         .collection([{ id: 3 }])
         .meta({})
         .transformWith(m => {})
-        .toArray()
+        .toJSON()
     } catch ({ message }) {
       assert.equal(message, 'A Serializer must implement the method meta')
     }
@@ -100,7 +100,7 @@ test.group('InvalidSerializer', group => {
       await manager.setSerializer(new InvalidSerializerWithCollection())
         .paginate(data)
         .transformWith(m => {})
-        .toArray()
+        .toJSON()
     } catch ({ message }) {
       assert.equal(message, 'A Serializer must implement the method paginator')
     }

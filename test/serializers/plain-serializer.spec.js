@@ -58,7 +58,7 @@ test.group('PlainSerializer', group => {
     let transformed = await manager
       .item({ id: 3 })
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, { id: 3 })
   })
@@ -67,7 +67,7 @@ test.group('PlainSerializer', group => {
     let transformed = await manager
       .collection([{ id: 3 }, { id: 7 }])
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, [{ id: 3 }, { id: 7 }])
   })
@@ -76,7 +76,7 @@ test.group('PlainSerializer', group => {
     let transformed = await manager
       .item()
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, null)
   })
@@ -89,7 +89,7 @@ test.group('PlainSerializer', group => {
       ])
       .include('primitive')
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, [
       { id: 3, primitive: 'Alice' },
@@ -105,7 +105,7 @@ test.group('PlainSerializer', group => {
       ])
       .include('item')
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, [
       { id: 3, item: { name: 'Alice' } },
@@ -121,7 +121,7 @@ test.group('PlainSerializer', group => {
       ])
       .include('collection')
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, [
       { id: 3, collection: [{ name: 'Alice' }] },
@@ -137,7 +137,7 @@ test.group('PlainSerializer', group => {
       ])
       .include('null')
       .transformWith(IDTransformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, [
       { id: 3, null: null },
@@ -152,7 +152,7 @@ test.group('PlainSerializer', group => {
       .item(data)
       .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => ({ id: d.id }))
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, { id: 3, meta: { link: 'rhwilr/adonis-bumblebee' } })
   })
@@ -164,7 +164,7 @@ test.group('PlainSerializer', group => {
       .collection(data)
       .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => ({ id: d.id }))
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, { data: [{ id: 3 }, { id: 7 }], meta: { link: 'rhwilr/adonis-bumblebee' } })
   })
