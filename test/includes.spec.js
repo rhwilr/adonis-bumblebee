@@ -182,8 +182,11 @@ test.group('Includes can be an array or a string', () => {
   })
 
   test('data should take precedent over an include with the same name', async (assert) => {
+    let availableIncludeWasCalled = false
+
     class CollisionTransformer extends TransformerAbstract {
-      availableInclude () {
+      static get availableInclude () {
+        availableIncludeWasCalled = true
         return [
           'name'
         ]
@@ -209,6 +212,7 @@ test.group('Includes can be an array or a string', () => {
     assert.deepEqual(transformed, {
       name: 'Harry Potter and the Deathly Hallows'
     })
+    assert.ok(availableIncludeWasCalled)
   })
 
   test('an include name can be camelCase', async (assert) => {
