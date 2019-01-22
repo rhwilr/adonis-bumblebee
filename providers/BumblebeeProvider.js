@@ -22,15 +22,10 @@ class BumblebeeProvider extends ServiceProvider {
    * @return {void}
    */
   register () {
-    this.app.bind('Adonis/Addons/Bumblebee/TransformerAbstract', app => {
-      return TransformerAbstract
-    })
+    this.app.bind('Adonis/Addons/Bumblebee/TransformerAbstract', app => TransformerAbstract)
+    this.app.alias('Adonis/Addons/Bumblebee/TransformerAbstract', 'Bumblebee/Transformer')
 
-    this.app.bind('Adonis/Addons/Bumblebee', app => {
-      return Bumblebee
-    })
-
-    this.app.alias('Adonis/Addons/Bumblebee/TransformerAbstract', 'BaseTransformer')
+    this.app.bind('Adonis/Addons/Bumblebee', app => Bumblebee)
   }
 
   /**

@@ -114,12 +114,12 @@ You can let bumblebee generate the transformer for you by running:
 adonis make:transformer User
 ```
 
-The class must extend `BaseTransformer` and implement at least a `transform` method.
+The class must extend `Bumblebee/Transformer` and implement at least a `transform` method.
 
 ```js
-const BaseTransformer = use('BaseTransformer')
+const BumblebeeTransformer = use('Bumblebee/Transformer')
 
-class UserTransformer extends BaseTransformer {
+class UserTransformer extends BumblebeeTransformer {
   transform (model) {
     return {
       id: model.id,
@@ -159,7 +159,7 @@ Most of the time our data does not only consist of simple properties on the mode
 #### Default Include
 
 ```js
-class BookTransformer extends TransformerAbstract {
+class BookTransformer extends BumblebeeTransformer {
   static get defaultInclude () {
     return [
       'author'
@@ -197,7 +197,7 @@ The include method returns a new resource, that can either be an `item` or a `co
 #### Available Include
 
 ```js
-class BookTransformer extends TransformerAbstract {
+class BookTransformer extends BumblebeeTransformer {
   static get availableInclude () {
     return [
       'author'
