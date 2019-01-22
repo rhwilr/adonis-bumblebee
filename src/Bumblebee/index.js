@@ -191,6 +191,7 @@ class Bumblebee {
    * Terminates the fluid interface and returns the transformed data.
    */
   toArray () {
+    console.warn('Deprecation warning: Calling #toArray() is deprecated. Please us #toJSON() instead.')
     return this.toJSON()
   }
 

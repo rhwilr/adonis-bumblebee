@@ -102,7 +102,7 @@ test.group('Available Includes', (group) => {
     let transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book1Transformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       id: 1,
@@ -116,7 +116,7 @@ test.group('Available Includes', (group) => {
       .include('author')
       .item(data)
       .transformWith(Book1Transformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       id: 1,
@@ -133,7 +133,7 @@ test.group('Available Includes', (group) => {
       .include(['author', 'characters'])
       .item(data)
       .transformWith(Book1Transformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, {
       id: 1,
@@ -195,7 +195,7 @@ test.group('Available Includes', (group) => {
       .include(['author', 'characters.actor'])
       .item(data)
       .transformWith(Book2Transformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformed, expectedTransform)
 
@@ -203,7 +203,7 @@ test.group('Available Includes', (group) => {
       .include('author,characters.actor')
       .item(data)
       .transformWith(Book2Transformer)
-      .toArray()
+      .toJSON()
 
     assert.deepEqual(transformedFromString, expectedTransform)
   })

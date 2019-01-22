@@ -402,7 +402,7 @@ The following methods are available on the `transform` object in the context and
 - `collection(data, transformer)`
 - `item(data, transformer)`
 - `paginate(data, transformer)`
-- `toArray()`
+- `toJSON()`
 
 
 You may want to use the transformer somewhere other than in a controller. You can import bumblebee directly by the following method:
@@ -414,7 +414,7 @@ let transformed = await Bumblebee.create()
     .collection(data)
     .transformWith(BookTransformer)
     .withContext(ctx)
-    .toArray()
+    .toJSON()
 ```
 
 You can use all the same methods as in the controllers. With one difference: If you need the `context` inside the transformer, you have to set it with the `.withContext(ctx)` method since it is not automatically injected.
