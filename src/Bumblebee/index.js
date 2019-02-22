@@ -25,6 +25,7 @@ class Bumblebee {
     instance._data = data
     instance._dataType = instance._determineDataType(data)
     instance._transformer = transformer
+    instance._variant = null
 
     // set pagination, context and meta properties to null
     instance._pagination = null
@@ -144,6 +145,17 @@ class Bumblebee {
   }
 
   /**
+   * Set the transformer variant
+   *
+   * @param {String} variant
+   */
+  usingVariant (variant) {
+    this._variant = variant
+
+    return this
+  }
+
+  /**
    * Allows you to set the adonis context if you are not
    * using the 'transform' object from the http context.
    *
@@ -230,6 +242,7 @@ class Bumblebee {
 
     resourceInstance.setMeta(this._meta)
     resourceInstance.setPagination(this._pagination)
+    resourceInstance.setVariant(this._variant)
 
     return resourceInstance
   }
