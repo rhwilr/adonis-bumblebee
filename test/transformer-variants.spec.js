@@ -63,6 +63,22 @@ test.group('Transformer Variants', () => {
     assert.equal(transformedVariant1.id, 3)
   })
 
+  test('variants can be used in shorthand form', async (assert) => {
+    ioc.bind('App/Transformers/IDTransformer', () => new IDTransformer())
+
+    let data = { item_id: 3 }
+
+    let transformedVariant1 = await Bumblebee.create()
+      .item(data, 'App/Transformers/IDTransformer.variant1')
+
+    assert.equal(transformedVariant1.id, 3)
+
+    let transformedVariant2 = await Bumblebee.create()
+      .collection([data], 'App/Transformers/IDTransformer.variant2')
+
+    assert.equal(transformedVariant2[0].identifier, 3)
+  })
+
   test('an error is thrown if an invalid variant is passed', async (assert) => {
     assert.plan(1)
 
