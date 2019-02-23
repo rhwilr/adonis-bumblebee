@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Breaking Changes
+ - The `toArray()` was renamed to `toJSON()`.
+ - Changed `defaultInclude` & `availableInclude` methods to static getter
+
+### Added
+ - Transformers can now be automatically resolved when passed by name.
+ - The `Adonis/Addons/Bumblebee/TransformerAbstract` class now has a shorter alias to `Bumblebee/Transformer`.
+
+### Deprecated
+ - The `toArray()` method was marked as deprecated.
+
+
 
 ## [1.5.3] - 2018-11-26
 
