@@ -31,7 +31,7 @@ class PrimitiveTransformer extends TransformerAbstract {
 
 test.group('Transformer', () => {
   test('a transformer can be resolved using its namespace', async (assert) => {
-    ioc.bind('App/Transformers/IDTransformer', () => new IDTransformer())
+    ioc.bind('App/Transformers/IDTransformer', () => IDTransformer)
 
     let data = { item_id: 3 }
 

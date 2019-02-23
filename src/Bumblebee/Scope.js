@@ -178,7 +178,7 @@ class Scope {
   _getTransformerInstance (Transformer) {
     // if the transformer is a string, use the IoC to fetch the instance.
     if (typeof Transformer === 'string') {
-      return ioc.use(Transformer)
+      Transformer = ioc.use(Transformer)
     }
 
     // if the transformer is a class, create a new instance
