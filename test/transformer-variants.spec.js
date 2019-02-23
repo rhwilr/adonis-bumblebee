@@ -29,6 +29,45 @@ class IDTransformer extends TransformerAbstract {
   }
 }
 
+class IDIncludeTransformer extends TransformerAbstract {
+  static get availableInclude () {
+    return [
+      'both'
+    ]
+  }
+
+  transformVariant1 (model) {
+    return {
+      id: model.item_id
+    }
+  }
+
+  transformVariant2 (model) {
+    return {
+      identifier: model.item_id
+    }
+  }
+
+  includeBoth (model) {
+    return this.item(model, 'App/Transformers/IDIncludeTransformer.variant2')
+  }
+}
+
+class IDRefTransformer extends TransformerAbstract {
+  transform (model) {
+    return {
+      id: model.item_id
+    }
+  }
+
+  transformWithName (model) {
+    return {
+      ...this.transform(model),
+      name: model.name
+    }
+  }
+}
+
 test.group('Transformer Variants', () => {
   test('a specific variant can be used for the transformer method', async (assert) => {
     let data = { item_id: 3 }
@@ -77,6 +116,36 @@ test.group('Transformer Variants', () => {
       .collection([data], 'App/Transformers/IDTransformer.variant2')
 
     assert.equal(transformedVariant2[0].identifier, 3)
+  })
+
+  test('includes can use a variant', async (assert) => {
+    ioc.bind('App/Transformers/IDIncludeTransformer', () => new IDIncludeTransformer())
+
+    let data = { item_id: 3 }
+
+    let transformed = await Bumblebee.create()
+      .include('both')
+      .item(data, 'App/Transformers/IDIncludeTransformer.variant1')
+
+    assert.deepEqual(transformed, {
+      id: 3,
+      both: { identifier: 3 }
+    })
+  })
+
+  test('a transformer variant can reference the default transformer', async (assert) => {
+    ioc.bind('App/Transformers/IDRefTransformer', () => new IDRefTransformer())
+
+    let data = { item_id: 3, name: 'Leta' }
+
+    let transformed = await Bumblebee.create()
+      .include('both')
+      .item(data, 'App/Transformers/IDRefTransformer.withName')
+
+    assert.deepEqual(transformed, {
+      id: 3,
+      name: 'Leta'
+    })
   })
 
   test('an error is thrown if an invalid variant is passed', async (assert) => {

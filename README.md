@@ -45,6 +45,7 @@ presentation and transformation layer for complex data output.
         * [Default Include](#default-include)
         * [Available Include](#available-include)
         * [Parse available includes automatically](#parse-available-includes-automatically)
+    * [Transformer Variants](#transformer-variants)
   * [EagerLoading](#eagerloading)
   * [Serializers](#serializers)
     * [PlainSerializer](#plainserializer)
@@ -179,12 +180,12 @@ return transform.collection(users, 'App/Transformers/UserTransformer')
 *Note:* Passing the Transformer as the second argument will terminate the fluent
 interface. If you want to chain more methods after the call to `collection` or
 `item` you should only pass the first argument and then use the `transformWith`
-method to define the transformer. See [Fluent Interface](#fluent-interface)
+method to define the transformer. See [Fluent Interface](#fluent-interface).
 
 
 ### Including Data
 
-When transforming a model you may want to include some additional data. For
+When transforming a model, you may want to include some additional data. For
 example, you may have a book model and want to include the author for the book
 in the same resource. Include methods let you do just that. 
 
@@ -195,11 +196,11 @@ Includes defined in the `defaultInclude` getter will always be included in the
 returned data.
 
 You have to specify the name of the include by returning an array of all
-includes from the  `defaultInclude` getter. Then you create an additional method
-for each include, named like in the example: `include{Name}`
+includes from the `defaultInclude` getter. Then you create an additional method
+for each include, named like in the example: `include{Name}`.
 
 The include method returns a new resource, that can either be an `item` or a
-`collection`.  See [Resources](#resources)
+`collection`.  See [Resources](#resources).
 
 ```js
 class BookTransformer extends BumblebeeTransformer {
@@ -225,7 +226,8 @@ class BookTransformer extends BumblebeeTransformer {
 module.exports = BookTransformer
 ```
 
-*Note:* Just like in the transform method, you can also access to the `context` through the second argument.
+*Note:* Just like in the transform method, you can also access to the `context`
+through the second argument.
 
 *Note:* If you have hyphen or underscore separated properties, you would name
 the include function in camelCase. The conversion is done automatically.
@@ -266,18 +268,62 @@ To include this resource you call the `include()` method before transforming.
 return transform.include('author').item(book, BookTransformer)
 ```
 
-These includes can be nested with dot notation too, to include resources within other resources.
+These includes can be nested with dot notation too, to include resources within
+other resources.
 
 ```js
 return transform.include('author,publisher.something').item(book, BookTransformer)
 ```
 
 
-### Parse available includes automatically
+#### Parse available includes automatically
 
 In addition to the previously mentioned `include` method, you can also enable
 `parseRequest` in the config file. Now bumblebee will automatically parse the
 `?include=` GET parameter and include the requested resources.
+
+
+### Transformer Variants
+
+Sometimes you may want to transform some model in a slitely different way while
+sill utilizing existing include methods. To use out book example, you may have
+an api endpoint that returns a list of all books, but you don't want to include
+the summary of the book in this response to save on data. However, when
+requesting a single book you want the summary to be included.
+
+You could define a separate transformer for this, but it would be much easier if
+you could reuse the existing book transformer. This is where transform variants
+come in play.
+
+```js
+class BookTransformer extends BumblebeeTransformer {
+  transform (book) {
+    return {
+      id: book.id,
+      title: book.title,
+      year: book.yr
+    }
+  }
+
+  transformWithSummary (book) {
+    return {
+      ...this.transform(book),
+      summary: book.summary
+    }
+  }
+}
+
+module.exports = BookTransformer
+```
+
+We define a `transformWithSummary` method that calls our existing `transform`
+method and adds the book summary to the result.
+
+Now we can use this variant by specifing it as follows:
+
+```js
+return transform.collection(books, 'App/Transformers/BookTransformer.withSummary')
+```
 
 
 
@@ -390,9 +436,9 @@ There is one major drawback to this serializer. It does not play nicely with met
 
 Since you cannot mix an Array and Objects in JSON, the serializer has to add a
 `data` property if you use metadata on a collection. The same is true if you use
-pagination. This is why we do not recommend using the `PlainSerializer` when
-using these features. But other than that, this serializer works great for small
-and simple APIs.
+pagination. This is why we do not recommend using `PlainSerializer` when using
+these features. But other than that, this serializer works great for small and
+simple APIs.
 
 
 ### DataSerializer
@@ -458,6 +504,7 @@ available on the `transform` object in the context and from `Bumblebee.create()`
 - `paginate(data)`
 - `meta(metadata)`
 - `transformWith(transformer)`
+- `usingVariant(variant)`
 - `withContext(ctx)`
 - `include(include)`
 - `setSerializer(serializer)`
@@ -483,15 +530,17 @@ let transformed = await Bumblebee.create()
     .toJSON()
 ```
 
-You can use the same methods as in a controller. With one difference: If
-you need the `context` inside the transformer, you have to set it with the
+You can use the same methods as in a controller. With one difference: If you
+need the `context` inside the transformer, you have to set it with the
 `.withContext(ctx)` method since it is not automatically injected.
 
 
 
 ## Credits
 
-Special thanks to the creator(s) of
-[Fractal](https://fractal.thephpleague.com/), a PHP API transformer that was the
-main inspiration for this package. Also, a huge thank goes to the creator(s) of
-[AdonisJS](http://adonisjs.com/) for creating such an awesome framework.
+Special thanks to the creator(s) of [Fractal], a PHP API transformer that was
+the main inspiration for this package. Also, a huge thank goes to the creator(s)
+of [AdonisJS] for creating such an awesome framework.
+
+[Fractal]: https://fractal.thephpleague.com
+[AdonisJS]: http://adonisjs.com
