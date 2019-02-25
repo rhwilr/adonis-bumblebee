@@ -1,7 +1,7 @@
 'use strict'
 
 const { ioc } = require('@adonisjs/fold')
-const { _trimEnd } = require('lodash')
+const { trimEnd: _trimEnd } = require('lodash')
 
 const TransformerAbstract = require('./TransformerAbstract')
 const Resources = require('./Resources')

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-const { _upperFirst, _camelCase } = require('lodash')
+const { upperFirst: _upperFirst, camelCase: _camelCase } = require('lodash')
 const { Command } = require('@adonisjs/ace')
 const { join } = require('path')
 
