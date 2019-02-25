@@ -35,7 +35,7 @@ class IDTransformer extends TransformerAbstract {
   }
 }
 
-test.group('Context', (group) => {
+test.group('Context', group => {
   group.before(async () => {
     await setup()
   })

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
+const { _upperFirst, _camelCase } = require('lodash')
 const { Command } = require('@adonisjs/ace')
 const { join } = require('path')
-const _ = require('lodash')
 
 class MakeTransformer extends Command {
   /**
@@ -62,7 +62,7 @@ class MakeTransformer extends Command {
     let directories = name.split('/')
     let filename = directories[directories.length - 1]
 
-    return (_.upperFirst(_.camelCase(filename.replace('Transformer', ''))) + 'Transformer')
+    return (_upperFirst(_camelCase(filename.replace('Transformer', ''))) + 'Transformer')
   }
 
   /**

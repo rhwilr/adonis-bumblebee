@@ -10,7 +10,6 @@
 */
 
 const test = require('japa')
-const { ioc } = require('@adonisjs/fold')
 
 const Bumblebee = require('../src/Bumblebee')
 const TransformerAbstract = require('../src/Bumblebee/TransformerAbstract')
@@ -30,34 +29,6 @@ class PrimitiveTransformer extends TransformerAbstract {
 }
 
 test.group('Transformer', () => {
-  test('a transformer can be resolved using its namespace', async (assert) => {
-    ioc.bind('App/Transformers/IDTransformer', () => IDTransformer)
-
-    let data = { item_id: 3 }
-
-    let transformed = await Bumblebee.create()
-      .item(data)
-      .transformWith('App/Transformers/IDTransformer')
-      .toJSON()
-
-    assert.equal(transformed.id, 3)
-  })
-
-  test('an exception is thrown when namespace doesn\'t exists', async (assert) => {
-    assert.plan(1)
-
-    let data = { item_id: 3 }
-
-    try {
-      await Bumblebee.create()
-        .item(data)
-        .transformWith('IDontExists')
-        .toJSON()
-    } catch (e) {
-      assert.equal(e.message, 'Cannot find module \'IDontExists\'')
-    }
-  })
-
   test('a transformer maps item properties', async (assert) => {
     let data = { item_id: 3 }
 
