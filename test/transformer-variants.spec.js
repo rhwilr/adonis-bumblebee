@@ -90,7 +90,7 @@ test.group('Transformer Variants', () => {
   })
 
   test('a transformer can be defined using dot-notation', async (assert) => {
-    ioc.bind('App/Transformers/IDTransformer', () => new IDTransformer())
+    ioc.fake('App/Transformers/IDTransformer', () => IDTransformer)
 
     let data = { item_id: 3 }
 
@@ -103,7 +103,7 @@ test.group('Transformer Variants', () => {
   })
 
   test('variants can be used in shorthand form', async (assert) => {
-    ioc.bind('App/Transformers/IDTransformer', () => new IDTransformer())
+    ioc.fake('App/Transformers/IDTransformer', () => IDTransformer)
 
     let data = { item_id: 3 }
 
@@ -119,7 +119,7 @@ test.group('Transformer Variants', () => {
   })
 
   test('includes can use a variant', async (assert) => {
-    ioc.bind('App/Transformers/IDIncludeTransformer', () => new IDIncludeTransformer())
+    ioc.fake('App/Transformers/IDIncludeTransformer', () => IDIncludeTransformer)
 
     let data = { item_id: 3 }
 
@@ -134,7 +134,7 @@ test.group('Transformer Variants', () => {
   })
 
   test('a transformer variant can reference the default transformer', async (assert) => {
-    ioc.bind('App/Transformers/IDRefTransformer', () => new IDRefTransformer())
+    ioc.fake('App/Transformers/IDRefTransformer', () => IDRefTransformer)
 
     let data = { item_id: 3, name: 'Leta' }
 

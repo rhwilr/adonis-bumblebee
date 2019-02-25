@@ -1,6 +1,7 @@
 'use strict'
 
 const { ioc } = require('@adonisjs/fold')
+const { trimEnd: _trimEnd } = require('lodash')
 
 const TransformerAbstract = require('./TransformerAbstract')
 const Resources = require('./Resources')
@@ -178,7 +179,7 @@ class Scope {
   _getTransformerInstance (Transformer) {
     // if the transformer is a string, use the IoC to fetch the instance.
     if (typeof Transformer === 'string') {
-      Transformer = ioc.use(Transformer)
+      Transformer = this._resolveTransformer(Transformer)
     }
 
     // if the transformer is a class, create a new instance
@@ -198,6 +199,27 @@ class Scope {
     }
 
     throw new Error('A transformer must be a function or a class extending TransformerAbstract')
+  }
+
+  /**
+   * Resolves a transformer from the ioc container
+   *
+   * @param {*} Transformer
+   */
+  _resolveTransformer (transformer) {
+    let prefix = ''
+
+    // if the provided transformer name does not start with the App namespace
+    // we assume we need to add the prefix to the name
+    if (!transformer.startsWith('App')) {
+      const Config = ioc.use('Adonis/Src/Config')
+      const namespace = _trimEnd(Config.get('bumblebee.namespace', 'App/Transformers'), '/')
+
+      prefix = `${namespace}/`
+    }
+
+    // try to load the transformer using the ioc container
+    return ioc.use(`${prefix}${transformer}`)
   }
 
   /**

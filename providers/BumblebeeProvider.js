@@ -29,7 +29,7 @@ class BumblebeeProvider extends ServiceProvider {
   }
 
   /**
-   * Bind ally to the http context
+   * Bind transform to the http context
    *
    * @method boot
    *
