@@ -28,7 +28,7 @@ class TransformerAbstract {
    * Implementation required
    */
   transform () {
-    throw new Error('You have to implement the method transform!')
+    throw new Error('You have to implement the method transform or specify a variant when calling the transformer!')
   }
 
   /**

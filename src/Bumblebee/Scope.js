@@ -118,7 +118,7 @@ class Scope {
 
     // get a transformer instance and tranform data
     let transformerInstance = this._getTransformerInstance(transformer)
-    let transformedData = await transformerInstance.transform(await data, this._ctx)
+    let transformedData = await this._dispatchToTransformerVariant(transformerInstance, await data, this._ctx)
 
     // if this transformer has includes defined,
     // figure out which includes should be run and run requested includes
@@ -198,6 +198,32 @@ class Scope {
     }
 
     throw new Error('A transformer must be a function or a class extending TransformerAbstract')
+  }
+
+  /**
+   * Checks if any variants are defined and calls the corresponding transform method
+   *
+   * @param {*} transformerInstance
+   * @param {*} data
+   * @param {*} ctx
+   */
+  async _dispatchToTransformerVariant (transformerInstance, data, ctx) {
+    let variant = this._resource.getVariant()
+
+    //  if a variant was defined, we construct the name for the transform mehod
+    // otherwise, the default transformer method 'transform' is called
+    let transformMethodName = variant
+      ? `transform${variant.charAt(0).toUpperCase()}${variant.slice(1)}`
+      : 'transform'
+
+    // Since the user can pass anything as a variant name, we need to
+    // validate that the transformer method exists.
+    if (!(transformerInstance[transformMethodName] instanceof Function)) {
+      throw new Error(`A transformer method '${transformMethodName}' could not be found in '${transformerInstance.constructor.name}'`)
+    }
+
+    // now we call the transformer method on the transformer and return the data
+    return transformerInstance[transformMethodName](data, this._ctx)
   }
 
   /**

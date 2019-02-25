@@ -66,6 +66,17 @@ class Manager {
   }
 
   /**
+   * Allowes setting a custom recursion limit
+   *
+   * @param {*} limit
+   */
+  setRecursionLimit (limit) {
+    this._recursionLimit = limit
+
+    return this
+  }
+
+  /**
    * Create a serializer
    *
    * @param {*} serializer
@@ -146,17 +157,6 @@ class Manager {
 
     // add all parsed includes to the set of requested includes
     parsed.forEach(this.requestedIncludes.add, this.requestedIncludes)
-  }
-
-  /**
-   * Allowes setting a custom recursion limit
-   *
-   * @param {*} limit
-   */
-  setRecursionLimit (limit) {
-    this._recursionLimit = limit
-
-    return this
   }
 
   /**
