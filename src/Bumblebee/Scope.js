@@ -221,7 +221,7 @@ class Scope {
     // try to load the transformer using the ioc container
     return ioc.use(`${prefix}${transformer}`)
   }
-  
+
   /**
    * Checks if any variants are defined and calls the corresponding transform method
    *

@@ -168,19 +168,26 @@ as covered in the next section, only work when an object is returned.
 
 #### Using the Transformer
 
-Once the Transformer class is defined, it can be passed to the resource as the
+Once the transformer class is defined, it can be passed to the resource as the
 second argument.
 
 ```js
 const users = await User.all()
 
-return transform.collection(users, 'App/Transformers/UserTransformer')
+return transform.collection(users, 'UserTransformer')
 ```
 
-*Note:* Passing the Transformer as the second argument will terminate the fluent
+If the transformer was placed in the default location `App/Transformers`, you
+can reference it by just passing the name of the transformer. If you placed the
+transformer class somewhere else or use a different path for your transformers,
+you may have to pass the full namespace or change the default namespace in the
+config file. Lastly, you can also pass a reference to the transformer class
+directly.
+
+*Note:* Passing the transformer as the second argument will terminate the fluent
 interface. If you want to chain more methods after the call to `collection` or
 `item` you should only pass the first argument and then use the `transformWith`
-method to define the transformer. See [Fluent Interface](#fluent-interface).
+method to define the transformer. See [Fluent Interface](#fluent-interface)
 
 
 ### Including Data
