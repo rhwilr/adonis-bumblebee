@@ -73,7 +73,7 @@ test.group('Transformer', () => {
         .transformWith(InvalidTransformer)
         .toJSON()
     } catch ({ message }) {
-      assert.equal(message, 'You have to implement the method transform!')
+      assert.equal(message, 'You have to implement the method transform or specify a variant when calling the transformer!')
     }
   })
 

@@ -11,10 +11,14 @@ class ResourceAbstract {
    * Constractor for the ResourceAbstract
    * This allowes to set data and transformer while creating an instance
    */
-  constructor (data, transformer) {
+  constructor (data, trans) {
     this.data = data
-    this.transformer = transformer
     this.meta = null
+
+    let { transformer, variant } = this._separateTransformerAndVariation(trans)
+
+    this.transformer = transformer
+    this.variant = variant
   }
 
   /**
@@ -74,6 +78,48 @@ class ResourceAbstract {
    */
   getPagination () {
     return this.pagination
+  }
+
+  /**
+   * Set the transformer variant to be used for this resource
+   *
+   * @param {Object} pagination
+   */
+  setVariant (variant) {
+    if (variant) {
+      this.variant = variant
+    }
+
+    return this
+  }
+
+  /**
+   * Returns the transformer variant
+   */
+  getVariant () {
+    return this.variant
+  }
+
+  /**
+   * When a transformer string is passed with a variation defined in dot-notation
+   * we will split the string into transformer and variant
+   */
+  _separateTransformerAndVariation (transformerString) {
+    // This feature is only available when a string binding is used
+    if (typeof transformerString !== 'string') {
+      return { transformer: transformerString, variant: null }
+    }
+
+    let regex = /(.*)\.(.*)/
+
+    let matches = transformerString.match(regex)
+
+    // if the string did not contain a variation use the
+    // transformerString is used and the variation is set to null
+    let transformer = matches ? matches[1] : transformerString
+    let variant = matches ? matches[2] : null
+
+    return { transformer, variant }
   }
 }
 
