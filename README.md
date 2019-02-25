@@ -329,7 +329,7 @@ method and adds the book summary to the result.
 Now we can use this variant by specifing it as follows:
 
 ```js
-return transform.collection(books, 'App/Transformers/BookTransformer.withSummary')
+return transform.collection(books, 'BookTransformer.withSummary')
 ```
 
 

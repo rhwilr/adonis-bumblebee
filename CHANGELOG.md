@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
  - Transformers can now be automatically resolved when passed by name.
  - The `Adonis/Addons/Bumblebee/TransformerAbstract` class now has a shorter alias to `Bumblebee/Transformer`.
+ - Multiple transform methods can be defined and used with the new Transformer Variants feature.
 
 ### Deprecated
  - The `toArray()` method was marked as deprecated.
