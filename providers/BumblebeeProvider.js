@@ -38,6 +38,8 @@ class BumblebeeProvider extends ServiceProvider {
   boot () {
     const Context = this.app.use('Adonis/Src/HttpContext')
 
+    // We can't use an arrow function here, because `this` needs to be bound to
+    // the calling context
     Context.getter('transform', function () {
       return Bumblebee.create().withContext(this)
     }, true)
