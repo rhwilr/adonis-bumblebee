@@ -6,18 +6,58 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+## [2.0.0] - 2019-03-22
+
+The developer experience release! 
+
+With this release, we improved the integration of Bumblebee into your
+application by allowing you to pass the Transformer by name, while also
+improving performance by changing the `defaultInclude` & `availableInclude`
+methods to static getters. For a complete list of all changes, see the changelog
+below.
+
+An absolutely huge thank goes to [@RomainLanz], who suggested and implemented many
+of the features we have in this release. Great work man! :clap:
+
+
 ### Breaking Changes
- - The `toArray()` was renamed to `toJSON()`.
- - Changed `defaultInclude` & `availableInclude` methods to static getter
+- The `toArray()` was renamed to `toJSON()` to be consistent with the rest of 
+  the framework. 
+  If you use the `toArray()` method, you should rename this it to `toJSON()`. 
+  The signature and returned value remain the same. [#29]
+
+- Changed `defaultInclude` & `availableInclude` methods to static getter for better performance. [#29]
+  ```js
+  // before
+  class BookTransformer extends TransformerAbstract {
+    defaultInclude () {
+      return ['author']
+    }
+  }
+
+  // after
+  class BookTransformer extends TransformerAbstract {
+    static get defaultInclude () {
+      return ['author']
+    }
+  }
+  ```
 
 ### Added
- - Transformers can now be automatically resolved when passed by name.
- - The `Adonis/Addons/Bumblebee/TransformerAbstract` class now has a shorter alias to `Bumblebee/Transformer`.
- - Multiple transform methods can be defined and used with the new Transformer Variants feature.
+- Transformers can now be automatically resolved when [passed by name]. [#33]
+- Multiple transform methods can be defined and used with the new [Transformer Variants] feature. [#32]
+- The `Adonis/Addons/Bumblebee/TransformerAbstract` class now has an optional shorter alias to `Bumblebee/Transformer`. [#29]
 
 ### Deprecated
- - The `toArray()` method was marked as deprecated.
+- The `toArray()` method was marked as deprecated. [#29]
 
+[#29]: https://github.com/rhwilr/adonis-bumblebee/pull/29
+[#32]: https://github.com/rhwilr/adonis-bumblebee/pull/32
+[#33]: https://github.com/rhwilr/adonis-bumblebee/pull/33
+[@RomainLanz]: https://github.com/RomainLanz
+[passed by name]: https://github.com/rhwilr/adonis-bumblebee/blob/9f4edd019bc776b15cbb8a3d1713f07ef072d761/README.md#using-the-transformer
+[Transformer Variants]: https://github.com/rhwilr/adonis-bumblebee/blob/9f4edd019bc776b15cbb8a3d1713f07ef072d761/README.md#transformer-variants
 
 
 ## [1.5.3] - 2018-11-26
