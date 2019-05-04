@@ -76,7 +76,7 @@ test.group('IoC', group => {
         .transformWith('IDontExists')
         .toJSON()
     } catch (e) {
-      assert.equal(e.message, 'Cannot find module \'App/Transformers/IDontExists\'')
+      assert.include(e.message, 'Cannot find module \'App/Transformers/IDontExists\'')
     }
 
     try {
@@ -85,7 +85,7 @@ test.group('IoC', group => {
         .transformWith('App/Transformers/IDontExists')
         .toJSON()
     } catch (e) {
-      assert.equal(e.message, 'Cannot find module \'App/Transformers/IDontExists\'')
+      assert.include(e.message, 'Cannot find module \'App/Transformers/IDontExists\'')
     }
   })
 })
