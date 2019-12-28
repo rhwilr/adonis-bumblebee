@@ -30,9 +30,9 @@ class PrimitiveTransformer extends TransformerAbstract {
 
 test.group('Transformer', () => {
   test('a transformer maps item properties', async (assert) => {
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(IDTransformer)
       .toJSON()
@@ -41,9 +41,9 @@ test.group('Transformer', () => {
   })
 
   test('a transformer can transform a collection of items', async (assert) => {
-    let data = [{ item_id: 3 }, { item_id: 55 }]
+    const data = [{ item_id: 3 }, { item_id: 55 }]
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .collection(data)
       .transformWith(IDTransformer)
       .toJSON()
@@ -52,9 +52,9 @@ test.group('Transformer', () => {
   })
 
   test('a transformer can return an array', async (assert) => {
-    let data = [{ name: 'John' }, { name: 'Bob' }]
+    const data = [{ name: 'John' }, { name: 'Bob' }]
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .collection(data)
       .transformWith(PrimitiveTransformer)
       .toJSON()
@@ -65,7 +65,7 @@ test.group('Transformer', () => {
   test('a transformer must implement the transform method', async (assert) => {
     assert.plan(1)
     class InvalidTransformer extends TransformerAbstract {}
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
     try {
       await Bumblebee.create()
@@ -78,9 +78,9 @@ test.group('Transformer', () => {
   })
 
   test('a transformer can be a function', async (assert) => {
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(model => ({
         id: model.item_id
@@ -92,7 +92,7 @@ test.group('Transformer', () => {
 
   test('an invalid transformer throws an error', async (assert) => {
     assert.plan(2)
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
     try {
       await Bumblebee.create()
@@ -114,7 +114,7 @@ test.group('Transformer', () => {
   })
 
   test('the null transformer returns always null', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .null()
       .toJSON()
 
@@ -122,7 +122,7 @@ test.group('Transformer', () => {
   })
 
   test('if null is passed to item transformer, null is returned', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(null)
       .transformWith(IDTransformer)
       .toJSON()
@@ -131,7 +131,7 @@ test.group('Transformer', () => {
   })
 
   test('if null is passed to collection transformer, null is returned', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .collection(null)
       .transformWith(IDTransformer)
       .toJSON()
@@ -140,17 +140,17 @@ test.group('Transformer', () => {
   })
 
   test('data and transformer can be passed to create method directly', async (assert) => {
-    let item = { item_id: 3 }
+    const item = { item_id: 3 }
 
-    let transformedItem = await Bumblebee.create(item, IDTransformer).toJSON()
+    const transformedItem = await Bumblebee.create(item, IDTransformer).toJSON()
     assert.equal(transformedItem.id, 3)
 
-    let collection = [{ item_id: 3 }, { item_id: 55 }]
+    const collection = [{ item_id: 3 }, { item_id: 55 }]
 
-    let transformedCollection = await Bumblebee.create(collection, IDTransformer).toJSON()
+    const transformedCollection = await Bumblebee.create(collection, IDTransformer).toJSON()
     assert.deepEqual(transformedCollection, [{ id: 3 }, { id: 55 }])
 
-    let transformedNull = await Bumblebee.create(null, IDTransformer).toJSON()
+    const transformedNull = await Bumblebee.create(null, IDTransformer).toJSON()
     assert.deepEqual(transformedNull, null)
   })
 })

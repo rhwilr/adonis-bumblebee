@@ -34,9 +34,11 @@ class Book1Transformer extends TransformerAbstract {
   includeAuthor (book) {
     return this.item(book.getRelated('author'), author => ({ name: author.name }))
   }
+
   includeDragon (book) {
     return this.item(book.getRelated('dragon'), dragon => ({ name: dragon.name }))
   }
+
   includeCharacters (book) {
     return this.collection(book.getRelated('characters'), character => ({ name: character.n }))
   }
@@ -79,7 +81,7 @@ test.group('EagerLoading', (group) => {
   })
 
   test('an include function eagerloads the relationship', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book1Transformer)
       .include(['author'])
@@ -97,7 +99,7 @@ test.group('EagerLoading', (group) => {
   })
 
   test('multiple include functions load all relations at once', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book1Transformer)
       .include(['author', 'characters'])
@@ -131,7 +133,7 @@ test.group('EagerLoading', (group) => {
       assert.equal(message, 'E_CANNOT_OVERRIDE_RELATION: author')
     }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book1Transformer)
       .include(['author'])
@@ -154,9 +156,9 @@ test.group('EagerLoading', (group) => {
 
     // now the relation is loaded, but there is no record linked with this relation
     // so the relation prop will be null
-    assert.equal(data.$relations['dragon'], null)
+    assert.equal(data.$relations.dragon, null)
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book1Transformer)
       .include(['dragon'])

@@ -52,9 +52,11 @@ class Book2Transformer extends TransformerAbstract {
   includeAuthor (book) {
     return this.item(book.author, author => ({ name: author.n }))
   }
+
   includeCharacters (book) {
     return this.collection(book.characters, Book2CharacterTransformer)
   }
+
   includeVoldemort (book) {
     return this.null()
   }
@@ -70,7 +72,7 @@ class Book2CharacterTransformer extends TransformerAbstract {
 
 test.group('Default Includes', () => {
   test('a deftault include is appended to the model', async (assert) => {
-    let data = {
+    const data = {
       id: 1,
       title: 'Harry Potter and the Philosopher\'s Stone',
       yr: 2001,
@@ -79,7 +81,7 @@ test.group('Default Includes', () => {
       }
     }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book1Transformer)
       .toJSON()
@@ -95,7 +97,7 @@ test.group('Default Includes', () => {
   })
 
   test('all transform types can be used in includes', async (assert) => {
-    let data = {
+    const data = {
       title: 'Harry Potter and the Chamber of Secrets',
       author: {
         n: 'J. K. Rowling'
@@ -107,7 +109,7 @@ test.group('Default Includes', () => {
       ]
     }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book2Transformer)
       .toJSON()

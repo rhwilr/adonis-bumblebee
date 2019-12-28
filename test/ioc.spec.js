@@ -33,9 +33,9 @@ test.group('IoC', group => {
   })
 
   test('a transformer can be resolved using its namespace', async (assert) => {
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith('App/Transformers/IDTransformer')
       .toJSON()
@@ -44,9 +44,9 @@ test.group('IoC', group => {
   })
 
   test('a transformer can use a custom namespace if the fully qualified namespace is used', async (assert) => {
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith('App/APITransformers/IDTransformer')
       .toJSON()
@@ -55,9 +55,9 @@ test.group('IoC', group => {
   })
 
   test('the default namespace is used if only the transformer name is defined', async (assert) => {
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith('IDTransformer')
       .toJSON()
@@ -68,7 +68,7 @@ test.group('IoC', group => {
   test('an exception is thrown when namespace doesn\'t exists', async (assert) => {
     assert.plan(2)
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
     try {
       await Bumblebee.create()

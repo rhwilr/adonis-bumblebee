@@ -33,7 +33,7 @@ test.group('Exception', (group) => {
   test('throw exception if include function is not defined', async (assert) => {
     assert.plan(1)
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
     try {
       await Bumblebee.create()
@@ -49,7 +49,7 @@ test.group('Exception', (group) => {
   test('invalid includes throw an exception', async (assert) => {
     assert.plan(2)
 
-    let manager = new Manager()
+    const manager = new Manager()
 
     try {
       manager.parseIncludes(null)

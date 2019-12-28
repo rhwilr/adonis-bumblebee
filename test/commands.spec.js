@@ -56,8 +56,8 @@ test.group('Commands', group => {
     await ace.call('make:transformer', { name: 'Test' })
     const transformerContent = await fs.readFile(transformerFilePath, 'utf-8')
 
-    assert.isTrue(transformerContent.includes(`TestTransformer class`))
-    assert.isTrue(transformerContent.includes(`module.exports = TestTransformer`))
+    assert.isTrue(transformerContent.includes('TestTransformer class'))
+    assert.isTrue(transformerContent.includes('module.exports = TestTransformer'))
   })
 
   test('Create a transformer in a subdirectory', async assert => {

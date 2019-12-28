@@ -34,6 +34,7 @@ class Book1Transformer extends TransformerAbstract {
   includeAuthor (book) {
     return this.item(book.author, author => ({ name: author.name }))
   }
+
   includeCharacters (book) {
     return this.collection(book.characters, character => ({ name: character.n }))
   }
@@ -56,6 +57,7 @@ class Book2Transformer extends TransformerAbstract {
   includeAuthor (book) {
     return this.item(book.author, author => ({ name: author.n }))
   }
+
   includeCharacters (book) {
     return this.collection(book.characters, Book2CharacterTransformer)
   }
@@ -99,7 +101,7 @@ test.group('Available Includes', (group) => {
   })
 
   test('an availableInclude is not addad by default', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(Book1Transformer)
       .toJSON()
@@ -112,7 +114,7 @@ test.group('Available Includes', (group) => {
   })
 
   test('an include can be request', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .include('author')
       .item(data)
       .transformWith(Book1Transformer)
@@ -129,7 +131,7 @@ test.group('Available Includes', (group) => {
   })
 
   test('multiple includes can be requested at once', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .include(['author', 'characters'])
       .item(data)
       .transformWith(Book1Transformer)
@@ -151,7 +153,7 @@ test.group('Available Includes', (group) => {
   })
 
   test('includes can be defined by relation', async (assert) => {
-    let data = {
+    const data = {
       title: 'Harry Potter and the Deathly Hallows',
       author: {
         n: 'J. K. Rowling'
@@ -172,18 +174,20 @@ test.group('Available Includes', (group) => {
       ]
     }
 
-    let expectedTransform = {
+    const expectedTransform = {
       title: 'Harry Potter and the Deathly Hallows',
       author: {
         name: 'J. K. Rowling'
       },
       characters: [
-        { name: 'Harry Potter',
+        {
+          name: 'Harry Potter',
           actor: {
             name: 'Daniel Radcliffe'
           }
         },
-        { name: 'Hermione Granger',
+        {
+          name: 'Hermione Granger',
           actor: {
             name: 'Emma Watson'
           }
@@ -191,7 +195,7 @@ test.group('Available Includes', (group) => {
       ]
     }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .include(['author', 'characters.actor'])
       .item(data)
       .transformWith(Book2Transformer)
@@ -199,7 +203,7 @@ test.group('Available Includes', (group) => {
 
     assert.deepEqual(transformed, expectedTransform)
 
-    let transformedFromString = await Bumblebee.create()
+    const transformedFromString = await Bumblebee.create()
       .include('author,characters.actor')
       .item(data)
       .transformWith(Book2Transformer)

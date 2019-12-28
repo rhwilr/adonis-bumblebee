@@ -68,17 +68,17 @@ class TransformerAbstract {
    * @param {*} data
    */
   async _processIncludedResources (parentScope, data) {
-    let includeData = {}
+    const includeData = {}
 
     // figure out which of the available includes are requested
-    let resourcesToInclude = this._figureOutWhichIncludes(parentScope)
+    const resourcesToInclude = this._figureOutWhichIncludes(parentScope)
 
     // load related lucid models
     await this._eagerloadIncludedResource(resourcesToInclude, data)
 
     // for each include call the include function for the transformer
-    for (let include of resourcesToInclude) {
-      let resource = await this._callIncludeFunction(include, parentScope, data)
+    for (const include of resourcesToInclude) {
+      const resource = await this._callIncludeFunction(include, parentScope, data)
 
       // if the include uses a resource, run the data through the transformer chain
       if (resource instanceof Resources.ResourceAbstract) {
@@ -100,7 +100,7 @@ class TransformerAbstract {
    * @param {*} data
    */
   async _callIncludeFunction (include, parentScope, data) {
-    let includeName = `include${include.charAt(0).toUpperCase()}${include.slice(1)}`
+    const includeName = `include${include.charAt(0).toUpperCase()}${include.slice(1)}`
 
     if (!(this[includeName] instanceof Function)) {
       throw new Error(`A method called '${includeName}' could not be found in '${this.constructor.name}'`)
@@ -115,9 +115,9 @@ class TransformerAbstract {
    * @param {*} parentScope
    */
   _figureOutWhichIncludes (parentScope) {
-    let includes = this.constructor.defaultInclude
+    const includes = this.constructor.defaultInclude
 
-    let requestedAvailableIncludes = this.constructor.availableInclude.filter(i => parentScope._isRequested(i))
+    const requestedAvailableIncludes = this.constructor.availableInclude.filter(i => parentScope._isRequested(i))
 
     return includes.concat(requestedAvailableIncludes)
   }
@@ -132,10 +132,10 @@ class TransformerAbstract {
   _createChildScopeFor (parentScope, resource, include) {
     // create a new scope
     const Scope = require('./Scope')
-    let childScope = new Scope(parentScope._manager, resource, parentScope._ctx, include)
+    const childScope = new Scope(parentScope._manager, resource, parentScope._ctx, include)
 
     // get the scope for this transformer
-    let scopeArray = [...parentScope.getParentScopes()]
+    const scopeArray = [...parentScope.getParentScopes()]
 
     if (parentScope.getScopeIdentifier()) {
       scopeArray.push(parentScope.getScopeIdentifier())
@@ -157,7 +157,7 @@ class TransformerAbstract {
     if (!data.loadMany) return
 
     // figure out which resources should be loaded
-    let resourcesToLoad = resourcesToInclude.filter(resource => {
+    const resourcesToLoad = resourcesToInclude.filter(resource => {
       // check that a relation method exists and that the relation was not previously loaded.
       return (data[resource] instanceof Function) && !data.getRelated(resource) && data.$relations[resource] !== null
     })

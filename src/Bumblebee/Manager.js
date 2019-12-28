@@ -112,10 +112,10 @@ class Manager {
     return include.split('.')
       .map(fragment => {
         // Split on underscores and hyphens to properly support multi-part includes
-        let fragments = fragment.split(/[_|-]/)
+        const fragments = fragment.split(/[_|-]/)
 
         // transform the fist letter of each word into uppercase, except for the first word.
-        let camelCaseInclude = fragments.slice(1).map(word => word[0].toUpperCase() + word.substr(1))
+        const camelCaseInclude = fragments.slice(1).map(word => word[0].toUpperCase() + word.substr(1))
 
         // combine the first word with the rest of the fragments
         return fragments.slice(0, 1).concat(camelCaseInclude).join('')
@@ -136,12 +136,12 @@ class Manager {
    * Add all the resources along the way to a nested include
    */
   _autoIncludeParents () {
-    let parsed = []
+    const parsed = []
 
     // for each resource that is requested
-    for (let include of this.requestedIncludes) {
+    for (const include of this.requestedIncludes) {
       // we split it by '.' to get the recursions
-      let nested = include.split('.')
+      const nested = include.split('.')
 
       // Add the first level to the includes
       let part = nested.shift()
@@ -171,7 +171,7 @@ class Manager {
     if (!Config.get('bumblebee.parseRequest', false)) return
 
     // get all get parameters from the request
-    let params = (ctx && ctx.request.get()) || {}
+    const params = (ctx && ctx.request.get()) || {}
 
     // if the 'include' parameter is set, pass it the the parse method
     if (params.include) {

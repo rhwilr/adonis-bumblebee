@@ -55,7 +55,7 @@ test.group('DataSerializer', group => {
   })
 
   test('item', async (assert) => {
-    let transformed = await manager
+    const transformed = await manager
       .item({ id: 3 })
       .transformWith(IDTransformer)
       .toJSON()
@@ -64,7 +64,7 @@ test.group('DataSerializer', group => {
   })
 
   test('collection', async (assert) => {
-    let transformed = await manager
+    const transformed = await manager
       .collection([{ id: 3 }, { id: 7 }])
       .transformWith(IDTransformer)
       .toJSON()
@@ -83,7 +83,7 @@ test.group('DataSerializer', group => {
       }
     }
 
-    let transformed = await manager
+    const transformed = await manager
       .paginate(data)
       .transformWith(IDTransformer)
       .toJSON()
@@ -95,7 +95,7 @@ test.group('DataSerializer', group => {
   })
 
   test('null', async (assert) => {
-    let transformed = await manager
+    const transformed = await manager
       .item()
       .transformWith(IDTransformer)
       .toJSON()
@@ -104,7 +104,7 @@ test.group('DataSerializer', group => {
   })
 
   test('includes primitive', async (assert) => {
-    let transformed = await manager
+    const transformed = await manager
       .collection([
         { id: 3, name: 'Alice' },
         { id: 7, name: 'Bob' }
@@ -113,14 +113,16 @@ test.group('DataSerializer', group => {
       .transformWith(IDTransformer)
       .toJSON()
 
-    assert.deepEqual(transformed, { data: [
-      { id: 3, primitive: 'Alice' },
-      { id: 7, primitive: 'Bob' }
-    ] })
+    assert.deepEqual(transformed, {
+      data: [
+        { id: 3, primitive: 'Alice' },
+        { id: 7, primitive: 'Bob' }
+      ]
+    })
   })
 
   test('includes item', async (assert) => {
-    let transformed = await manager
+    const transformed = await manager
       .collection([
         { id: 3, name: 'Alice' },
         { id: 7, name: 'Bob' }
@@ -129,14 +131,16 @@ test.group('DataSerializer', group => {
       .transformWith(IDTransformer)
       .toJSON()
 
-    assert.deepEqual(transformed, { data: [
-      { id: 3, item: { data: { name: 'Alice' } } },
-      { id: 7, item: { data: { name: 'Bob' } } }
-    ] })
+    assert.deepEqual(transformed, {
+      data: [
+        { id: 3, item: { data: { name: 'Alice' } } },
+        { id: 7, item: { data: { name: 'Bob' } } }
+      ]
+    })
   })
 
   test('includes collection', async (assert) => {
-    let transformed = await manager
+    const transformed = await manager
       .collection([
         { id: 3, c: [{ name: 'Alice' }] },
         { id: 7, c: [{ name: 'Bob' }] }
@@ -145,14 +149,16 @@ test.group('DataSerializer', group => {
       .transformWith(IDTransformer)
       .toJSON()
 
-    assert.deepEqual(transformed, { data: [
-      { id: 3, collection: { data: [{ name: 'Alice' }] } },
-      { id: 7, collection: { data: [{ name: 'Bob' }] } }
-    ] })
+    assert.deepEqual(transformed, {
+      data: [
+        { id: 3, collection: { data: [{ name: 'Alice' }] } },
+        { id: 7, collection: { data: [{ name: 'Bob' }] } }
+      ]
+    })
   })
 
   test('includes null', async (assert) => {
-    let transformed = await manager
+    const transformed = await manager
       .collection([
         { id: 3 },
         { id: 7 }
@@ -161,16 +167,18 @@ test.group('DataSerializer', group => {
       .transformWith(IDTransformer)
       .toJSON()
 
-    assert.deepEqual(transformed, { data: [
-      { id: 3, null: null },
-      { id: 7, null: null }
-    ] })
+    assert.deepEqual(transformed, {
+      data: [
+        { id: 3, null: null },
+        { id: 7, null: null }
+      ]
+    })
   })
 
   test('add meta to a item', async (assert) => {
-    let data = { id: 3 }
+    const data = { id: 3 }
 
-    let transformed = await manager
+    const transformed = await manager
       .item(data)
       .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => ({ id: d.id }))
@@ -180,9 +188,9 @@ test.group('DataSerializer', group => {
   })
 
   test('add meta to a collection', async (assert) => {
-    let data = [{ id: 3 }, { id: 7 }]
+    const data = [{ id: 3 }, { id: 7 }]
 
-    let transformed = await manager
+    const transformed = await manager
       .collection(data)
       .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => ({ id: d.id }))

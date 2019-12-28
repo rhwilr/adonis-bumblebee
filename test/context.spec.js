@@ -44,9 +44,9 @@ test.group('Context', group => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const ctx = new Context()
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(IDTransformer)
       .withContext(ctx)
@@ -60,9 +60,9 @@ test.group('Context', group => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const ctx = new Context()
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .include('ienv')
       .transformWith(IDTransformer)
@@ -78,9 +78,9 @@ test.group('Context', group => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const { transform } = new Context()
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await transform
+    const transformed = await transform
       .item(data)
       .transformWith(model => ({ id: model.item_id }))
       .toJSON()
@@ -92,9 +92,9 @@ test.group('Context', group => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const { transform } = new Context()
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await transform
+    const transformed = await transform
       .item(data)
       .transformWith(IDTransformer)
       .toJSON()
@@ -114,9 +114,9 @@ test.group('Context', group => {
       }
     }
 
-    let data = { id: 42 }
+    const data = { id: 42 }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .transformWith(UserTransformer)
       .toJSON()

@@ -19,7 +19,7 @@ class Bumblebee {
    */
   static create (data = null, transformer = null) {
     // create an instance of Bumblebee and pass a new instance of Manager
-    let instance = new Bumblebee(new Manager())
+    const instance = new Bumblebee(new Manager())
 
     // initialize data and transformer properties
     instance._data = data
@@ -104,7 +104,7 @@ class Bumblebee {
     this._setData('Collection', data.rows)
 
     // extract pagination data
-    let paginationData = data.pages
+    const paginationData = data.pages
 
     // ensure the pagination keys are integers
     Object.keys(paginationData).forEach((key) => {
@@ -237,8 +237,8 @@ class Bumblebee {
    * Create a resource for the data and set meta and pagination data
    */
   _getResource () {
-    let Resource = Resources[this._dataType]
-    let resourceInstance = new Resource(this._data, this._transformer)
+    const Resource = Resources[this._dataType]
+    const resourceInstance = new Resource(this._data, this._transformer)
 
     resourceInstance.setMeta(this._meta)
     resourceInstance.setPagination(this._pagination)

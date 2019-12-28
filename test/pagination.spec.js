@@ -25,7 +25,7 @@ const data = {
 
 test.group('Pagination', () => {
   test('paginate a adonis lucid model', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .paginate(data)
       .transformWith(d => ({ id: d.item_id }))
       .serializeWith('data')
@@ -46,7 +46,7 @@ test.group('Pagination', () => {
     // Overwrite with a string to ensure transformation
     data.pages.page = '2'
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .paginate(data)
       .transformWith(d => ({ id: d.item_id }))
       .serializeWith('data')
@@ -64,7 +64,7 @@ test.group('Pagination', () => {
   })
 
   test('an item resource does not support pagination', async (assert) => {
-    let bumblebee = await Bumblebee.create()
+    const bumblebee = await Bumblebee.create()
       .item({ item_id: 3 })
       .transformWith(d => ({ id: d.item_id }))
       .serializeWith('data')
@@ -75,7 +75,7 @@ test.group('Pagination', () => {
       total: 5
     }
 
-    let transformed = await bumblebee.toJSON()
+    const transformed = await bumblebee.toJSON()
 
     assert.deepEqual(transformed, {
       data: { id: 3 }
@@ -83,7 +83,7 @@ test.group('Pagination', () => {
   })
 
   test('the null resource does not support pagination', async (assert) => {
-    let bumblebee = await Bumblebee.create()
+    const bumblebee = await Bumblebee.create()
       .null()
       .serializeWith('data')
 
@@ -93,7 +93,7 @@ test.group('Pagination', () => {
       total: 5
     }
 
-    let transformed = await bumblebee.toJSON()
+    const transformed = await bumblebee.toJSON()
 
     assert.deepEqual(transformed, null)
   })

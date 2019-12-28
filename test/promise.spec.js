@@ -44,11 +44,11 @@ test.group('Promise', (group) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const { transform } = new Context()
 
-    let data = new Promise((resolve, reject) => {
+    const data = new Promise((resolve, reject) => {
       setTimeout(resolve, 1, { item_id: 3 })
     })
 
-    let transformed = await transform
+    const transformed = await transform
       .item(data, model => ({ id: model.item_id }))
 
     assert.equal(transformed.id, 3)
@@ -58,7 +58,7 @@ test.group('Promise', (group) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const { transform } = new Context()
 
-    let data = {
+    const data = {
       id: 1,
       title: 'A Game of Thrones',
       yr: 1996,
@@ -67,7 +67,7 @@ test.group('Promise', (group) => {
       }
     }
 
-    let transformed = await transform
+    const transformed = await transform
       .item(data, BookTransformer)
 
     assert.deepEqual(transformed, {

@@ -15,7 +15,7 @@ class ResourceAbstract {
     this.data = data
     this.meta = null
 
-    let { transformer, variant } = this._separateTransformerAndVariation(trans)
+    const { transformer, variant } = this._separateTransformerAndVariation(trans)
 
     this.transformer = transformer
     this.variant = variant
@@ -26,7 +26,7 @@ class ResourceAbstract {
    */
   async getData () {
     // data can be a promise, so we wait until it resolves
-    let data = await this.data
+    const data = await this.data
 
     // if data is a lucid collection, return just the array with the data
     if (data && data.rows) {
@@ -110,14 +110,14 @@ class ResourceAbstract {
       return { transformer: transformerString, variant: null }
     }
 
-    let regex = /(.*)\.(.*)/
+    const regex = /(.*)\.(.*)/
 
-    let matches = transformerString.match(regex)
+    const matches = transformerString.match(regex)
 
     // if the string did not contain a variation use the
     // transformerString is used and the variation is set to null
-    let transformer = matches ? matches[1] : transformerString
-    let variant = matches ? matches[2] : null
+    const transformer = matches ? matches[1] : transformerString
+    const variant = matches ? matches[2] : null
 
     return { transformer, variant }
   }

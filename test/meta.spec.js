@@ -15,9 +15,9 @@ const Bumblebee = require('../src/Bumblebee')
 
 test.group('Meta', () => {
   test('add meta to a item', async (assert) => {
-    let data = { id: 3 }
+    const data = { id: 3 }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => ({ id: d.id }))
@@ -27,9 +27,9 @@ test.group('Meta', () => {
   })
 
   test('add meta to a collection', async (assert) => {
-    let data = [{ id: 3 }, { id: 7 }]
+    const data = [{ id: 3 }, { id: 7 }]
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .collection(data)
       .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => ({ id: d.id }))
@@ -39,9 +39,9 @@ test.group('Meta', () => {
   })
 
   test('add meta to a primitive value', async (assert) => {
-    let data = 1
+    const data = 1
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(data)
       .meta({ link: 'rhwilr/adonis-bumblebee' })
       .transformWith(d => (d))

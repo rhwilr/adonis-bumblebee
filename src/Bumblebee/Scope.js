@@ -34,10 +34,10 @@ class Scope {
    */
   async toJSON () {
     // run the transformation on the data
-    let [rawData] = await this._executeResourceTransformers()
+    const [rawData] = await this._executeResourceTransformers()
 
     // create a serializer instance
-    let serializer = this._manager.getSerializer()
+    const serializer = this._manager.getSerializer()
 
     // run the raw data through the serializer
     let data = await this._serializeResource(serializer, rawData)
@@ -48,7 +48,7 @@ class Scope {
     // if the resource is a collection and there is pagination data...
     if (this._resource instanceof Resources.Collection && this._resource.getPagination()) {
       // run the pagination data through the serializer and add it to the meta object
-      let pagination = await serializer.paginator(this._resource.getPagination())
+      const pagination = await serializer.paginator(this._resource.getPagination())
       meta = Object.assign(pagination, meta)
     }
 
@@ -78,8 +78,8 @@ class Scope {
    */
   async _executeResourceTransformers () {
     // get a transformer and fetch data from the resource
-    let transformer = this._resource.getTransformer()
-    let data = await this._resource.getData()
+    const transformer = this._resource.getTransformer()
+    const data = await this._resource.getData()
 
     let transformedData = []
     let includedData = []
@@ -94,8 +94,8 @@ class Scope {
     } else if (this._resource instanceof Resources.Collection) {
       // It we have a collection, get each item from the array of data
       // and run each item individually through the transformer
-      for (let value of data) {
-        let [transformedValue, includedValue] = await this._fireTransformer(value, transformer)
+      for (const value of data) {
+        const [transformedValue, includedValue] = await this._fireTransformer(value, transformer)
 
         transformedData.push(transformedValue)
         includedData.push(includedValue)
@@ -118,7 +118,7 @@ class Scope {
     let includedData = []
 
     // get a transformer instance and tranform data
-    let transformerInstance = this._getTransformerInstance(transformer)
+    const transformerInstance = this._getTransformerInstance(transformer)
     let transformedData = await this._dispatchToTransformerVariant(transformerInstance, await data, this._ctx)
 
     // if this transformer has includes defined,
@@ -165,7 +165,7 @@ class Scope {
       scopeArray = [checkScopeSegment]
     }
 
-    let scopeString = scopeArray.join('.')
+    const scopeString = scopeArray.join('.')
 
     // check if this include was requested
     return this._manager.getRequestedIncludes().has(scopeString)
@@ -230,11 +230,11 @@ class Scope {
    * @param {*} ctx
    */
   async _dispatchToTransformerVariant (transformerInstance, data, ctx) {
-    let variant = this._resource.getVariant()
+    const variant = this._resource.getVariant()
 
     //  if a variant was defined, we construct the name for the transform mehod
     // otherwise, the default transformer method 'transform' is called
-    let transformMethodName = variant
+    const transformMethodName = variant
       ? `transform${variant.charAt(0).toUpperCase()}${variant.slice(1)}`
       : 'transform'
 
@@ -254,8 +254,8 @@ class Scope {
    * @param {*} Transformer
    */
   _transformerHasIncludes (Transformer) {
-    let defaultInclude = Transformer.constructor.defaultInclude
-    let availableInclude = Transformer.constructor.availableInclude
+    const defaultInclude = Transformer.constructor.defaultInclude
+    const availableInclude = Transformer.constructor.availableInclude
 
     return defaultInclude.length > 0 || availableInclude.length > 0
   }

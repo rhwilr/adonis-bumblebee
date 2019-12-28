@@ -70,9 +70,9 @@ class IDRefTransformer extends TransformerAbstract {
 
 test.group('Transformer Variants', () => {
   test('a specific variant can be used for the transformer method', async (assert) => {
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformedVariant1 = await Bumblebee.create()
+    const transformedVariant1 = await Bumblebee.create()
       .item(data)
       .transformWith(IDTransformer)
       .usingVariant('variant1')
@@ -80,7 +80,7 @@ test.group('Transformer Variants', () => {
 
     assert.equal(transformedVariant1.id, 3)
 
-    let transformedVariant2 = await Bumblebee.create()
+    const transformedVariant2 = await Bumblebee.create()
       .item(data)
       .transformWith(IDTransformer)
       .usingVariant('variant2')
@@ -92,9 +92,9 @@ test.group('Transformer Variants', () => {
   test('a transformer can be defined using dot-notation', async (assert) => {
     ioc.fake('App/Transformers/IDTransformer', () => IDTransformer)
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformedVariant1 = await Bumblebee.create()
+    const transformedVariant1 = await Bumblebee.create()
       .item(data)
       .transformWith('App/Transformers/IDTransformer.variant1')
       .toJSON()
@@ -105,14 +105,14 @@ test.group('Transformer Variants', () => {
   test('variants can be used in shorthand form', async (assert) => {
     ioc.fake('App/Transformers/IDTransformer', () => IDTransformer)
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformedVariant1 = await Bumblebee.create()
+    const transformedVariant1 = await Bumblebee.create()
       .item(data, 'App/Transformers/IDTransformer.variant1')
 
     assert.equal(transformedVariant1.id, 3)
 
-    let transformedVariant2 = await Bumblebee.create()
+    const transformedVariant2 = await Bumblebee.create()
       .collection([data], 'App/Transformers/IDTransformer.variant2')
 
     assert.equal(transformedVariant2[0].identifier, 3)
@@ -121,9 +121,9 @@ test.group('Transformer Variants', () => {
   test('includes can use a variant', async (assert) => {
     ioc.fake('App/Transformers/IDIncludeTransformer', () => IDIncludeTransformer)
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .include('both')
       .item(data, 'App/Transformers/IDIncludeTransformer.variant1')
 
@@ -136,9 +136,9 @@ test.group('Transformer Variants', () => {
   test('a transformer variant can reference the default transformer', async (assert) => {
     ioc.fake('App/Transformers/IDRefTransformer', () => IDRefTransformer)
 
-    let data = { item_id: 3, name: 'Leta' }
+    const data = { item_id: 3, name: 'Leta' }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .include('both')
       .item(data, 'App/Transformers/IDRefTransformer.withName')
 
@@ -151,7 +151,7 @@ test.group('Transformer Variants', () => {
   test('an error is thrown if an invalid variant is passed', async (assert) => {
     assert.plan(1)
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
     try {
       await Bumblebee.create()

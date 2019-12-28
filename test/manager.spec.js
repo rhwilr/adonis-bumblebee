@@ -20,7 +20,7 @@ test.group('Manager', (group) => {
   })
 
   test('parseIncludes allows strings and arrays', async (assert) => {
-    let manager = new Manager()
+    const manager = new Manager()
 
     // Does a CSV string work
     manager.parseIncludes('foo,bar')
@@ -41,7 +41,7 @@ test.group('Manager', (group) => {
   })
 
   test('parseIncludes respects the recursion limit', async (assert) => {
-    let manager = new Manager()
+    const manager = new Manager()
 
     // Should limit to 10 by default
     manager.parseIncludes('a.b.c.d.e.f.g.h.i.j.NEVER')

@@ -23,9 +23,9 @@ test.group('Shorthand', (group) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const { transform } = new Context()
 
-    let data = { item_id: 3 }
+    const data = { item_id: 3 }
 
-    let transformed = await transform
+    const transformed = await transform
       .item(data, model => ({ id: model.item_id }))
 
     assert.equal(transformed.id, 3)
@@ -35,9 +35,9 @@ test.group('Shorthand', (group) => {
     const Context = ioc.use('Adonis/Src/HttpContext')
     const { transform } = new Context()
 
-    let data = [{ item_id: 3 }]
+    const data = [{ item_id: 3 }]
 
-    let transformed = await transform
+    const transformed = await transform
       .collection(data, model => ({ id: model.item_id }))
 
     assert.deepEqual(transformed, [{ id: 3 }])
@@ -57,7 +57,7 @@ test.group('Shorthand', (group) => {
       }
     }
 
-    let transformed = await transform.paginate(data, model => ({ id: model.item_id }))
+    const transformed = await transform.paginate(data, model => ({ id: model.item_id }))
 
     assert.deepEqual(transformed, {
       pagination: {

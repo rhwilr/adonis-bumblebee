@@ -18,7 +18,7 @@ class MakeTransformer extends Command {
    * The signature for the Make command
    */
   static get signature () {
-    return `make:transformer { name: Name of Transformer }`
+    return 'make:transformer { name: Name of Transformer }'
   }
 
   /**
@@ -59,8 +59,8 @@ class MakeTransformer extends Command {
    * @param {*} name
    */
   getClassname (name) {
-    let directories = name.split('/')
-    let filename = directories[directories.length - 1]
+    const directories = name.split('/')
+    const filename = directories[directories.length - 1]
 
     return (_upperFirst(_camelCase(filename.replace('Transformer', ''))) + 'Transformer')
   }

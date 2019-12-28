@@ -33,9 +33,11 @@ class Book2Transformer extends TransformerAbstract {
   includeAuthor (book) {
     return this.item(book.author, author => ({ name: author.n }))
   }
+
   includeCharacters (book) {
     return this.collection(book.characters, Book2CharacterTransformer)
   }
+
   includeSchool (book) {
     return 'Hogwarts'
   }
@@ -104,12 +106,14 @@ const expectedTransform = {
     name: 'J. K. Rowling'
   },
   characters: [
-    { name: 'Harry Potter',
+    {
+      name: 'Harry Potter',
       actor: {
         name: 'Daniel Radcliffe'
       }
     },
-    { name: 'Hermione Granger',
+    {
+      name: 'Hermione Granger',
       actor: {
         name: 'Emma Watson'
       }
@@ -119,7 +123,7 @@ const expectedTransform = {
 
 test.group('Includes can be an array or a string', () => {
   test('includes can be defined by relation', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .include(['author', 'characters.actor'])
       .item(data)
       .transformWith(Book2Transformer)
@@ -127,7 +131,7 @@ test.group('Includes can be an array or a string', () => {
 
     assert.deepEqual(transformed, expectedTransform)
 
-    let transformedFromString = await Bumblebee.create()
+    const transformedFromString = await Bumblebee.create()
       .include('author,characters.actor')
       .item(data)
       .transformWith(Book2Transformer)
@@ -169,7 +173,7 @@ test.group('Includes can be an array or a string', () => {
   })
 
   test('an include function can return a object to be merged', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .include(['school'])
       .item(data)
       .transformWith(Book2Transformer)
@@ -203,7 +207,7 @@ test.group('Includes can be an array or a string', () => {
       }
     }
 
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .include(['name'])
       .item(data)
       .transformWith(CollisionTransformer)
@@ -216,7 +220,7 @@ test.group('Includes can be an array or a string', () => {
   })
 
   test('an include name can be camelCase', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .include(['authorName'])
       .item(data)
       .transformWith(CamelCaseTransformer)
@@ -229,7 +233,7 @@ test.group('Includes can be an array or a string', () => {
   })
 
   test('a camel case include can be requested using snake_case', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .include(['author_name'])
       .item(data)
       .transformWith(CamelCaseTransformer)

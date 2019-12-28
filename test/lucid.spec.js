@@ -61,14 +61,14 @@ const expectedTransform = {
 
 test.group('Lucid', () => {
   test('a lucid item can be transformed', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .item(UserItemModel, UserTransformer)
 
     assert.deepEqual(transformed, expectedTransform)
   })
 
   test('a lucid collection can be transformed', async (assert) => {
-    let transformed = await Bumblebee.create()
+    const transformed = await Bumblebee.create()
       .collection(UserCollectionModel, UserTransformer)
 
     assert.deepEqual(transformed, [expectedTransform])
