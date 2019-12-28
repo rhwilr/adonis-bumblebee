@@ -19,8 +19,8 @@ class Context extends Macroable {
     }
   }
 }
-Context._getters = {}
-Context._macros = {}
+Context.getters = {}
+Context.macros = {}
 
 module.exports = async () => {
   ioc.bind('Adonis/Src/HttpContext', () => {
