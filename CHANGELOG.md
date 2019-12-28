@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [2.1.0] - 2019-12-28
+
+### Added
+ - it is now possible to define include properties in snake_case, [#67](https://github.com/rhwilr/adonis-bumblebee/issues/67)
+
+### Updated
+ - Many dev-dependencies were updated
+
+
 ## [2.0.0] - 2019-03-22
 
 The developer experience release! 
