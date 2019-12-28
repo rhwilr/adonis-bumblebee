@@ -79,6 +79,47 @@ class CamelCaseTransformer extends TransformerAbstract {
   }
 }
 
+class SnakeCaseTransformer extends TransformerAbstract {
+  static get availableInclude () {
+    return [
+      'author_name'
+    ]
+  }
+
+  transform (book) {
+    return {
+      name: book.title
+    }
+  }
+
+  includeAuthorName (book) {
+    return this.item(book.author, author => author.n)
+  }
+}
+
+class SnakeAndCamelTransformer extends TransformerAbstract {
+  static get availableInclude () {
+    return [
+      'camel',
+      'snake'
+    ]
+  }
+
+  transform (book) {
+    return {
+      title: book.title
+    }
+  }
+
+  includeCamel (book) {
+    return this.item(book, CamelCaseTransformer)
+  }
+
+  includeSnake (book) {
+    return this.item(book, SnakeCaseTransformer)
+  }
+}
+
 const data = {
   title: 'Harry Potter and the Deathly Hallows',
   author: {
@@ -232,7 +273,7 @@ test.group('Includes can be an array or a string', () => {
     })
   })
 
-  test('a camel case include can be requested using snake_case', async (assert) => {
+  test('a camelCase include can be requested using snake_case', async (assert) => {
     const transformed = await Bumblebee.create()
       .include(['author_name'])
       .item(data)
@@ -242,6 +283,103 @@ test.group('Includes can be an array or a string', () => {
     assert.deepEqual(transformed, {
       name: 'Harry Potter and the Deathly Hallows',
       authorName: 'J. K. Rowling'
+    })
+  })
+
+  test('an include name can be snake_case', async (assert) => {
+    const transformed = await Bumblebee.create()
+      .include(['author_name'])
+      .item(data)
+      .transformWith(SnakeCaseTransformer)
+      .toJSON()
+
+    assert.deepEqual(transformed, {
+      name: 'Harry Potter and the Deathly Hallows',
+      author_name: 'J. K. Rowling'
+    })
+  })
+
+  test('a snake_case include can be requested using snake_case', async (assert) => {
+    const transformed = await Bumblebee.create()
+      .include(['author_name'])
+      .item(data)
+      .transformWith(SnakeCaseTransformer)
+      .toJSON()
+
+    assert.deepEqual(transformed, {
+      name: 'Harry Potter and the Deathly Hallows',
+      author_name: 'J. K. Rowling'
+    })
+  })
+
+  test('a snake_case include can not be requested using camelCase', async (assert) => {
+    const transformed = await Bumblebee.create()
+      .include(['authorName'])
+      .item(data)
+      .transformWith(SnakeCaseTransformer)
+      .toJSON()
+
+    assert.deepEqual(transformed, {
+      name: 'Harry Potter and the Deathly Hallows'
+    })
+  })
+
+  test('a nested camelCase include can be requested', async (assert) => {
+    let transformed = await Bumblebee.create()
+      .include(['camel.authorName'])
+      .item(data)
+      .transformWith(SnakeAndCamelTransformer)
+      .toJSON()
+
+    assert.deepEqual(transformed, {
+      title: 'Harry Potter and the Deathly Hallows',
+      camel: {
+        name: 'Harry Potter and the Deathly Hallows',
+        authorName: 'J. K. Rowling'
+      }
+    })
+
+    transformed = await Bumblebee.create()
+      .include(['camel.author_name'])
+      .item(data)
+      .transformWith(SnakeAndCamelTransformer)
+      .toJSON()
+
+    assert.deepEqual(transformed, {
+      title: 'Harry Potter and the Deathly Hallows',
+      camel: {
+        name: 'Harry Potter and the Deathly Hallows',
+        authorName: 'J. K. Rowling'
+      }
+    })
+  })
+
+  test('a nested snake_case include can be requested', async (assert) => {
+    let transformed = await Bumblebee.create()
+      .include(['snake.author_name'])
+      .item(data)
+      .transformWith(SnakeAndCamelTransformer)
+      .toJSON()
+
+    assert.deepEqual(transformed, {
+      title: 'Harry Potter and the Deathly Hallows',
+      snake: {
+        name: 'Harry Potter and the Deathly Hallows',
+        author_name: 'J. K. Rowling'
+      }
+    })
+
+    transformed = await Bumblebee.create()
+      .include(['snake.authorName'])
+      .item(data)
+      .transformWith(SnakeAndCamelTransformer)
+      .toJSON()
+
+    assert.deepEqual(transformed, {
+      title: 'Harry Potter and the Deathly Hallows',
+      snake: {
+        name: 'Harry Potter and the Deathly Hallows'
+      }
     })
   })
 })

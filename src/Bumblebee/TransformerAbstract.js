@@ -1,6 +1,7 @@
 'use strict'
 
 const Resources = require('./Resources')
+const { camelCase: _camelCase } = require('lodash')
 
 /**
  * TransformerAbstract class
@@ -100,6 +101,8 @@ class TransformerAbstract {
    * @param {*} data
    */
   async _callIncludeFunction (include, parentScope, data) {
+    // convert the include name to camelCase
+    include = _camelCase(include)
     const includeName = `include${include.charAt(0).toUpperCase()}${include.slice(1)}`
 
     if (!(this[includeName] instanceof Function)) {

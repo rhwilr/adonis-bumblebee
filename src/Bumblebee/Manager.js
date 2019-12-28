@@ -1,6 +1,7 @@
 'use strict'
 
 const { ioc } = require('@adonisjs/fold')
+const { camelCase: _camelCase } = require('lodash')
 const Scope = require('./Scope')
 const Serializers = require('./Serializers')
 
@@ -34,14 +35,21 @@ class Manager {
   }
 
   /**
-   * Returns the requested includes
+   * Returns the requested includes. An optional parameter converts snake_case
+   * includes to standardized camelCase
    */
-  getRequestedIncludes () {
-    return this.requestedIncludes
+  getRequestedIncludes (transformCamelCase = false) {
+    if (!transformCamelCase) return this.requestedIncludes
+
+    const includes = [...this.requestedIncludes]
+      .map(i => i.split('.').map(_camelCase).join('.'))
+
+    return new Set(includes)
   }
 
   /**
    * Parses an include string or array and constructs an array of all requested includes
+   *
    * @param {*} includes
    */
   parseIncludes (includes) {
@@ -58,7 +66,7 @@ class Manager {
     }
 
     // sanitize the includes
-    includes = includes.map(i => this._guardAgainstToDeepRecursion(i)).map(i => this._formatIncludeName(i))
+    includes = includes.map(i => this._guardAgainstToDeepRecursion(i))
 
     // add all includes to the internal set
     includes.forEach(this.requestedIncludes.add, this.requestedIncludes)
@@ -90,8 +98,7 @@ class Manager {
   }
 
   /**
-   * Get an instance if the serializer,
-   * if not set, use setting from the config
+   * Get an instance if the serializer, if not set, use setting from the config
    */
   getSerializer () {
     if (!this.serializer) {
@@ -100,27 +107,6 @@ class Manager {
     }
 
     return this.serializer
-  }
-
-  /**
-   * Sanitize the name for the include
-   *
-   * @param {*} include
-   */
-  _formatIncludeName (include) {
-    // split the include name by recursion level
-    return include.split('.')
-      .map(fragment => {
-        // Split on underscores and hyphens to properly support multi-part includes
-        const fragments = fragment.split(/[_|-]/)
-
-        // transform the fist letter of each word into uppercase, except for the first word.
-        const camelCaseInclude = fragments.slice(1).map(word => word[0].toUpperCase() + word.substr(1))
-
-        // combine the first word with the rest of the fragments
-        return fragments.slice(0, 1).concat(camelCaseInclude).join('')
-      })
-      .join('.')
   }
 
   /**

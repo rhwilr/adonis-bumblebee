@@ -167,8 +167,11 @@ class Scope {
 
     const scopeString = scopeArray.join('.')
 
-    // check if this include was requested
-    return this._manager.getRequestedIncludes().has(scopeString)
+    // check if this include was requested. If the include does not occur in the
+    // requested includes, we check again, for it may have been requested using
+    // snake_case instead of camelCase
+    return this._manager.getRequestedIncludes().has(scopeString) ||
+      this._manager.getRequestedIncludes(true).has(scopeString)
   }
 
   /**
