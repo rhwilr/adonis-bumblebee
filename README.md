@@ -7,13 +7,9 @@ presentation and transformation layer for complex data output.
 <hr />
 <br />
 
-[![Greenkeeper][greenkeeper-image]][greenkeeper-url]
 [![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Codecov][codecov-image]][codecov-url]
-
-[greenkeeper-image]: https://badges.greenkeeper.io/rhwilr/adonis-bumblebee.svg
-[greenkeeper-url]: https://greenkeeper.io
 
 [npm-image]: https://img.shields.io/npm/v/adonis-bumblebee.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/adonis-bumblebee
