@@ -236,8 +236,8 @@ module.exports = BookTransformer
 *Note:* Just like in the transform method, you can also access to the `context`
 through the second argument.
 
-*Note:* If you have hyphen or underscore separated properties, you would name
-the include function in camelCase. The conversion is done automatically.
+*Note:* If you want to use snake_case property names, you would still name the
+include function in camelCase, but list it under `defaultInclude` in snake_case.
 
 
 #### Available Include
