@@ -16,7 +16,7 @@ module.exports = {
   /*
    * The serializer will be used to transform the data into its final
    * representation.
-   * Currently supported: 'plain', 'data'
+   * Currently supported: 'plain', 'data', 'sld'
    */
   serializer: 'plain',
 

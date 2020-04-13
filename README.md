@@ -46,6 +46,7 @@ presentation and transformation layer for complex data output.
   * [Serializers](#serializers)
     * [PlainSerializer](#plainserializer)
     * [DataSerializer](#dataserializer)
+    * [SLDataSerializer](#sldataserializer)
   * [Pagination](#pagination)    
   * [Fluent Interface](#fluent-interface)
   * [Credits](#credits)
@@ -452,7 +453,12 @@ This serializer adds the `data` namespace to all of its items:
 // Item
 {
   data: {
-    foo: 'bar'
+    foo: 'bar',
+    included: {
+      data: {
+        name: 'test'
+      }
+    }
   }
 }
 
@@ -488,6 +494,24 @@ and pagination:
   ],
   meta: {...},
   pagination: {...}
+}
+```
+
+
+### SLDataSerializer
+
+This serializer works similarly to the DataSerializer, but it only adds the
+`data` namespace on the first level.
+
+```js
+// Item
+{
+  data: {
+    foo: 'bar',
+    included: {
+      name: 'test'
+    }
+  }
 }
 ```
 

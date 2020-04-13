@@ -138,15 +138,17 @@ class Scope {
    * @param {*} rawData
    */
   async _serializeResource (serializer, rawData) {
+    const scopeDepth = this.getScopeArray().length
+
     if (this._resource instanceof Resources.Collection) {
-      return serializer.collection(rawData)
+      return serializer.collection(rawData, scopeDepth)
     }
 
     if (this._resource instanceof Resources.Item) {
-      return serializer.item(rawData)
+      return serializer.item(rawData, scopeDepth)
     }
 
-    return serializer.null()
+    return serializer.null(scopeDepth)
   }
 
   /**
@@ -155,17 +157,8 @@ class Scope {
    * @param {*} checkScopeSegment
    */
   _isRequested (checkScopeSegment) {
-    let scopeArray
-
     // create the include string by combining current level with parent levels
-    if (this._scopeIdentifier) {
-      scopeArray = [...this._parentScopes, this._scopeIdentifier, checkScopeSegment]
-    } else {
-      // if this scope has no identifier, we are in the root scope
-      scopeArray = [checkScopeSegment]
-    }
-
-    const scopeString = scopeArray.join('.')
+    const scopeString = [...this.getScopeArray(), checkScopeSegment].join('.')
 
     // check if this include was requested. If the include does not occur in the
     // requested includes, we check again, for it may have been requested using
@@ -282,6 +275,14 @@ class Scope {
    */
   getScopeIdentifier () {
     return this._scopeIdentifier
+  }
+
+  getScopeArray () {
+    if (this._scopeIdentifier) {
+      return [...this._parentScopes, this._scopeIdentifier]
+    }
+
+    return []
   }
 }
 
