@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [2.2.0] - 2020-04-13
+
+### Added
+ - Serializers now have access to the nesting level of included resources.
+ - Added a `SLDataSerializer` that only adds the `data` keyword on the first level, [#72](https://github.com/rhwilr/adonis-bumblebee/issues/72)
+
+
 ## [2.1.0] - 2019-12-28
 
 ### Added
